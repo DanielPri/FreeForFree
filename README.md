@@ -16,3 +16,5 @@ Tyler Delaportas | 29720766 | tdelaportas@hotmail.com
 [Link to the SAD](https://docs.google.com/document/d/1xZVP_H1vIcfh5upbR4nQgDBCqMcCySsisl6TmVyOuUE "SAD document")
 
 [Link to the SRS](https://docs.google.com/document/d/1dtbTcZLlSLU4q7ml8xa4aiTf5IhMCYHVO1jbSH6PHNA "SRS document")
+
+[Domain Model](https://www.lucidchart.com/documents/edit/830e88a1-6ad4-4ef7-89b2-42c18c1d9a8c/0 "Domain Model")
