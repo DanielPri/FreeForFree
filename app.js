@@ -10,7 +10,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 // Books
-app.use('/books', require('./books/crud'));
+app.use('/users', require('./users/crud'));
 
 // Home Route
 app.get('/', (req, res) => {
