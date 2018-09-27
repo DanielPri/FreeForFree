@@ -1,0 +1,18 @@
+extends ../base.pug
+
+block content
+  h3 Active Users
+
+  table(class='table')
+    thead
+      tr
+        th Name
+        th ID
+    tbody
+      each user in users
+        tr
+          td= user.profileName
+          td= user.profileID
+
+  if !users.length
+    p No users found.
