@@ -53,12 +53,20 @@
     ]
   },
   "dependencies": {
-    "express": "^4.16.2"
+    "body-parser": "1.18.2",
+    "express": "4.16.2",
+    "lodash": "4.17.5",
+    "mysql": "2.15.0",
+    "nconf": "0.10.0",
+    "prompt": "1.0.0",
+    "pug": "2.0.0-rc.4",
+    "uglify-js": "3.3.12"
   },
   "devDependencies": {
     "@google-cloud/nodejs-repo-tools": "2.2.1",
     "ava": "0.25.0",
-    "supertest": "3.0.0"
+    "proxyquire": "1.8.0",
+    "sinon": "4.3.0"
   },
   "engines": {
     "node": "8.x.x"
