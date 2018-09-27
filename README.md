@@ -17,3 +17,5 @@ Tyler Delaportas | 29720766 | tdelaportas@hotmail.com
 
 [Link to the SRS](https://docs.google.com/document/d/1dtbTcZLlSLU4q7ml8xa4aiTf5IhMCYHVO1jbSH6PHNA "SRS document")
 
+[How to run the application (for developers)](https://github.com/DanielPri/FreeForFree/wiki/How-to-run-the-application "How to run the application")
+
