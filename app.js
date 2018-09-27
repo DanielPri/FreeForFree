@@ -9,9 +9,12 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+// Books
+app.use('/users', require('./users/crud'));
+
 // Home Route
 app.get('/', (req, res) => {
-  res.render('index');
+  res.redirect('/users');
 });
 
 // Basic 404 handler -> found from google cloud tutorials
