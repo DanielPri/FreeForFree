@@ -1,8 +1,8 @@
 {
   "name": "nodejs-getting-started",
   "version": "1.0.0",
-  "description": "End to end sample for running Node.js applications on Google Cloud Platform",
-  "repository": "https://github.com/GoogleCloudPlatform/nodejs-getting-started",
+  "description": "A library management app.",
+  "repository": "https://github.com/DanielPri/FreeForFree",
   "private": true,
   "scripts": {
     "start": "node app.js",
@@ -10,23 +10,43 @@
     "test": "repo-tools test app",
     "cover": "nyc --cache npm test; nyc report --reporter=html"
   },
-  "author": "Google Inc.",
+  "author": "SOEN343 - Team #1",
   "contributors": [
     {
-      "name": "Jon Wayne Parrott",
-      "email": "jonwayne@google.com"
+      "name": "Mikael Samvelian",
+      "email": "mikael.samvelian@gmail.com"
     },
     {
-      "name": "Jonathan Simon",
-      "email": "jbsimon@google.com"
+      "name": "Hassan Karimian",
+      "email": "karimian_hassan@yahoo.ca"
     },
     {
-      "name": "Jason Dobry",
-      "email": "jdobry@google.com"
+      "name": "Charles Chan",
+      "email": "chanc09@gmail.com"
     },
     {
-      "name": "Ace Nassri",
-      "email": "anassri@google.com"
+      "name": "Sebastien Ong Tone",
+      "email": "s.ongtone@hotmail.com"
+    },
+    {
+      "name": "Steffan Venacious",
+      "email": "steffan_v@hotmail.com"
+    },
+    {
+      "name": "Calvin-Alain Bernales",
+      "email": "b_calvin@hotmail.com"
+    },
+    {
+      "name": "Conor Geoghegan",
+      "email": "cognoman@hotmail.com"
+    },
+    {
+      "name": "Daniel Privorotsky",
+      "email": "privorotskyd@gmail.com"
+    },
+    {
+      "name": "Oumar Ba",
+      "email": "oumarba221296@hotmail.fr"
     }
   ],
   "cloud-repo-tools": {
@@ -37,7 +57,7 @@
         "args": [
           "app.js"
         ],
-        "msg": "Hello, world!"
+        "msg": "Hello"
       }
     }
   },
