@@ -61,7 +61,7 @@
         "args": [
           "app.js"
         ],
-        "msg": "Hello"
+        "msg": "FreeForFree - Library Management App"
       }
     }
   },
@@ -78,10 +78,14 @@
   },
   "dependencies": {
     "body-parser": "1.18.2",
+    "connect-memjs": "0.2.1",
     "express": "4.16.2",
+    "express-session": "1.15.6",
     "lodash": "4.17.5",
     "mysql": "2.15.0",
     "nconf": "0.10.0",
+    "passport": "0.4.0",
+    "passport-google-oauth20": "1.0.0",
     "prompt": "1.0.0",
     "pug": "2.0.0-rc.4",
     "uglify-js": "3.3.12"

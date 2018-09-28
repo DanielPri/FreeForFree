@@ -14,7 +14,7 @@
 'use strict';
 
 const express = require('express');
-const bodyParser = require('body-parser');
+const oauth2 = require('../lib/oauth2');
 
 function getModel () {
   return require(`./model-${require('../config').get('DATA_BACKEND')}`);
@@ -22,8 +22,9 @@ function getModel () {
 
 const router = express.Router();
 
-// Automatically parse request body as form data
-router.use(bodyParser.urlencoded({ extended: false }));
+// Use the oauth middleware to automatically get the user's profile
+// information and expose login/logout URLs to templates.
+router.use(oauth2.template);
 
 // Set Content-Type for all responses for these routes
 router.use((req, res, next) => {
@@ -36,7 +37,7 @@ router.use((req, res, next) => {
  *
  * Display a page of users (up to ten at a time).
  */
-router.get('/', (req, res, next) => {
+router.get('/', oauth2.required, (req, res, next) => {
   getModel().list(1, 10, req.query.pageToken, (err, entities, cursor) => {
     if (err) {
       next(err);

@@ -16,5 +16,10 @@ html(lang="en")
           li
             a(href="/users") Active Users
 
+        p.navbar-text.navbar-right
+          if profile
+            span #{profile.displayName} &nbsp;
+              a(href=logout) (logout)
+
     .container
       block content
