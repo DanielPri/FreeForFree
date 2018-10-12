@@ -32,23 +32,40 @@ router.use((req, res, next) => {
   next();
 });
 
+router.get('/', (req, res, next) => {
+  res.render('users/login.pug')
+});
+
+//--------Catalog----------//
+router.get('/catalog', (req, res, next) => {
+  res.render('users/catalog.pug')
+});
+//--------//
+
 /**
  * GET /users
  *
  * Display a page of users (up to ten at a time).
  */
-router.get('/', oauth2.required, (req, res, next) => {
-  getModel().list(1, 10, req.query.pageToken, (err, entities, cursor) => {
-    if (err) {
-      next(err);
-      return;
-    }
-    res.render('users/list.pug', {
-      users: entities,
-      nextPageToken: cursor
-    });
-  });
-});
+ router.get('/admin', oauth2.required, (req, res, next) => {
+  //  console.log(req.user.id != "101972659614580788232"
+  //  || req.user.id != "103961475077481640020");
+   if(req.user.id == "101972659614580788232"
+    || req.user.id == "103961475077481640020") {
+      getModel().list(1, 10, req.query.pageToken, (err, entities, cursor) => {
+        if (err) {
+          next(err);
+          return;
+        }
+        res.render('users/list.pug', {
+          users: entities,
+          nextPageToken: cursor
+         });
+      });  
+  } else {
+      res.render('users/login.pug')
+  }
+ });
 
 /**
  * Errors on "/users/*" routes.
@@ -61,3 +78,4 @@ router.use((err, req, res, next) => {
 });
 
 module.exports = router;
+

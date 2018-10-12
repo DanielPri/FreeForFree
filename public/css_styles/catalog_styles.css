@@ -1,0 +1,120 @@
+
+body {
+    background: #fff;
+    color: #333;
+    font-family: Lato, sans-serif;
+  }
+  #catalogContent {
+    display: block;
+    width: 400px;
+    margin: 100px auto 0;
+  }
+  #catalogContent ul {
+    margin: 0;
+    padding: 0;
+  }
+  #catalogContent li * {
+    float: left;
+  }
+  #catalogContent li, h3 {
+    clear:both;
+    list-style:none;
+  }
+  #catalogContent input, button {
+    outline: none;
+  }
+  #catalogContent button {
+    background: none;
+    border: 0px;
+    color: #888;
+    font-size: 15px;
+    width: 60px;
+    margin: 10px 0 0;
+    font-family: Lato, sans-serif;
+    cursor: pointer;
+  }
+  #catalogContent button:hover {
+    color: #333;
+  }
+  /* Heading */
+  #catalogContent h3,
+  #catalogContent label[for='new-book'] {
+    color: #333;
+    font-weight: 700;
+    font-size: 15px;
+    border-bottom: 2px solid #333;
+    padding: 30px 0 10px;
+    margin: 0;
+    text-transform: uppercase;
+  }
+  #catalogContent input[type="text"] {
+    margin: 0;
+    font-size: 18px;
+    line-height: 18px;
+    height: 18px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background: #fff;
+    border-radius: 6px;
+    font-family: Lato, sans-serif;
+    color: #888;
+  }
+  #catalogContent input[type="text"]:focus {
+    color: #333;
+  }
+  
+  /* New Book */
+  #catalogContent label[for='new-book'] {
+    display: block;
+    margin: 0 0 20px;
+  }
+  #catalogContent input#new-book {
+    float: left;
+    width: 318px;
+  }
+  #catalogContent p > button:hover {
+    color: #0FC57C;
+  }
+  
+
+  #catalogContent li {
+    overflow: hidden;
+    padding: 20px 0;
+    border-bottom: 1px solid #eee;
+  }
+  #catalogContent li > input[type="checkbox"] {
+    margin: 0 10px;
+    position: relative;
+    top: 15px;
+  }
+  #catalogContent li > label {
+    font-size: 18px;
+    line-height: 40px;
+    width: 237px;
+    padding: 0 0 0 11px;
+  }
+  #catalogContent li >  input[type="text"] {
+    width: 226px;
+  }
+  #catalogContent li > .delete:hover {
+    color: #CF2323;
+  }
+  
+  /* Completed */
+  #catalogContent #completed-books label {
+    text-decoration: line-through;
+    color: #888;
+  }
+  
+  /* Edit Task */
+  #catalogContent ul li input[type=text] {
+    display:none;
+  }
+  
+  #catalogContent ul li.editMode input[type=text] {
+    display:block;
+  }
+  
+  #catalogContent ul li.editMode label {
+    display:none;
+  }

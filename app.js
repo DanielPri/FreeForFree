@@ -12,6 +12,7 @@ const app = express();
 // Load View Engine
 app.disable('etag');
 app.set('views', path.join(__dirname, 'views'));
+app.use(express.static(__dirname+ '/public'));
 app.set('view engine', 'pug');
 app.set('trust proxy', true);
 

@@ -47,10 +47,40 @@ function list (isActive, limit, token, cb) {
 }
 // [END active users list]
 
+// [Start set user to state active]
+function setIsActive (tiny, userID, cb) {
+  tiny = tiny ? parseInt(tiny, 10) : 0;
+  connection.query(
+    'UPDATE `user` SET `isActive` = ? WHERE `profileID` = ?', [tiny, userID],
+    (err, result) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      cb(null, result);
+    });
+}
+// [End set user to state active]
+
+// [Start verify admin]
+function verify (userID, cb) {
+  connection.query(
+    'SELECT `userType` FROM `user` WHERE `profileID` = ?', userID,
+    (err, result) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      cb(null, result);
+    });
+}
+// [End verify admin]
 
 module.exports = {
   createSchema: createSchema,
-  list: list
+  list: list,
+  setIsActive: setIsActive,
+  verify: verify
 };
 
 if (module === require.main) {
