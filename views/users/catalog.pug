@@ -14,6 +14,52 @@ block content
         button.edit Edit
         button.delete Delete
     script.
+      var bookInput = document.getElementById("new-book"); // new-book
+      var addButton = document.getElementsByTagName("button")[0];//first button
+      var booksHolder = document.getElementById("booksList"); //booksList
+      //New Book List item
+      var createNewBookElement = function(bookString) {
+      // create List Item
+      var listItem = document.createElement("li");
+      // label
+      var label = document.createElement("label");
+      // input (text)
+      var editInput = document.createElement("input");
+      // button.edit
+      var editButton = document.createElement("button");
+      // button.delete
+      var deleteButton = document.createElement("button");
+      //Each element needs modified
+      editInput.type = "text";
+      editButton.innerText = "Edit";
+      editButton.className = "edit";
+      deleteButton.innerText = "Delete";
+      deleteButton.className = "delete";
+      label.innerText = bookString;
+      // Each element needs appending
+      listItem.appendChild(label);
+      listItem.appendChild(editInput);
+      listItem.appendChild(editButton);
+      listItem.appendChild(deleteButton);
+      return listItem;
+      }
+      //Add a new book
+      var addBook = function() {
+      console.log("Adding Book");
+      //Create a new list item with the text from the #new-book:
+      var listItem = createNewBookElement(bookInput.value);
+      //Append listItem to BookHolder
+      booksHolder.appendChild(listItem);
+      bindBookEvents(listItem, bookCompleted);
+      bookInput.value = "";
+      }
+      //Edit an existing book
+      var editBook = function() {
+      console.log("Edit Book...");
+      var listItem = this.parentNode;
+      var editInput = listItem.querySelector("input[type=text]");
+      var label = listItem.querySelector("label");
+      var containsClass = listItem.classList.contains("editMode");
       
       // if class of the parent is .editMode
       if (containsClass) {
