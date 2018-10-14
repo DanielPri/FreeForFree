@@ -37,8 +37,12 @@ router.get('/', (req, res, next) => {
 });
 
 //--------Catalog----------//
-router.get('/catalog', (req, res, next) => {
+router.get('/admin/catalog', oauth2.required, (req, res, next) => {
+  if(req.user.id == "101972659614580788232" || req.user.id == "103961475077481640020") {
   res.render('users/catalog.pug')
+} else {
+  res.render('users/login.pug')
+}
 });
 //--------//
 
@@ -47,11 +51,8 @@ router.get('/catalog', (req, res, next) => {
  *
  * Display a page of users (up to ten at a time).
  */
- router.get('/admin', oauth2.required, (req, res, next) => {
-  //  console.log(req.user.id != "101972659614580788232"
-  //  || req.user.id != "103961475077481640020");
-   if(req.user.id == "101972659614580788232"
-    || req.user.id == "103961475077481640020") {
+ router.get('/admin/list', oauth2.required, (req, res, next) => {
+   if(req.user.id == "101972659614580788232" || req.user.id == "103961475077481640020") {
       getModel().list(1, 10, req.query.pageToken, (err, entities, cursor) => {
         if (err) {
           next(err);
@@ -61,7 +62,7 @@ router.get('/catalog', (req, res, next) => {
           users: entities,
           nextPageToken: cursor
          });
-      });  
+      });
   } else {
       res.render('users/login.pug')
   }
@@ -78,4 +79,3 @@ router.use((err, req, res, next) => {
 });
 
 module.exports = router;
-
