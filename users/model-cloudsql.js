@@ -47,7 +47,7 @@ function list (isActive, limit, token, cb) {
 }
 // [END active users list]
 
-// [Start set user to state active]
+// [Start set user's activity state]
 function setIsActive (tiny, userID, cb) {
   tiny = tiny ? parseInt(tiny, 10) : 0;
   connection.query(
@@ -60,27 +60,12 @@ function setIsActive (tiny, userID, cb) {
       cb(null, result);
     });
 }
-// [End set user to state active]
-
-// [Start verify admin]
-function verify (userID, cb) {
-  connection.query(
-    'SELECT `userType` FROM `user` WHERE `profileID` = ?', userID,
-    (err, result) => {
-      if (err) {
-        cb(err);
-        return;
-      }
-      cb(null, result);
-    });
-}
-// [End verify admin]
+// [End set user's activity state]
 
 module.exports = {
   createSchema: createSchema,
   list: list,
-  setIsActive: setIsActive,
-  verify: verify
+  setIsActive: setIsActive
 };
 
 if (module === require.main) {
