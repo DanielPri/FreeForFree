@@ -61,6 +61,20 @@ function createUser (data, profileName, limit, cb) {
 }
 // [End create user]
 
+// [Find unregistered users]
+function findUnregisteredUser (userType, cb) {
+  connection.query(
+    'SELECT * FROM `user` WHERE `userType` = ?', [userType],
+    (err, result) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      cb(null, result);
+  });
+}
+// [End find unregistered users]
+
 // [Start verify admin]
 function verifyAdmin (profileID, userType, cb) {
   connection.query(
@@ -95,7 +109,8 @@ module.exports = {
   list: list,
   createUser: createUser,
   setIsActive: setIsActive,
-  verifyAdmin: verifyAdmin
+  verifyAdmin: verifyAdmin,
+  findUnregisteredUser: findUnregisteredUser
 };
 
 if (module === require.main) {

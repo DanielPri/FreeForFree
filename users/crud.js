@@ -40,6 +40,22 @@ router.get('/', (req, res, next) => {
 router.get('/admin/catalog', oauth2.required, oauth2.adminRequired, (req, res, next) => {
   res.render('users/catalog.pug')
 });
+
+//--------Add User----------//
+router.get('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().findUnregisteredUser(3, (err, entities) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/addUser.pug', {
+      users: entities
+     });
+  });
+});
+
+
+
 //--------//
 
 /**
