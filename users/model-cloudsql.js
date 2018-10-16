@@ -47,7 +47,35 @@ function list (isActive, limit, token, cb) {
 }
 // [END active users list]
 
-// [Start set user to state active]
+// [Start create user]
+function createUser (data, profileName, limit, cb) {
+  connection.query(
+    'INSERT INTO `user` SET ? ON DUPLICATE KEY UPDATE `profileName` = ?', [data, profileName, limit],
+    (err, result) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      cb(null, result);
+    });
+}
+// [End create user]
+
+// [Start verify admin]
+function verifyAdmin (profileID, userType, cb) {
+  connection.query(
+    'SELECT `profileName` FROM `user` WHERE `profileID` = ? AND `userType` = ?', [profileID, userType],
+    (err, result) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      cb(null, result);
+  });
+}
+// [End verify admin]
+
+// [Start set user's activity state]
 function setIsActive (tiny, userID, cb) {
   tiny = tiny ? parseInt(tiny, 10) : 0;
   connection.query(
@@ -60,27 +88,14 @@ function setIsActive (tiny, userID, cb) {
       cb(null, result);
     });
 }
-// [End set user to state active]
-
-// [Start verify admin]
-function verify (userID, cb) {
-  connection.query(
-    'SELECT `userType` FROM `user` WHERE `profileID` = ?', userID,
-    (err, result) => {
-      if (err) {
-        cb(err);
-        return;
-      }
-      cb(null, result);
-    });
-}
-// [End verify admin]
+// [End set user's activity state]
 
 module.exports = {
   createSchema: createSchema,
   list: list,
+  createUser: createUser,
   setIsActive: setIsActive,
-  verify: verify
+  verifyAdmin: verifyAdmin
 };
 
 if (module === require.main) {
