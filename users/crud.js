@@ -37,12 +37,8 @@ router.get('/', (req, res, next) => {
 });
 
 //--------Catalog----------//
-router.get('/admin/catalog', oauth2.required, (req, res, next) => {
-  if(req.user.id == "101972659614580788232" || req.user.id == "103961475077481640020") {
+router.get('/admin/catalog', oauth2.required, oauth2.adminRequired, (req, res, next) => {
   res.render('users/catalog.pug')
-} else {
-  res.render('users/login.pug')
-}
 });
 //--------//
 
@@ -51,8 +47,7 @@ router.get('/admin/catalog', oauth2.required, (req, res, next) => {
  *
  * Display a page of users (up to ten at a time).
  */
- router.get('/admin/list', oauth2.required, (req, res, next) => {
-   if(req.user.id == "101972659614580788232" || req.user.id == "103961475077481640020") {
+ router.get('/admin/list', oauth2.required, oauth2.adminRequired, (req, res, next) => {
       getModel().list(1, 10, req.query.pageToken, (err, entities, cursor) => {
         if (err) {
           next(err);
@@ -63,9 +58,6 @@ router.get('/admin/catalog', oauth2.required, (req, res, next) => {
           nextPageToken: cursor
          });
       });
-  } else {
-      res.render('users/login.pug')
-  }
  });
 
 /**

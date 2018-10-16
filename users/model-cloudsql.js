@@ -59,7 +59,21 @@ function createUser (data, profileName, limit, cb) {
       cb(null, result);
     });
 }
-// [End crete user]
+// [End create user]
+
+// [Start verify admin]
+function verifyAdmin (profileID, userType, cb) {
+  connection.query(
+    'SELECT `profileName` FROM `user` WHERE `profileID` = ? AND `userType` = ?', [profileID, userType],
+    (err, result) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      cb(null, result);
+  });
+}
+// [End verify admin]
 
 // [Start set user's activity state]
 function setIsActive (tiny, userID, cb) {
@@ -80,7 +94,8 @@ module.exports = {
   createSchema: createSchema,
   list: list,
   createUser: createUser,
-  setIsActive: setIsActive
+  setIsActive: setIsActive,
+  verifyAdmin: verifyAdmin
 };
 
 if (module === require.main) {
