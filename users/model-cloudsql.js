@@ -90,12 +90,30 @@ function setIsActive (tiny, userID, cb) {
 }
 // [End set user's activity state]
 
+// [Start set listBooks]
+function listBooks (limit, token, cb) {
+  token = token ? parseInt(token, 10) : 0;
+  connection.query(
+    'SELECT * FROM `books` LIMIT ? OFFSET ?', [limit, token],
+    (err, results) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      const hasMore = results.length === limit ? token + results.length : false;
+      cb(null, results, hasMore);
+    }
+  );
+}
+//[End set listBooks]
+
 module.exports = {
   createSchema: createSchema,
   list: list,
   createUser: createUser,
   setIsActive: setIsActive,
-  verifyAdmin: verifyAdmin
+  verifyAdmin: verifyAdmin,
+  listBooks: listBooks
 };
 
 if (module === require.main) {

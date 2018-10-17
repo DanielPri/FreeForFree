@@ -38,7 +38,16 @@ router.get('/', (req, res, next) => {
 
 //--------Catalog----------//
 router.get('/admin/catalog', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  res.render('users/catalog.pug')
+  getModel().listBooks(10, req.query.pageToken, (err, entities, cursor) => {
+    if (err) {
+      next(err);
+      return;
+}
+  res.render('users/catalog.pug', {
+    books: entities,
+    nextPageToken: cursor
+  });
+});
 });
 //--------//
 
