@@ -16,7 +16,9 @@ block content
                     tr
                         td= user.profileName
                         td= user.profileID
-                        td= input( type='checkbox' name='agreement' unchecked)
-
+                        td 
+                            input(type='radio' name='type' + user.profileID)
+                        td
+                            input(type='radio' name='type' + user.profileID)
         if !users.length
             p No Unregistered users found.
