@@ -9,16 +9,38 @@ block content
                 tr
                     th Name
                     th ID
-                    th make User
-                    th make admin
+                    th Type
             tbody
                 each user in users
                     tr
                         td= user.profileName
                         td= user.profileID
                         td 
-                            input(type='radio' name='type' + user.profileID)
-                        td
-                            input(type='radio' name='type' + user.profileID)
+                            select(name="userType_"+ user.profileID form="guestType")
+                                option(value='3') guest
+                                option(value='2') user
+                                option(value='1') admin
+                        
         if !users.length
             p No Unregistered users found.
+
+        div    
+            input(type="submit" value="submit" form="guestType") 
+        // replace these br with CSS whitespace later    
+        br 
+        br    
+        h3 Manually create user
+        table(class='table')
+            tbody  
+                tr
+                    td Full Name
+                    td
+                        input(type="text" name='fullName')
+                tr
+                    td  Email
+                    td
+                        input(type="text" name='fullName')
+
+        // in retro
+
+            
