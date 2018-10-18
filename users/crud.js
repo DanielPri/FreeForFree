@@ -57,6 +57,8 @@ router.get('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, n
 
 //--------Submit button to change user type status----------//
 router.post('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  
+  console.log("hejfbsdkjfhlsdkflsdkgklsdj;dsjf;lsdfm;sldf");
   var selectTypeArray = document.getElementsByClassName("selectType");
   var i=0;
   var allSelectedElements=[];
@@ -66,9 +68,10 @@ router.post('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, 
     }
       
   }
-
-  getModel().findUnregisteredUser(allSelectedElements, (err, entities) => {
+  console.log(allSelectedElements);
+  getModel().chooseUserType(allSelectedElements, (err, entities) => {
     if (err) {
+      
       next(err);
       return;
     }

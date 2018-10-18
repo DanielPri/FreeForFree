@@ -63,6 +63,24 @@ function createUser (data, profileName, limit, cb) {
 
 // [Find unregistered users]
 function findUnregisteredUser (userType, cb) {
+  // var i=0;
+  // for(i=0; i<userType.length; i++){
+    connection.query(
+      // 'UPDATE `user` SET `userType`= ? where `profileID` = ?' , [3, userType[i]],
+      'SELECT * FROM `user` WHERE `userType` = ?', [userType],
+      (err, result) => {
+        if (err) {
+          cb(err);
+          return;
+        }
+        cb(null, result);
+    });
+  // }
+  
+}
+// [End find unregistered users]
+
+function chooseUserType (userType, cb) {
   var i=0;
   for(i=0; i<userType.length; i++){
     connection.query(
@@ -78,7 +96,6 @@ function findUnregisteredUser (userType, cb) {
   }
   
 }
-// [End find unregistered users]
 
 // [Start verify admin]
 function verifyAdmin (profileID, userType, cb) {
