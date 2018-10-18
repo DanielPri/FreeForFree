@@ -23,6 +23,10 @@ body {
   #catalogContent input, button {
     outline: none;
   }
+  #bookImage {
+    height:150px;
+    width:100px;
+  }
   #catalogContent button {
     background: none;
     border: 0px;
@@ -62,7 +66,7 @@ body {
   #catalogContent input[type="text"]:focus {
     color: #333;
   }
-  
+
   /* New Book */
   #catalogContent label[for='new-book'] {
     display: block;
@@ -75,7 +79,7 @@ body {
   #catalogContent p > button:hover {
     color: #0FC57C;
   }
-  
+
 
   #catalogContent li {
     overflow: hidden;
@@ -99,22 +103,22 @@ body {
   #catalogContent li > .delete:hover {
     color: #CF2323;
   }
-  
+
   /* Completed */
   #catalogContent #completed-books label {
     text-decoration: line-through;
     color: #888;
   }
-  
+
   /* Edit Task */
   #catalogContent ul li input[type=text] {
     display:none;
   }
-  
+
   #catalogContent ul li.editMode input[type=text] {
     display:block;
   }
-  
+
   #catalogContent ul li.editMode label {
     display:none;
   }
