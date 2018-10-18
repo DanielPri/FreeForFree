@@ -25,20 +25,29 @@ html(lang="en")
 
     .container
 
-      block content  
-      br
-      table(class='table')
-        thead
-         tr
-            td Name
-            td Description
-        tbody
+      block content
+        br
+        header Books
+        table(class='table')
+         thead
+          tr
+           td
+           td Name
+           td Description
+           td Author
+           td Published
+         tbody
           each book in books
-            tr
-              td= book.title
-              td= book.description
-    
-  
+           tr
+            td
+             .media-left
+              img(src=book.imageUrl)
+            td= book.title
+            td= book.description
+            td= book.author
+            td= book.publishedDate
+
+
 
 
 
@@ -69,4 +78,3 @@ html(lang="en")
           ul.pager
             li
     //a(href=`?pageToken=${encodeURIComponent(nextPageToken)}`) More
-          
