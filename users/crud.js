@@ -15,6 +15,7 @@
 
 const express = require('express');
 const oauth2 = require('../lib/oauth2');
+const bodyParser = require('body-parser');
 
 function getModel () {
   return require(`./model-${require('../config').get('DATA_BACKEND')}`);
@@ -54,6 +55,18 @@ router.get('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, n
   });
 });
 
+//--------Submit button to change user type status----------//
+router.post('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().findUnregisteredUser(3, (err, entities) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/addUser.pug', {
+      users: entities
+     });
+  });
+});
 
 
 //--------//

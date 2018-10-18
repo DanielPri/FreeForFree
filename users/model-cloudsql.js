@@ -104,6 +104,20 @@ function setIsActive (tiny, userID, cb) {
 }
 // [End set user's activity state]
 
+
+// [Change user's type]
+function changeUserType (data, cb) {
+  connection.query(
+    'UPDATE `user` SET `userType` = ? WHERE `profileID` = ?', [userType, userID],
+    (err, result) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      cb(null, result);
+    });
+}
+// [End of submit to change user's type]
 module.exports = {
   createSchema: createSchema,
   list: list,
