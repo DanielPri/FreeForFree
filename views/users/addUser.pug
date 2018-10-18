@@ -4,20 +4,20 @@ block content
     .container
         h3 Unregistered Users
         form(method="POST")
-            table(class='table')
+            table(class='table', id='Unregistered_User_Table')
                 thead
                     tr
                         th Name
                         th ID
                         th Type
-                tbody
+                tbody(id='Unregistered_User_Table_body')
                     each user in users
                         tr
                             td= user.profileName
                             td= user.profileID
                             td 
                                 .form-group
-                                    select.form-control(name="userType_"+ user.profileID, id=user.profileID)
+                                    select(class="selectType", name="userType_"+ user.profileID, id=user.profileID)
                                         option(value='3') guest
                                         option(value='2') user
                                         option(value='1') admin

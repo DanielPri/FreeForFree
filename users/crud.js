@@ -57,7 +57,17 @@ router.get('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, n
 
 //--------Submit button to change user type status----------//
 router.post('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().findUnregisteredUser(3, (err, entities) => {
+  var selectTypeArray = document.getElementsByClassName("selectType");
+  var i=0;
+  var allSelectedElements=[];
+  for(i=0; i<selectTypeArray.length; i++){
+    if(selectTypeArray[i].value==1 || selectTypeArray[i].value==2){
+      allSelectedElements.push(selectTypeArray[0].parentNode.parentNode.parentNode.childNodes[1].innerText);
+    }
+      
+  }
+
+  getModel().findUnregisteredUser(allSelectedElements, (err, entities) => {
     if (err) {
       next(err);
       return;
@@ -67,6 +77,18 @@ router.post('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, 
      });
   });
 });
+  
+
+//   getModel().findUnregisteredUser(3, (err, entities) => {
+//     if (err) {
+//       next(err);
+//       return;
+//     }
+//     res.render('users/addUser.pug', {
+//       users: entities
+//      });
+//   });
+// });
 
 
 //--------//
