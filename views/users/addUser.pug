@@ -3,7 +3,7 @@ extends adminBase.pug
 block content
     .container
         h3 Unregistered Users
-        form(method="POST")
+        form(method="POST" )
             table(class='table', id='Unregistered_User_Table')
                 thead
                     tr
@@ -17,7 +17,7 @@ block content
                             td= user.profileID
                             td 
                                 .form-group
-                                    select(class="selectType", name="userType_"+ user.profileID, id=user.profileID)
+                                    select(class="selectType", name="userType", id=user.profileID)
                                         option(value='3') guest
                                         option(value='2') user
                                         option(value='1') admin
@@ -43,5 +43,24 @@ block content
                         input(type="text" name='fullName')
 
         // in retro
+
+        //- script.
+        //-     function getUserType(){
+        //-         console.log("hejfbsdkjfhlsdkflsdkgklsdj;dsjf;lsdfm;sldf");
+        //-         // const dom = new JSDOM.fromFile(`/users/addUser.pug`);
+        //-         console.log(document.getElementsByClassName("selectType"));
+        //-         console.log("BIIIIIIIIIIIIIIIIIIIIIITCH");
+        //-         var selectTypeArray = document.getElementsByClassName("selectType");
+        //-         var i=0;
+        //-         var allSelectedElements=[];
+        //-         for(i=0; i<selectTypeArray.length; i++){
+        //-         if(selectTypeArray[i].value==1 || selectTypeArray[i].value==2){
+        //-             allSelectedElements.push(selectTypeArray[0].parentNode.parentNode.parentNode.childNodes[1].innerText);
+        //-         }
+                    
+        //-         }
+        //-         console.log(allSelectedElements);
+        //-         return allSelectedElements;
+        //-     }
 
             

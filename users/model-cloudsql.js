@@ -146,7 +146,8 @@ module.exports = {
   createUser: createUser,
   setIsActive: setIsActive,
   verifyAdmin: verifyAdmin,
-  findUnregisteredUser: findUnregisteredUser
+  findUnregisteredUser: findUnregisteredUser,
+  chooseUserType: chooseUserType
 };
 
 if (module === require.main) {

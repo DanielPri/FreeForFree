@@ -56,22 +56,18 @@ router.get('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, n
 });
 
 //--------Submit button to change user type status----------//
-router.post('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  
-  console.log("hejfbsdkjfhlsdkflsdkgklsdj;dsjf;lsdfm;sldf");
-  var selectTypeArray = document.getElementsByClassName("selectType");
-  var i=0;
-  var allSelectedElements=[];
-  for(i=0; i<selectTypeArray.length; i++){
-    if(selectTypeArray[i].value==1 || selectTypeArray[i].value==2){
-      allSelectedElements.push(selectTypeArray[0].parentNode.parentNode.parentNode.childNodes[1].innerText);
-    }
-      
-  }
-  console.log(allSelectedElements);
+// const jsdom = require("jsdom");
+// const { JSDOM } = jsdom;
+
+
+router.post('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, next) => { 
+  // var allSelectedElements= getUserType();
+  console.log("---------------------------------begining----------------------------------------------");
+  console.log(req.body);
+  console.log("-----------------------------------end-------------------------------------------------");
   getModel().chooseUserType(allSelectedElements, (err, entities) => {
     if (err) {
-      
+
       next(err);
       return;
     }
