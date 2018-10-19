@@ -6,16 +6,17 @@ html(lang="en")
     meta(name="viewport", content="width=device-width, initial-scale=1")
     link(href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css')
     link(rel="stylesheet", href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css")
-
+    link(rel='stylesheet' href='/css_styles/login_styles.css' type='text/css' media='screen' charset='utf-8')
   body
     .navbar.navbar-default
       .container
         .navbar-header
-          .navbar-brand FreeForFree
+          .navbar-brand 
+            a(href="/users") FreeForFree
 
         ul.nav.navbar-nav
           li
-            a(href="/users") Login Page
+            a(href="/users") Home
           li
             a(href="/users/admin/list") Admin
 
@@ -30,5 +31,5 @@ html(lang="en")
             a(href=login) Login
           // [END profile]
 
-    .container
-      block content
+
+    block content

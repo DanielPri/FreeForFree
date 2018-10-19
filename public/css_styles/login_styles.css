@@ -1,0 +1,32 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial;
+    font-size: 17px;
+}
+
+#myVideo {
+    position: fixed;
+    right: 0;
+    top: 57px;
+    bottom: 0;
+    width: 100%;
+}
+
+.welcome {
+    position: fixed;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    color: #f1f1f1;
+    width: 70%;
+    padding: 20px;
+}
+
+@media only screen and (max-width: 768px) {  
+    #myVideo {
+        top: 193px;
+    }
+}
