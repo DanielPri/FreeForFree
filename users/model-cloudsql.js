@@ -61,12 +61,20 @@ function createUser (data, profileName, limit, cb) {
 }
 // [End create user]
 
-// [Find unregistered users]
-function findUnregisteredUser (userType, cb) {
-  // var i=0;
-  // for(i=0; i<userType.length; i++){
+// [Find all users]
+function findUserByType (userType, cb) {
+  if(userType == 0){
     connection.query(
-      // 'UPDATE `user` SET `userType`= ? where `profileID` = ?' , [3, userType[i]],
+      'SELECT * FROM `user`',
+      (err, result) => {
+        if (err) {
+          cb(err);
+          return;
+        }
+        cb(null, result);
+    });
+  }
+    connection.query(
       'SELECT * FROM `user` WHERE `userType` = ?', [userType],
       (err, result) => {
         if (err) {
@@ -78,14 +86,15 @@ function findUnregisteredUser (userType, cb) {
   // }
   
 }
-// [End find unregistered users]
+// [End find all users]
 
+
+// [Find user by type]
 function chooseUserType (userType, cb) {
   var i=0;
   for(i=0; i<userType.length; i++){
     connection.query(
       'UPDATE `user` SET `userType`= ? where `profileID` = ?' , [3, userType[i]],
-      // 'SELECT * FROM `user` WHERE `userType` = ?', [userType],
       (err, result) => {
         if (err) {
           cb(err);
@@ -93,9 +102,9 @@ function chooseUserType (userType, cb) {
         }
         cb(null, result);
     });
-  }
-  
+  } 
 }
+// [End of user by type]
 
 // [Start verify admin]
 function verifyAdmin (profileID, userType, cb) {
@@ -126,28 +135,34 @@ function setIsActive (tiny, userID, cb) {
 }
 // [End set user's activity state]
 
-
-// [Change user's type]
-function changeUserType (data, cb) {
+// [edit user]
+function editUser(profileID, userType, cd){
   connection.query(
-    'UPDATE `user` SET `userType` = ? WHERE `profileID` = ?', [userType, userID],
+    'SELECT `profileName` FROM `user` WHERE `profileID` = ? AND `userType` = ?', [profileID, userType],
     (err, result) => {
       if (err) {
         cb(err);
         return;
       }
       cb(null, result);
-    });
+  });
 }
-// [End of submit to change user's type]
+//[end of edit user function]
+
 module.exports = {
   createSchema: createSchema,
   list: list,
   createUser: createUser,
   setIsActive: setIsActive,
   verifyAdmin: verifyAdmin,
+<<<<<<< HEAD
   findUnregisteredUser: findUnregisteredUser,
   chooseUserType: chooseUserType
+=======
+  findUserByType: findUserByType,
+  chooseUserType: chooseUserType,
+  editUser: editUser
+>>>>>>> 7e9a01f383403f5f149294d930d4e1f60e4fe7f2
 };
 
 if (module === require.main) {
