@@ -111,7 +111,7 @@ function listBooks (limit, token, cb) {
 function listMagazines (limit, token, cb) {
   token = token ? parseInt(token, 10) : 0;
   connection.query(
-    'SELECT * FROM `magazines` LIMIT ? OFFSET ?', [limit, token],
+    'SELECT * FROM `Magazines` LIMIT ? OFFSET ?', [limit, token],
     (err, results) => {
       if (err) {
         cb(err);

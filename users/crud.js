@@ -48,7 +48,7 @@ router.get('/admin/catalog', oauth2.required, oauth2.adminRequired, (req, res, n
     nextPageToken: cursor
   });
 });
-  getModel().listMagazines(10, req.query.pageToken, (err, entities, cursor) => {
+getModel().listMagazines(10, req.query.pageToken, (err, entities, cursor) => {
     if (err) {
       next(err);
       return;
@@ -57,6 +57,7 @@ router.get('/admin/catalog', oauth2.required, oauth2.adminRequired, (req, res, n
     Magazines: entities,
     nextPageToken: cursor
   });
+});
 });
 //--------//
 
