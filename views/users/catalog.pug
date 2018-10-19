@@ -54,13 +54,22 @@ html(lang="en")
             td= book.publishedDate
             td= book.ISBN10
             td= book.ISBN13
+
         br
         header Magazines
         table(class='table')
          thead
           tr
-         td Title
+           td Title
+           td Language
+           td Publisher
+           td ISBN-10
+           td ISBN-13
           tbody
            each magazine in Magazines
             tr
              td= magazine.title
+             td= magazine.language
+             td= magazine.publisher
+             td= magazine.ISBN10
+             td= magazine.ISBN13

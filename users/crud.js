@@ -38,17 +38,25 @@ router.get('/', (req, res, next) => {
 
 //--------Catalog----------//
 router.get('/admin/catalog', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().listBooks(10, req.query.pageToken, (err, entities, cursor) => {
+  getModel().listBooks(10, req.query.pageToken, (err, entitiesBook, cursor) => {
     if (err) {
       next(err);
       return;
 }
+  getModel().listMagazines(10, req.query.pageToken, (err, entitiesMag, cursor) => {
+    if (err) {
+      next(err);
+      return;
+  }
   res.render('users/catalog.pug', {
-    books: entities,
+    books: entitiesBook,
+    Magazines: entitiesMag,
     nextPageToken: cursor
   });
 });
-getModel().listMagazines(10, req.query.pageToken, (err, entities, cursor) => {
+});
+/*
+  getModel().listMagazines(10, req.query.pageToken, (err, entities, cursor) => {
     if (err) {
       next(err);
       return;
@@ -58,6 +66,7 @@ getModel().listMagazines(10, req.query.pageToken, (err, entities, cursor) => {
     nextPageToken: cursor
   });
 });
+*/
 });
 //--------//
 
