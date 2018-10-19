@@ -63,10 +63,7 @@ function createUser (data, profileName, limit, cb) {
 
 // [Find unregistered users]
 function findUnregisteredUser (userType, cb) {
-  // var i=0;
-  // for(i=0; i<userType.length; i++){
     connection.query(
-      // 'UPDATE `user` SET `userType`= ? where `profileID` = ?' , [3, userType[i]],
       'SELECT * FROM `user` WHERE `userType` = ?', [userType],
       (err, result) => {
         if (err) {
@@ -85,7 +82,6 @@ function chooseUserType (userType, cb) {
   for(i=0; i<userType.length; i++){
     connection.query(
       'UPDATE `user` SET `userType`= ? where `profileID` = ?' , [3, userType[i]],
-      // 'SELECT * FROM `user` WHERE `userType` = ?', [userType],
       (err, result) => {
         if (err) {
           cb(err);
@@ -126,27 +122,14 @@ function setIsActive (tiny, userID, cb) {
 }
 // [End set user's activity state]
 
-
-// [Change user's type]
-function changeUserType (data, cb) {
-  connection.query(
-    'UPDATE `user` SET `userType` = ? WHERE `profileID` = ?', [userType, userID],
-    (err, result) => {
-      if (err) {
-        cb(err);
-        return;
-      }
-      cb(null, result);
-    });
-}
-// [End of submit to change user's type]
 module.exports = {
   createSchema: createSchema,
   list: list,
   createUser: createUser,
   setIsActive: setIsActive,
   verifyAdmin: verifyAdmin,
-  findUnregisteredUser: findUnregisteredUser
+  findUnregisteredUser: findUnregisteredUser,
+  chooseUserType: chooseUserType
 };
 
 if (module === require.main) {

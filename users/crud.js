@@ -82,18 +82,6 @@ router.post('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, 
 });
   
 
-//   getModel().findUnregisteredUser(3, (err, entities) => {
-//     if (err) {
-//       next(err);
-//       return;
-//     }
-//     res.render('users/addUser.pug', {
-//       users: entities
-//      });
-//   });
-// });
-
-
 //--------//
 
 /**
