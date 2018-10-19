@@ -54,7 +54,6 @@ html(lang="en")
             td= book.publishedDate
             td= book.ISBN10
             td= book.ISBN13
-
         br
         header Magazines
         table(class='table')
@@ -73,3 +72,27 @@ html(lang="en")
              td= magazine.publisher
              td= magazine.ISBN10
              td= magazine.ISBN13
+        br
+        header Movies
+        table(class='table')
+         thead
+          tr
+           td Title
+           td Director
+           td Producers
+           td Actors
+           td Language
+           td Dubbed
+           td Release Date
+          tbody
+           each movie in movies
+            tr
+             td= movie.title
+             td= movie.director
+             td= movie.producers
+             td= movie.actors
+             td= movie.language
+             td= movie.dubbed
+             td= movie.releaseDate
+             
+             

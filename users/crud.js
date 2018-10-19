@@ -42,19 +42,29 @@ router.get('/admin/catalog', oauth2.required, oauth2.adminRequired, (req, res, n
     if (err) {
       next(err);
       return;
-}
+    }
+
   getModel().listMagazines(10, req.query.pageToken, (err, entitiesMag, cursor) => {
     if (err) {
       next(err);
       return;
-  }
+    }
+
+  getModel().listMovies(10, req.query.pageToken, (err, entitiesMov, cursor) => {
+    if (err) {
+      next(err);
+      return;
+    }
+
   res.render('users/catalog.pug', {
     books: entitiesBook,
     Magazines: entitiesMag,
+    movies: entitiesMov,
     nextPageToken: cursor
   });
-});
-});
+  });
+  });
+  });
 /*
   getModel().listMagazines(10, req.query.pageToken, (err, entities, cursor) => {
     if (err) {
