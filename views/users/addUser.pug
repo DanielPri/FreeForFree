@@ -16,11 +16,7 @@ block content
                             td= user.profileName
                             td= user.profileID
                             td 
-                                .form-group
-                                    select(class="selectType", name="userType_"+ user.profileID, id=user.profileID)
-                                        option(value='3') guest
-                                        option(value='2') user
-                                        option(value='1') admin
+                                a(id="selectUser" href="/users/admin/editUser") Edit
                             
             if !users.length
                 p No Unregistered users found.

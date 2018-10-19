@@ -1,0 +1,19 @@
+extends adminBase.pug
+
+block content
+  
+  head
+  link(rel='stylesheet' href='/css_styles/catalog_styles.css' type='text/css' media='screen' charset='utf-8')
+
+  .container(id='catalogContent')
+    p
+      label(for='new-book') Add Book
+      input#new-book(type='text')
+      button Add
+    h3 Books
+    ul#booksList
+      li
+        label Harry Potter
+        input(type='text')
+        button.edit Edit
+        button.delete Delete

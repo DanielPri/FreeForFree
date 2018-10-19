@@ -61,8 +61,19 @@ function createUser (data, profileName, limit, cb) {
 }
 // [End create user]
 
-// [Find unregistered users]
-function findUnregisteredUser (userType, cb) {
+// [Find all users]
+function findUserByType (userType, cb) {
+  if(userType == 0){
+    connection.query(
+      'SELECT * FROM `user`',
+      (err, result) => {
+        if (err) {
+          cb(err);
+          return;
+        }
+        cb(null, result);
+    });
+  }
     connection.query(
       'SELECT * FROM `user` WHERE `userType` = ?', [userType],
       (err, result) => {
@@ -75,8 +86,10 @@ function findUnregisteredUser (userType, cb) {
   // }
   
 }
-// [End find unregistered users]
+// [End find all users]
 
+
+// [Find user by type]
 function chooseUserType (userType, cb) {
   var i=0;
   for(i=0; i<userType.length; i++){
@@ -89,9 +102,9 @@ function chooseUserType (userType, cb) {
         }
         cb(null, result);
     });
-  }
-  
+  } 
 }
+// [End of user by type]
 
 // [Start verify admin]
 function verifyAdmin (profileID, userType, cb) {
@@ -122,14 +135,29 @@ function setIsActive (tiny, userID, cb) {
 }
 // [End set user's activity state]
 
+// [edit user]
+function editUser(profileID, userType, cd){
+  connection.query(
+    'SELECT `profileName` FROM `user` WHERE `profileID` = ? AND `userType` = ?', [profileID, userType],
+    (err, result) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      cb(null, result);
+  });
+}
+//[end of edit user function]
+
 module.exports = {
   createSchema: createSchema,
   list: list,
   createUser: createUser,
   setIsActive: setIsActive,
   verifyAdmin: verifyAdmin,
-  findUnregisteredUser: findUnregisteredUser,
-  chooseUserType: chooseUserType
+  findUserByType: findUserByType,
+  chooseUserType: chooseUserType,
+  editUser: editUser
 };
 
 if (module === require.main) {

@@ -44,7 +44,7 @@ router.get('/admin/catalog', oauth2.required, oauth2.adminRequired, (req, res, n
 
 //--------Add User----------//
 router.get('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().findUnregisteredUser(3, (err, entities) => {
+  getModel().findUserByType(0, (err, entities) => {
     if (err) {
       next(err);
       return;
@@ -53,6 +53,20 @@ router.get('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, n
       users: entities
      });
   });
+});
+
+//--------EDit user----------//
+router.get('/admin/editUser', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().findUserByType(0,(err, entities) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/addUser.pug', {
+      users: entities
+     });
+  });
+  res.render('users/editUser.pug')
 });
 
 //--------Submit button to change user type status----------//
