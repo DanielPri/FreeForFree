@@ -56,11 +56,19 @@ router.get('/admin/catalog', oauth2.required, oauth2.adminRequired, (req, res, n
       return;
     }
 
+    getModel().listMusics(10, req.query.pageToken, (err, entitiesMus, cursor) => {
+      if (err) {
+        next(err);
+        return;
+      }
+
   res.render('users/catalog.pug', {
     books: entitiesBook,
     Magazines: entitiesMag,
     movies: entitiesMov,
+    musics: entitiesMus,
     nextPageToken: cursor
+  });
   });
   });
   });

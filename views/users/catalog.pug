@@ -94,5 +94,24 @@ html(lang="en")
              td= movie.language
              td= movie.dubbed
              td= movie.releaseDate
-             
+        br
+        header Musics
+        table(class='table')
+         thead
+          tr
+           td Type
+           td Title
+           td Artist
+           td Label
+           td Release Date
+           td ASIN 
+          tbody
+           each music in musics
+            tr
+             td= music.type
+             td= music.title
+             td= music.artist
+             td= music.label
+             td= music.releaseDate
+             td= music.ASIN
              

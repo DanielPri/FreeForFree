@@ -140,6 +140,23 @@ function listMovies (limit, token, cb) {
   );
 }
 //[End set listMovies]
+
+// [Start set listMusic]
+function listMusics (limit, token, cb) {
+  token = token ? parseInt(token, 10) : 0;
+  connection.query(
+    'SELECT * FROM `musics` LIMIT ? OFFSET ?', [limit, token],
+    (err, results) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      const hasMore = results.length === limit ? token + results.length : false;
+      cb(null, results, hasMore);
+    }
+  );
+}
+//[End set listMusics]
 module.exports = {
   createSchema: createSchema,
   list: list,
@@ -148,7 +165,8 @@ module.exports = {
   verifyAdmin: verifyAdmin,
   listBooks: listBooks,
   listMagazines: listMagazines,
-  listMovies: listMovies
+  listMovies: listMovies,
+  listMusics: listMusics
 };
 
 if (module === require.main) {
