@@ -36,27 +36,40 @@ router.get('/', (req, res, next) => {
   res.render('users/login.pug')
 });
 
+router.get('/admin/books', (req, res, next) => {
+  res.render('users/books.pug')
+});
+
+router.get('/admin/magazines', (req, res, next) => {
+  res.render('users/magazines.pug')
+});
+
+
 //--------Catalog----------//
 router.get('/admin/catalog', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().listBooks(10, req.query.pageToken, (err, entitiesBook, cursor) => {
+  res.render('users/catalog.pug')
+});
+/*
+router.get('/admin/catalog', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().listBooks(5, req.query.pageToken, (err, entitiesBook, cursor) => {
     if (err) {
       next(err);
       return;
     }
 
-  getModel().listMagazines(10, req.query.pageToken, (err, entitiesMag, cursor) => {
+  getModel().listMagazines(5, req.query.pageToken, (err, entitiesMag, cursor) => {
     if (err) {
       next(err);
       return;
     }
 
-  getModel().listMovies(10, req.query.pageToken, (err, entitiesMov, cursor) => {
+  getModel().listMovies(5, req.query.pageToken, (err, entitiesMov, cursor) => {
     if (err) {
       next(err);
       return;
     }
 
-    getModel().listMusics(10, req.query.pageToken, (err, entitiesMus, cursor) => {
+    getModel().listMusics(5, req.query.pageToken, (err, entitiesMus, cursor) => {
       if (err) {
         next(err);
         return;
@@ -73,19 +86,21 @@ router.get('/admin/catalog', oauth2.required, oauth2.adminRequired, (req, res, n
   });
   });
   });
-/*
-  getModel().listMagazines(10, req.query.pageToken, (err, entities, cursor) => {
+});
+*/
+router.get('/admin/books', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().listBooks(10, req.query.pageToken, (err, entities, cursor) => {
     if (err) {
       next(err);
       return;
   }
-  res.render('users/catalog.pug', {
-    Magazines: entities,
+  res.render('users/books.pug', {
+    books: entities,
     nextPageToken: cursor
   });
 });
-*/
 });
+
 //--------//
 
 /**
