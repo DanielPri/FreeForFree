@@ -36,15 +36,6 @@ router.get('/', (req, res, next) => {
   res.render('users/login.pug')
 });
 
-router.get('/admin/books', (req, res, next) => {
-  res.render('users/books.pug')
-});
-
-router.get('/admin/magazines', (req, res, next) => {
-  res.render('users/magazines.pug')
-});
-
-
 //--------Catalog----------//
 router.get('/admin/catalog', oauth2.required, oauth2.adminRequired, (req, res, next) => {
   res.render('users/catalog.pug')
@@ -100,7 +91,18 @@ router.get('/admin/books', oauth2.required, oauth2.adminRequired, (req, res, nex
   });
 });
 });
-
+router.get('/admin/magazines', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().listMagazines(10, req.query.pageToken, (err, entities, cursor) => {
+    if (err) {
+      next(err);
+      return;
+  }
+  res.render('users/magazines.pug', {
+    magazines: entities,
+    nextPageToken: cursor
+  });
+});
+});
 //--------//
 
 /**

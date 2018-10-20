@@ -21,7 +21,7 @@ html(lang="en")
               li
                 a(href="/users/admin/books") Books
               li 
-                a(href="/users/admin/magazine") Magazines
+                a(href="/users/admin/magazines") Magazines
         p.navbar-text.navbar-right
           if profile
             span #{profile.displayName} &nbsp;
@@ -40,9 +40,8 @@ html(lang="en")
            td Publisher
            td ISBN-10
            td ISBN-13
-         tbody
-         
-          each magainze in Magazines
+         tbody   
+          each magazine in magazines
            tr
               td= magazine.title
               td= magazine.language
