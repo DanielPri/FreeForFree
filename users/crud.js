@@ -40,45 +40,7 @@ router.get('/', (req, res, next) => {
 router.get('/admin/catalog', oauth2.required, oauth2.adminRequired, (req, res, next) => {
   res.render('users/catalog.pug')
 });
-/*
-router.get('/admin/catalog', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().listBooks(5, req.query.pageToken, (err, entitiesBook, cursor) => {
-    if (err) {
-      next(err);
-      return;
-    }
 
-  getModel().listMagazines(5, req.query.pageToken, (err, entitiesMag, cursor) => {
-    if (err) {
-      next(err);
-      return;
-    }
-
-  getModel().listMovies(5, req.query.pageToken, (err, entitiesMov, cursor) => {
-    if (err) {
-      next(err);
-      return;
-    }
-
-    getModel().listMusics(5, req.query.pageToken, (err, entitiesMus, cursor) => {
-      if (err) {
-        next(err);
-        return;
-      }
-
-  res.render('users/catalog.pug', {
-    books: entitiesBook,
-    Magazines: entitiesMag,
-    movies: entitiesMov,
-    musics: entitiesMus,
-    nextPageToken: cursor
-  });
-  });
-  });
-  });
-  });
-});
-*/
 router.get('/admin/books', oauth2.required, oauth2.adminRequired, (req, res, next) => {
   getModel().listBooks(10, req.query.pageToken, (err, entities, cursor) => {
     if (err) {
@@ -103,7 +65,64 @@ router.get('/admin/magazines', oauth2.required, oauth2.adminRequired, (req, res,
   });
 });
 });
+router.get('/admin/movies', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().listMovies(10, req.query.pageToken, (err, entities, cursor) => {
+    if (err) {
+      next(err);
+      return;
+  }
+  res.render('users/movies.pug', {
+    movies: entities,
+    nextPageToken: cursor
+  });
+});
+});
+router.get('/admin/music', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().listMusics(10, req.query.pageToken, (err, entities, cursor) => {
+    if (err) {
+      next(err);
+      return;
+  }
+  res.render('users/music.pug', {
+    musics: entities,
+    nextPageToken: cursor
+  });
+});
+});
 //--------//
+
+/**
+
+ * Display a page for creating a book.
+ */
+// [START add_book]
+router.get('/admin/formBook', oauth2.required, oauth2.adminRequired, (req, res) => {
+  res.render('users/formBook.pug', {
+    book: {},
+    action: 'Add'
+  });
+});
+// [END add_book]
+
+/**
+ * POST /books/add
+ *
+ * Create a book.
+ */
+// [START add_post]
+router.post('/admin/formBook', (req, res, next) => {
+  const data = req.body;
+
+  // Save the data to the database.
+  getModel().createBook(data, (err, savedData) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.redirect(`${req.baseUrl}/${savedData.id}`);
+  });
+});
+// [END add_post]
 
 /**
  * GET /users

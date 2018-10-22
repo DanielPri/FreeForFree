@@ -157,6 +157,22 @@ function listMusics (limit, token, cb) {
   );
 }
 //[End set listMusics]
+
+// [START create]
+function createBook (data, cb) {
+  connection.query(
+    'INSERT INTO `books` SET ?', data,
+    (err, res) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      read(res.insertId, cb);
+    }
+  );
+}
+// [END create]
+
 module.exports = {
   createSchema: createSchema,
   list: list,
@@ -166,7 +182,8 @@ module.exports = {
   listBooks: listBooks,
   listMagazines: listMagazines,
   listMovies: listMovies,
-  listMusics: listMusics
+  listMusics: listMusics,
+  createBook: createBook
 };
 
 if (module === require.main) {
@@ -201,9 +218,13 @@ function createSchema (config) {
       \`author\` VARCHAR(255) NULL,
       \`publishedDate\` VARCHAR(255) NULL,
       \`imageUrl\` VARCHAR(255) NULL,
-      \`description\` TEXT NULL,
+      \`language\` TEXT NULL,
       \`createdBy\` VARCHAR(255) NULL,
       \`createdById\` VARCHAR(255) NULL,
+      \`format\` TEXT NULL,
+      \`pages\` INT(10) NULL,
+      \`ISBN10\` TEXT NULL,
+      \`ISBN10\` TEXT NULL,
     PRIMARY KEY (\`id\`));`,
     (err) => {
       if (err) {

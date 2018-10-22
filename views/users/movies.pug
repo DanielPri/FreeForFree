@@ -37,32 +37,28 @@ html(lang="en")
 
       block content
         br
-        header Books
+        header Movies
         table(class='table')
          thead
           tr
-           td
            td Title
-           td Format
-           td Pages
+           td Director
+           td Producers
+           td Actors
            td Language
-           td Author
-           td Published
-           td ISBN-10
-           td ISBN-13
+           td Subtitles
+           td Dubbed
+           td Run Time
          tbody
-          each book in books
+          each movie in movies
            tr
-            td
-             .media-left
-              img(Id="bookImage" src=book.imageUrl)
-            td= book.title
-            td= book.format
-            td= book.pages
-            td= book.language
-            td= book.author
-            td= book.publishedDate
-            td= book.ISBN10
-            td= book.ISBN13
-      if !books.length
-        p No books found.
+            td= movie.title
+            td= movie.director
+            td= movie.producers
+            td= movie.actors
+            td= movie.language
+            td= movie.subtitles
+            td= movie.dubbed
+            td= movie.runTime
+      if !movies.length
+        p No movies found.

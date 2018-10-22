@@ -1,0 +1,120 @@
+doctype html
+html(lang="en")
+  head
+    title FreeForFree - Library Management
+    meta(charset='utf-8')
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    link(rel="stylesheet", href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css")
+    link(rel='stylesheet' href='/css_styles/catalog_styles.css' type='text/css' media='screen' charset='utf-8')
+  body
+    .navbar.navbar-default
+      .container
+        .navbar-header
+          .navbar-brand FreeForFree
+
+        ul.nav.navbar-nav
+          li
+            a(href="/users/admin/list") Active Users
+          li
+            a(href="/users/admin/catalog") Catalog
+            ul.nav.navbar-nav
+              li
+                a(href="/users/admin/books") Books
+              li 
+                a(href="/users/admin/magazines") Magazines
+              li 
+                a(href="/users/admin/movies") Movies
+              li 
+                a(href="/users/admin/music") Music
+        p.navbar-text.navbar-right
+          if profile
+            span #{profile.displayName} &nbsp;
+              a(href=logout) (logout)
+
+    .container
+
+      block content
+        br
+        header Music
+        table(class='table')
+         thead
+          tr
+           td Title
+           td Type
+           td Artist
+           td Label
+           td Release Date
+           td ASIN
+         tbody
+          each music in musics
+           tr
+            td= music.title
+            td= music.type
+            td= music.artist
+            td= music.label
+            td= music.author
+            td= music.releaseDate
+            td= music.ASIN
+      if !musics.length
+        p No musics found.
+//        br
+        header Magazines
+        table(class='table')
+         thead
+          tr
+           td Title
+           td Language
+           td Publisher
+           td ISBN-10
+           td ISBN-13
+          tbody
+           each magazine in Magazines
+            tr
+             td= magazine.title
+             td= magazine.language
+             td= magazine.publisher
+             td= magazine.ISBN10
+             td= magazine.ISBN13
+        br
+        header Movies
+        table(class='table')
+         thead
+          tr
+           td Title
+           td Director
+           td Producers
+           td Actors
+           td Language
+           td Dubbed
+           td Release Date
+          tbody
+           each movie in movies
+            tr
+             td= movie.title
+             td= movie.director
+             td= movie.producers
+             td= movie.actors
+             td= movie.language
+             td= movie.dubbed
+             td= movie.releaseDate
+        br
+        header Music
+        table(class='table')
+         thead
+          tr
+           td Type
+           td Title
+           td Artist
+           td Label
+           td Release Date
+           td ASIN 
+          tbody
+           each music in musics
+            tr
+             td= music.type
+             td= music.title
+             td= music.artist
+             td= music.label
+             td= music.releaseDate
+             td= music.ASIN
+             
