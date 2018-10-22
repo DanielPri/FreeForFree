@@ -173,6 +173,23 @@ function createBook (data, cb) {
 }
 // [END create]
 
+function read (id, cb) {
+  connection.query(
+    'SELECT * FROM `books` WHERE `id` = ?', id, (err, results) => {
+      if (!err && !results.length) {
+        err = {
+          code: 404,
+          message: 'Not found'
+        };
+      }
+      if (err) {
+        cb(err);
+        return;
+      }
+      cb(null, results[0]);
+    });
+}
+
 module.exports = {
   createSchema: createSchema,
   list: list,
@@ -183,7 +200,8 @@ module.exports = {
   listMagazines: listMagazines,
   listMovies: listMovies,
   listMusics: listMusics,
-  createBook: createBook
+  createBook: createBook,
+  read: read
 };
 
 if (module === require.main) {
