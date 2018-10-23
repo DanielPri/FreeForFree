@@ -111,8 +111,12 @@ router.get('/admin/formBook', oauth2.required, oauth2.adminRequired, (req, res) 
  */
 // [START add_post]
 router.post('/admin/formBook', (req, res, next) => {
-  const data = req.body;
 
+  const data = req.body;
+  console.log("hello1");
+  console.log(req.body);
+  console.log(res.body);
+  console.log("hello2");
   // Save the data to the database.
   getModel().createBook(data, (err, savedData) => {
     if (err) {
