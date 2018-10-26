@@ -26,49 +26,31 @@ html(lang="en")
                 a(href="/users/admin/movies") Movies
               li 
                 a(href="/users/admin/music") Music
-          li 
-            a(href="/users/admin/formBook") Add Book
-          li 
-            a(href="/users/admin/formMagazine") Add Magazine
-          li 
-            a(href="/users/admin/formMovie") Add Movie
-          li 
-            a(href="/users/admin/formMusic") Add Music
         p.navbar-text.navbar-right
           if profile
             span #{profile.displayName} &nbsp;
               a(href=logout) (logout)
 
     .container
-
       block content
-        br
-        header Books
-        table(class='table')
-         thead
-          tr
-           td
-           td Title
-           td Format
-           td Pages
-           td Language
-           td Author
-           td Published
-           td ISBN-10
-           td ISBN-13
-         tbody
-          each book in books
-           tr
-            td
-             .media-left
-              img(Id="bookImage" src=book.imageUrl)
-            td= book.title
-            td= book.format
-            td= book.pages
-            td= book.language
-            td= book.author
-            td= book.publishedDate
-            td= book.ISBN10
-            td= book.ISBN13
-      if !books.length
-        p No books found.
+        h3 #{action} Magazine
+        form(method="POST", enctype="multipart/form-data")
+          .form-group
+            label(for="title") Title
+            input.form-control(type="text", name="Title", id="title", value=magazine.title)
+          .form-group
+            label(for="language") Language
+            input.form-control(type="text", name="Language", id="language", value=magazine.language)
+          .form-group
+            label(for="publisher") Publisher
+            input.form-control(type="text", name="Publisher", id="publisher", value=magazine.publisher)
+          .form-group
+            label(for="ISBN10") ISBN-10
+            input.form-control(type="text", name="ISBN10", id="ISBN10", value=magazine.ISBN10)
+          .form-group
+            label(for="ISBN13") ISBN-13
+            input.form-control(type="text", name="ISBN13", id="ISBN13", value=magazine.ISBN13)
+          .form-group
+            label(for="image") Cover Image
+            input.form-control(type="file", name="image", id="image")
+          button.btn.btn-success(type="submit") Save

@@ -172,14 +172,35 @@ function createBook (data, cb) {
 }
 // [END createBook]
 
+
 // [START createMagazines]
-
-
+function createMagazine (data, cb) {
+  connection.query(
+    'INSERT INTO `Magazines` SET ?', data,
+    (err, result) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      cb(null, result);
+    });
+}
 
 
 // [END createMagazines]
 
 // [START createMovies]
+function createMovie (data, cb) {
+  connection.query(
+    'INSERT INTO `movies` SET ?', data,
+    (err, result) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      cb(null, result);
+    });
+}
 
 
 
@@ -209,7 +230,10 @@ module.exports = {
   listMagazines: listMagazines,
   listMovies: listMovies,
   listMusics: listMusics,
-  createBook: createBook
+  createBook: createBook,
+  createmagazine: createMagazine,
+  createmovie: createMovie,
+  createMusic: createMusic
 };
 
 if (module === require.main) {
