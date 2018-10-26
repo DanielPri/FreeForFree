@@ -231,8 +231,8 @@ module.exports = {
   listMovies: listMovies,
   listMusics: listMusics,
   createBook: createBook,
-  createmagazine: createMagazine,
-  createmovie: createMovie,
+  createMagazine: createMagazine,
+  createMovie: createMovie,
   createMusic: createMusic
 };
 
