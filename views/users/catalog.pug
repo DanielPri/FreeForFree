@@ -1,4 +1,6 @@
-doctype html
+
+//extends adminBase.pug
+
 html(lang="en")
   head
     title FreeForFree - Library Management
@@ -11,7 +13,6 @@ html(lang="en")
       .container
         .navbar-header
           .navbar-brand FreeForFree
-
         ul.nav.navbar-nav
           li
             a(href="/users/admin/list") Active Users
@@ -22,14 +23,18 @@ html(lang="en")
                 a(href="/users/admin/books") Books
               li 
                 a(href="/users/admin/magazines") Magazines
-              li
+              li 
                 a(href="/users/admin/movies") Movies
               li 
                 a(href="/users/admin/music") Music
           li 
             a(href="/users/admin/formBook") Add Book
           li 
-            a(href="/users/admin/formMusic") Add Book
+            a(href="/users/admin/formMagazine") Add Magazine
+          li 
+            a(href="/users/admin/formMovie") Add Movie
+          li 
+            a(href="/users/admin/formMusic") Add Music
         p.navbar-text.navbar-right
           if profile
             span #{profile.displayName} &nbsp;
