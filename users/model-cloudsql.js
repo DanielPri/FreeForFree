@@ -90,12 +90,150 @@ function setIsActive (tiny, userID, cb) {
 }
 // [End set user's activity state]
 
+// [Start set listBooks]
+function listBooks (limit, token, cb) {
+  token = token ? parseInt(token, 10) : 0;
+  connection.query(
+    'SELECT * FROM `books` LIMIT ? OFFSET ?', [limit, token],
+    (err, results) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      const hasMore = results.length === limit ? token + results.length : false;
+      cb(null, results, hasMore);
+    }
+  );
+}
+//[End set listBooks]
+
+// [Start set listMagazines]
+function listMagazines (limit, token, cb) {
+  token = token ? parseInt(token, 10) : 0;
+  connection.query(
+    'SELECT * FROM `Magazines` LIMIT ? OFFSET ?', [limit, token],
+    (err, results) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      const hasMore = results.length === limit ? token + results.length : false;
+      cb(null, results, hasMore);
+    }
+  );
+}
+//[End set listMagazines]
+
+// [Start set listMovies]
+function listMovies (limit, token, cb) {
+  token = token ? parseInt(token, 10) : 0;
+  connection.query(
+    'SELECT * FROM `movies` LIMIT ? OFFSET ?', [limit, token],
+    (err, results) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      const hasMore = results.length === limit ? token + results.length : false;
+      cb(null, results, hasMore);
+    }
+  );
+}
+//[End set listMovies]
+
+// [Start set listMusics]
+function listMusics (limit, token, cb) {
+  token = token ? parseInt(token, 10) : 0;
+  connection.query(
+    'SELECT * FROM `musics` LIMIT ? OFFSET ?', [limit, token],
+    (err, results) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      const hasMore = results.length === limit ? token + results.length : false;
+      cb(null, results, hasMore);
+    }
+  );
+}
+//[End set listMusics]
+
+// [START createBook]
+function createBook (data, cb) {
+  connection.query(
+    'INSERT INTO `books` SET ?', data,
+    (err, result) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      cb(null, result);
+    });
+}
+// [END createBook]
+
+
+// [START createMagazines]
+function createMagazine (data, cb) {
+  connection.query(
+    'INSERT INTO `Magazines` SET ?', data,
+    (err, result) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      cb(null, result);
+    });
+}
+
+
+// [END createMagazines]
+
+// [START createMovies]
+function createMovie (data, cb) {
+  connection.query(
+    'INSERT INTO `movies` SET ?', data,
+    (err, result) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      cb(null, result);
+    });
+}
+
+
+
+// [END createMovies]
+
+// [START createMusic]
+function createMusic (data, cb) {
+  connection.query(
+    'INSERT INTO `musics` SET ?', data,
+    (err, result) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      cb(null, result);
+    });
+}
+// [END createMusic]
+
 module.exports = {
   createSchema: createSchema,
   list: list,
   createUser: createUser,
   setIsActive: setIsActive,
-  verifyAdmin: verifyAdmin
+  verifyAdmin: verifyAdmin,
+  listBooks: listBooks,
+  listMagazines: listMagazines,
+  listMovies: listMovies,
+  listMusics: listMusics,
+  createBook: createBook,
+  createmagazine: createMagazine,
+  createmovie: createMovie,
+  createMusic: createMusic
 };
 
 if (module === require.main) {
@@ -130,9 +268,13 @@ function createSchema (config) {
       \`author\` VARCHAR(255) NULL,
       \`publishedDate\` VARCHAR(255) NULL,
       \`imageUrl\` VARCHAR(255) NULL,
-      \`description\` TEXT NULL,
+      \`language\` TEXT NULL,
       \`createdBy\` VARCHAR(255) NULL,
       \`createdById\` VARCHAR(255) NULL,
+      \`format\` TEXT NULL,
+      \`pages\` INT(10) NULL,
+      \`ISBN10\` TEXT NULL,
+      \`ISBN10\` TEXT NULL,
     PRIMARY KEY (\`id\`));`,
     (err) => {
       if (err) {

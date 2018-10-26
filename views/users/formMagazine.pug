@@ -1,0 +1,56 @@
+doctype html
+html(lang="en")
+  head
+    title FreeForFree - Library Management
+    meta(charset='utf-8')
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    link(rel="stylesheet", href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css")
+    link(rel='stylesheet' href='/css_styles/catalog_styles.css' type='text/css' media='screen' charset='utf-8')
+  body
+    .navbar.navbar-default
+      .container
+        .navbar-header
+          .navbar-brand FreeForFree
+
+        ul.nav.navbar-nav
+          li
+            a(href="/users/admin/list") Active Users
+          li
+            a(href="/users/admin/catalog") Catalog
+            ul.nav.navbar-nav
+              li
+                a(href="/users/admin/books") Books
+              li 
+                a(href="/users/admin/magazines") Magazines
+              li 
+                a(href="/users/admin/movies") Movies
+              li 
+                a(href="/users/admin/music") Music
+        p.navbar-text.navbar-right
+          if profile
+            span #{profile.displayName} &nbsp;
+              a(href=logout) (logout)
+
+    .container
+      block content
+        h3 #{action} Magazine
+        form(method="POST", enctype="multipart/form-data")
+          .form-group
+            label(for="title") Title
+            input.form-control(type="text", name="Title", id="title", value=magazine.title)
+          .form-group
+            label(for="language") Language
+            input.form-control(type="text", name="Language", id="language", value=magazine.language)
+          .form-group
+            label(for="publisher") Publisher
+            input.form-control(type="text", name="Publisher", id="publisher", value=magazine.publisher)
+          .form-group
+            label(for="ISBN10") ISBN-10
+            input.form-control(type="text", name="ISBN10", id="ISBN10", value=magazine.ISBN10)
+          .form-group
+            label(for="ISBN13") ISBN-13
+            input.form-control(type="text", name="ISBN13", id="ISBN13", value=magazine.ISBN13)
+          .form-group
+            label(for="image") Cover Image
+            input.form-control(type="file", name="image", id="image")
+          button.btn.btn-success(type="submit") Save

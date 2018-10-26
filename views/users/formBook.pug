@@ -1,0 +1,65 @@
+doctype html
+html(lang="en")
+  head
+    title FreeForFree - Library Management
+    meta(charset='utf-8')
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    link(rel="stylesheet", href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css")
+    link(rel='stylesheet' href='/css_styles/catalog_styles.css' type='text/css' media='screen' charset='utf-8')
+  body
+    .navbar.navbar-default
+      .container
+        .navbar-header
+          .navbar-brand FreeForFree
+
+        ul.nav.navbar-nav
+          li
+            a(href="/users/admin/list") Active Users
+          li
+            a(href="/users/admin/catalog") Catalog
+            ul.nav.navbar-nav
+              li
+                a(href="/users/admin/books") Books
+              li 
+                a(href="/users/admin/magazines") Magazines
+              li 
+                a(href="/users/admin/movies") Movies
+              li 
+                a(href="/users/admin/music") Music
+        p.navbar-text.navbar-right
+          if profile
+            span #{profile.displayName} &nbsp;
+              a(href=logout) (logout)
+
+    .container
+      block content
+        h3 #{action} Book
+        form(method="POST", enctype="multipart/form-data")
+          .form-group
+            label(for="title") Title
+            input.form-control(type="text", name="Title", id="title", value=book.title)
+          .form-group
+            label(for="author") Author
+            input.form-control(type="text", name="Author", id="author", value=book.author)
+          .form-group
+            label(for="publishedDate") Date Published
+            input.form-control(type="text", name="PublishedDate", id="publishedDate", value=book.publishedDate)
+          .form-group
+            label(for="language") Language
+            input.form-control(type="text", name="Language", id="language", value=book.language)
+          .form-group
+            label(for="format") Format
+            input.form-control(type="text", name="Format", id="format", value=book.format)
+          .form-group
+            label(for="pages") Pages
+            input.form-control(type="INT", name="Pages", id="pages", value=book.pages)
+          .form-group
+            label(for="ISBN10") ISBN-10
+            input.form-control(type="text", name="ISBN10", id="ISBN10", value=book.ISBN10)
+          .form-group
+            label(for="ISBN13") ISBN-13
+            input.form-control(type="text", name="ISBN13", id="ISBN13", value=book.ISBN13)
+          .form-group
+            label(for="image") Cover Image
+            input.form-control(type="file", name="image", id="image")
+          button.btn.btn-success(type="submit") Save
