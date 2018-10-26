@@ -14,17 +14,13 @@ block content
                     each user in users
                         tr
                             td= user.profileName
-                            td= user.profileID
+                            td(name="userID")= user.profileID
                             td 
-<<<<<<< HEAD
                                 .form-group
                                     select(class="selectType", name="userType", id=user.profileID)
-                                        option(value='3') guest
-                                        option(value='2') user
-                                        option(value='1') admin
-=======
-                                a(id="selectUser" href="/users/admin/editUser") Edit
->>>>>>> 7e9a01f383403f5f149294d930d4e1f60e4fe7f2
+                                        option(value='3 id='+user.profileID) guest
+                                        option(value='2 id='+user.profileID) user
+                                        option(value='1 id='+user.profileID) admin
                             
             if !users.length
                 p No Unregistered users found.

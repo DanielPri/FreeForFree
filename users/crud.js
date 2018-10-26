@@ -22,10 +22,15 @@ function getModel () {
 }
 
 const router = express.Router();
+//////////////////////////////////////////////
+// var app     = express();
+// app.use(bodyParser.urlencoded({ extended: true })); 
+////////////
 
 // Use the oauth middleware to automatically get the user's profile
 // information and expose login/logout URLs to templates.
 router.use(oauth2.template);
+router.use(bodyParser.urlencoded({ extended: true }));
 
 // Set Content-Type for all responses for these routes
 router.use((req, res, next) => {
@@ -44,7 +49,7 @@ router.get('/admin/catalog', oauth2.required, oauth2.adminRequired, (req, res, n
 
 //--------Add User----------//
 router.get('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().findUserByType(0, (err, entities) => {
+  getModel().findUnregisteredUser(3, (err, entities) => {
     if (err) {
       next(err);
       return;
@@ -56,18 +61,18 @@ router.get('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, n
 });
 
 //--------EDit user----------//
-router.get('/admin/editUser', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().findUserByType(0,(err, entities) => {
-    if (err) {
-      next(err);
-      return;
-    }
-    res.render('users/addUser.pug', {
-      users: entities
-     });
-  });
-  res.render('users/editUser.pug')
-});
+// router.get('/admin/editUser', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+//   getModel().findUserByType(0,(err, entities) => {
+//     if (err) {
+//       next(err);
+//       return;
+//     }
+//     res.render('users/addUser.pug', {
+//       users: entities
+//      });
+//   });
+//   res.render('users/editUser.pug')
+// });
 
 //--------Submit button to change user type status----------//
 // const jsdom = require("jsdom");
@@ -77,9 +82,9 @@ router.get('/admin/editUser', oauth2.required, oauth2.adminRequired, (req, res, 
 router.post('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, next) => { 
   // var allSelectedElements= getUserType();
   console.log("---------------------------------begining----------------------------------------------");
-  console.log(req.body);
+  console.log(req.body.userType);
   console.log("-----------------------------------end-------------------------------------------------");
-  getModel().chooseUserType(allSelectedElements, (err, entities) => {
+  getModel().chooseUserType(req.body.userType, (err, entities) => {
     if (err) {
 
       next(err);
