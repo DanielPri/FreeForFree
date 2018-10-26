@@ -169,19 +169,6 @@ router.post('/admin/formMagazine', images.multer.single('image'), images.sendUpl
 // [END add_post]
 
 /**
-
- * Display a page for creating a magazines.
- */
-// [START add_magazine]
-router.get('/admin/formMagazine', oauth2.required, oauth2.adminRequired, (req, res) => {
-  res.render('users/formMagaine.pug', {
-    magazine: {},
-    action: 'Add'
-  });
-});
-// [END add_magazine]
-
-/**
  * POST /movie/add
  *
  * Create a movie.
@@ -218,6 +205,15 @@ router.get('/admin/formMovie', oauth2.required, oauth2.adminRequired, (req, res)
   });
 });
 // [END add_movie]
+
+// [START add_book]
+router.get('/admin/formMusic', oauth2.required, oauth2.adminRequired, (req, res) => {
+  res.render('users/formMusic.pug', {
+    music: {},
+    action: 'Add'
+  });
+});
+// [END add_book]
 
 /**
  * POST /music/add
