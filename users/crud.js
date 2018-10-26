@@ -131,6 +131,45 @@ router.post('/admin/formBook', images.multer.single('image'), images.sendUploadT
 // [END add_post]
 
 /**
+
+ * Display a page for creating a book.
+ */
+// [START add_music]
+router.get('/admin/formMusic', oauth2.required, oauth2.adminRequired, (req, res) => {
+  res.render('users/formMusic.pug', {
+    music: {},
+    action: 'Add'
+  });
+});
+// [END add_music]
+
+/**
+ * POST /music/add
+ *
+ * Create a music.
+ */
+// [START add_post]
+router.post('/admin/formMusic', images.multer.single('image'), images.sendUploadToGCS, (req, res, next) => {
+  const data = req.body;
+  // Was an image uploaded? If so, we'll use its public URL
+  // in cloud storage.
+  if (req.file && req.file.cloudStoragePublicUrl) {
+    data.imageUrl = req.file.cloudStoragePublicUrl;
+  }
+
+  // Save the data to the database.
+  getModel().createMusic(data, (err, savedData) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.redirect(`/users/admin/music`);
+  });
+});
+// [END add_post]
+
+
+/**
  * GET /users
  *
  * Display a page of users (up to ten at a time).

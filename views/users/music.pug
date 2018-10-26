@@ -28,6 +28,8 @@ html(lang="en")
                 a(href="/users/admin/music") Music
           li 
             a(href="/users/admin/formBook") Add Book
+          li 
+            a(href="/users/admin/formMusic") Add Music
         p.navbar-text.navbar-right
           if profile
             span #{profile.displayName} &nbsp;
@@ -54,69 +56,7 @@ html(lang="en")
             td= music.type
             td= music.artist
             td= music.label
-            td= music.author
             td= music.releaseDate
             td= music.ASIN
       if !musics.length
         p No musics found.
-//        br
-        header Magazines
-        table(class='table')
-         thead
-          tr
-           td Title
-           td Language
-           td Publisher
-           td ISBN-10
-           td ISBN-13
-          tbody
-           each magazine in Magazines
-            tr
-             td= magazine.title
-             td= magazine.language
-             td= magazine.publisher
-             td= magazine.ISBN10
-             td= magazine.ISBN13
-        br
-        header Movies
-        table(class='table')
-         thead
-          tr
-           td Title
-           td Director
-           td Producers
-           td Actors
-           td Language
-           td Dubbed
-           td Release Date
-          tbody
-           each movie in movies
-            tr
-             td= movie.title
-             td= movie.director
-             td= movie.producers
-             td= movie.actors
-             td= movie.language
-             td= movie.dubbed
-             td= movie.releaseDate
-        br
-        header Music
-        table(class='table')
-         thead
-          tr
-           td Type
-           td Title
-           td Artist
-           td Label
-           td Release Date
-           td ASIN 
-          tbody
-           each music in musics
-            tr
-             td= music.type
-             td= music.title
-             td= music.artist
-             td= music.label
-             td= music.releaseDate
-             td= music.ASIN
-             

@@ -172,6 +172,33 @@ function createBook (data, cb) {
 }
 // [END createBook]
 
+// [START createMagazines]
+
+
+
+
+// [END createMagazines]
+
+// [START createMovies]
+
+
+
+// [END createMovies]
+
+// [START createMusic]
+function createMusic (data, cb) {
+  connection.query(
+    'INSERT INTO `musics` SET ?', data,
+    (err, result) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      cb(null, result);
+    });
+}
+// [END createMusic]
+
 module.exports = {
   createSchema: createSchema,
   list: list,

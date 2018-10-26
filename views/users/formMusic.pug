@@ -1,0 +1,59 @@
+doctype html
+html(lang="en")
+  head
+    title FreeForFree - Library Management
+    meta(charset='utf-8')
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    link(rel="stylesheet", href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css")
+    link(rel='stylesheet' href='/css_styles/catalog_styles.css' type='text/css' media='screen' charset='utf-8')
+  body
+    .navbar.navbar-default
+      .container
+        .navbar-header
+          .navbar-brand FreeForFree
+
+        ul.nav.navbar-nav
+          li
+            a(href="/users/admin/list") Active Users
+          li
+            a(href="/users/admin/catalog") Catalog
+            ul.nav.navbar-nav
+              li
+                a(href="/users/admin/books") Books
+              li 
+                a(href="/users/admin/magazines") Magazines
+              li 
+                a(href="/users/admin/movies") Movies
+              li 
+                a(href="/users/admin/music") Music
+        p.navbar-text.navbar-right
+          if profile
+            span #{profile.displayName} &nbsp;
+              a(href=logout) (logout)
+
+    .container
+      block content
+        h3 #{action} Music
+        form(method="POST", enctype="multipart/form-data")
+          .form-group
+            label(for="title") Title
+            input.form-control(type="text", name="Title", id="title", value=music.title)
+          .form-group
+            label(for="author") Type
+            input.form-control(type="text", name="Type", id="type", value=music.type)
+          .form-group
+            label(for="artist") Artist
+            input.form-control(type="text", name="PublishedDate", id="publishedDate", value=music.publishedDate)
+          .form-group
+            label(for="label") Label
+            input.form-control(type="text", name="Language", id="language", value=music.label)
+          .form-group
+            label(for="releaseDate") Release Date
+            input.form-control(type="text", name="Format", id="releaseDate", value=music.releaseDate)
+          .form-group
+            label(for="ASIN") ASIN
+            input.form-control(type="text", name="ASIN", id="ASIN", value=music.ASIN)
+          .form-group
+            label(for="image") Cover Image
+            input.form-control(type="file", name="image", id="image")
+          button.btn.btn-success(type="submit") Save
