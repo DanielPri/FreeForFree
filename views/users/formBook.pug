@@ -26,8 +26,6 @@ html(lang="en")
                 a(href="/users/admin/movies") Movies
               li 
                 a(href="/users/admin/music") Music
-        li 
-          a(href="/users/admin/formBook") Add Book
         p.navbar-text.navbar-right
           if profile
             span #{profile.displayName} &nbsp;
@@ -36,7 +34,7 @@ html(lang="en")
     .container
       block content
         h3 #{action} Book
-        form(method="POST")
+        form(method="POST", enctype="multipart/form-data")
           .form-group
             label(for="title") Title
             input.form-control(type="text", name="Title", id="title", value=book.title)
@@ -62,4 +60,6 @@ html(lang="en")
             label(for="ISBN13") ISBN-13
             input.form-control(type="text", name="ISBN13", id="ISBN13", value=book.ISBN13)
           .form-group
+            label(for="image") Cover Image
+            input.form-control(type="file", name="image", id="image")
           button.btn.btn-success(type="submit") Save

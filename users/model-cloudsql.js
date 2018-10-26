@@ -141,7 +141,7 @@ function listMovies (limit, token, cb) {
 }
 //[End set listMovies]
 
-// [Start set listMusic]
+// [Start set listMusics]
 function listMusics (limit, token, cb) {
   token = token ? parseInt(token, 10) : 0;
   connection.query(
@@ -158,37 +158,19 @@ function listMusics (limit, token, cb) {
 }
 //[End set listMusics]
 
-// [START create]
+// [START createBook]
 function createBook (data, cb) {
   connection.query(
     'INSERT INTO `books` SET ?', data,
-    (err, res) => {
+    (err, result) => {
       if (err) {
         cb(err);
         return;
       }
-      read(res.insertId, cb);
-    }
-  );
-}
-// [END create]
-
-function read (id, cb) {
-  connection.query(
-    'SELECT * FROM `books` WHERE `id` = ?', id, (err, results) => {
-      if (!err && !results.length) {
-        err = {
-          code: 404,
-          message: 'Not found'
-        };
-      }
-      if (err) {
-        cb(err);
-        return;
-      }
-      cb(null, results[0]);
+      cb(null, result);
     });
 }
+// [END createBook]
 
 module.exports = {
   createSchema: createSchema,
@@ -200,8 +182,7 @@ module.exports = {
   listMagazines: listMagazines,
   listMovies: listMovies,
   listMusics: listMusics,
-  createBook: createBook,
-  read: read
+  createBook: createBook
 };
 
 if (module === require.main) {

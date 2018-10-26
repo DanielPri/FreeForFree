@@ -14,6 +14,7 @@
 'use strict';
 
 const express = require('express');
+const images = require('../lib/images');
 const oauth2 = require('../lib/oauth2');
 
 function getModel () {
@@ -110,20 +111,21 @@ router.get('/admin/formBook', oauth2.required, oauth2.adminRequired, (req, res) 
  * Create a book.
  */
 // [START add_post]
-router.post('/admin/formBook', (req, res, next) => {
-
+router.post('/admin/formBook', images.multer.single('image'), images.sendUploadToGCS, (req, res, next) => {
   const data = req.body;
-  console.log("hello1");
-  console.log(req.body);
-  console.log(res.body);
-  console.log("hello2");
+  // Was an image uploaded? If so, we'll use its public URL
+  // in cloud storage.
+  if (req.file && req.file.cloudStoragePublicUrl) {
+    data.imageUrl = req.file.cloudStoragePublicUrl;
+  }
+
   // Save the data to the database.
   getModel().createBook(data, (err, savedData) => {
     if (err) {
       next(err);
       return;
     }
-    res.redirect(`${req.baseUrl}/${savedData.id}`);
+    res.redirect(`/users/admin/books`);
   });
 });
 // [END add_post]
