@@ -245,6 +245,18 @@ router.post('/admin/formMusic', images.multer.single('image'), images.sendUpload
 });
 // [END add_post]
 
+/**
+
+ * Display a page for creating a music.
+ */
+// [START add_music]
+router.get('/admin/formMusic', oauth2.required, oauth2.adminRequired, (req, res) => {
+  res.render('users/formMusic.pug', {
+    music: {},
+    action: 'Add'
+  });
+});
+// [END add_music]
 
 /**
  * GET /users
