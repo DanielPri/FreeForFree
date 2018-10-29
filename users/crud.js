@@ -134,15 +134,6 @@ router.post('/admin/formBook', images.multer.single('image'), images.sendUploadT
 
  * Display a page for creating a magazines.
  */
-// [START add_magazine]
-router.get('/admin/formMagazine', oauth2.required, oauth2.adminRequired, (req, res) => {
-  res.render('users/formMagazine.pug', {
-    magazine: {},
-    action: 'Add'
-  });
-});
-// [END add_magazine]
-
 /**
  * POST /magazine/add
  *
