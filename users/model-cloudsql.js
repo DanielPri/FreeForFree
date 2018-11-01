@@ -92,7 +92,7 @@ function setIsActive (tiny, userID, cb) {
 
 // [Start set listBooks]
 function listBooks (limit, token, cb) {
-  token = token ? parseInt(token, 10) : 0;
+  token = token ? parseInt(token, 3) : 0;
   connection.query(
     'SELECT * FROM `books` LIMIT ? OFFSET ?', [limit, token],
     (err, results) => {
@@ -201,9 +201,6 @@ function createMovie (data, cb) {
       cb(null, result);
     });
 }
-
-
-
 // [END createMovies]
 
 // [START createMusic]
@@ -220,6 +217,25 @@ function createMusic (data, cb) {
 }
 // [END createMusic]
 
+// [START read]
+function read (id, cb) {
+  connection.query(
+    'SELECT * FROM `books` WHERE `id` = ?', id, (err, results) => {
+      if (!err && !results.length) {
+        err = {
+          code: 404,
+          message: 'Not found!!'
+        };
+      }
+      if (err) {
+        cb(err);
+        return;
+      }
+      cb(null, results[0]);
+    });
+}
+// [END read]
+
 module.exports = {
   createSchema: createSchema,
   list: list,
@@ -233,7 +249,8 @@ module.exports = {
   createBook: createBook,
   createMagazine: createMagazine,
   createMovie: createMovie,
-  createMusic: createMusic
+  createMusic: createMusic,
+  read: read
 };
 
 if (module === require.main) {

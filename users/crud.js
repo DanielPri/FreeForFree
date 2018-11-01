@@ -267,6 +267,24 @@ router.get('/admin/formMusic', oauth2.required, oauth2.adminRequired, (req, res)
       });
  });
 
+ /**
+  * GET /books/:id
+  *
+  * Display a book.
+  */
+ router.get('/admin/books/:book', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+   consolelog(req.params.book);
+   getModel().read(req.params.book, (err, entity) => {
+     if (err) {
+       next(err);
+       return;
+     }
+     res.render('users/viewBook.pug', {
+       book: entity
+     });
+   });
+ });
+
 /**
  * Errors on "/users/*" routes.
  */
