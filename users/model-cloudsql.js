@@ -236,6 +236,12 @@ function read (id, cb) {
 }
 // [END read]
 
+//[START delete]
+function _delete (id, cb) {
+  connection.query('DELETE FROM `books` WHERE `id` = ?', id, cb);
+}
+//[END delete]
+
 module.exports = {
   createSchema: createSchema,
   list: list,
@@ -250,7 +256,8 @@ module.exports = {
   createMagazine: createMagazine,
   createMovie: createMovie,
   createMusic: createMusic,
-  read: read
+  read: read,
+  delete: _delete
 };
 
 if (module === require.main) {

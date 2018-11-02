@@ -306,6 +306,22 @@ router.get('/admin/:book/edit', (req, res, next) => {
 });
 
 /**
+ * GET /books/:id/delete
+ *
+ * Delete a book.
+ */
+router.get('/admin/:book/delete', (req, res, next) => {
+  getModel().delete(req.params.book, (err) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.redirect(req.baseUrl);
+  });
+});
+
+
+/**
  * Errors on "/users/*" routes.
  */
 router.use((err, req, res, next) => {
