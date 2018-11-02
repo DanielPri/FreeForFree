@@ -23,7 +23,7 @@ block content
        tr
         td
          .media-left
-          a(href=`/admin/${book.id}`)
+          a(href=`/users/admin/${book.id}`)
            img(Id="bookImage" src=book.imageUrl)
         td= book.title
         td= book.format
@@ -32,7 +32,7 @@ block content
         td= book.author
         td= book.publishedDate
         td= book.ISBN10
-        td= book.ISBN13
+        td= book.ISBN13 
   if !books.length
     p No books found.
   if nextPageToken

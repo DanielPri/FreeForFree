@@ -167,7 +167,7 @@ function createBook (data, cb) {
         cb(err);
         return;
       }
-      cb(null, result);
+      read(res.insertId, cb);
     });
 }
 // [END createBook]

@@ -43,7 +43,7 @@ router.get('/admin/catalog', oauth2.required, oauth2.adminRequired, (req, res, n
 });
 
 router.get('/admin/books', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().listBooks(10, req.query.pageToken, (err, entities, cursor) => {
+  getModel().listBooks(3, req.query.pageToken, (err, entities, cursor) => {
     if (err) {
       next(err);
       return;
@@ -272,8 +272,7 @@ router.get('/admin/formMusic', oauth2.required, oauth2.adminRequired, (req, res)
   *
   * Display a book.
   */
- router.get('/admin/books/:book', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-   consolelog(req.params.book);
+ router.get('/admin/:book', oauth2.required, oauth2.adminRequired, (req, res, next) => {
    getModel().read(req.params.book, (err, entity) => {
      if (err) {
        next(err);
