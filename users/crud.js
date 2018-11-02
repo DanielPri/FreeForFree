@@ -270,13 +270,16 @@ router.get('/admin/formMusic', oauth2.required, oauth2.adminRequired, (req, res)
    });
  });
 
+
+ //************************************************* BOOK *******************************************************************/
+
  /**
   * GET /books/:id
   *
   * Display a book.
   */
  router.get('/admin/:book', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-   getModel().read(req.params.book, (err, entity) => {
+   getModel().readBook(req.params.book, (err, entity) => {
      if (err) {
        next(err);
        return;
@@ -293,7 +296,7 @@ router.get('/admin/formMusic', oauth2.required, oauth2.adminRequired, (req, res)
  * Display a book for editing.
  */
 router.get('/admin/:book/edit', (req, res, next) => {
-  getModel().read(req.params.book, (err, entity) => {
+  getModel().readBook(req.params.book, (err, entity) => {
     if (err) {
       next(err);
       return;
@@ -323,7 +326,7 @@ router.post(
       req.body.imageUrl = req.file.cloudStoragePublicUrl;
     }
 
-    getModel().update(req.params.book, data, (err, savedData) => {
+    getModel().updateBook(req.params.book, data, (err, savedData) => {
       if (err) {
         next(err);
         return;
@@ -348,6 +351,93 @@ router.get('/admin/:book/delete', (req, res, next) => {
     res.redirect(req.baseUrl);
   });
 });
+
+ //****************************************************************************************************************************/
+
+
+//*************************************************** Magazine ****************************************************************/
+
+ /**
+  * GET /Magazine/:id
+  *
+  * Display a Magazine.
+  */
+ router.get('/admin/:magazine', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().readMagazine(req.params.magazine, (err, entity) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/viewMagazine.pug', {
+      magazine: entity
+    });
+  });
+});
+
+ /**
+ * GET /magazine/:id/edit
+ *
+ * Display a magazine for editing.
+ */
+router.get('/admin/:magazine/edit', (req, res, next) => {
+  getModel().readMagazine(req.params.magazine, (err, entity) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/formMagazine.pug', {
+      magazine: entity,
+      action: 'Edit'
+    });
+  });
+});
+
+
+/**
+ * POST /magazine/:id/edit
+ *
+ * Update a magazine.
+ */
+router.post(
+  '/admin/:magazine/edit',
+  images.multer.single('image'),
+  images.sendUploadToGCS,
+  (req, res, next) => {
+    let data = req.body;
+
+    // Was an image uploaded? If so, we'll use its public URL
+    // in cloud storage.
+    if (req.file && req.file.cloudStoragePublicUrl) {
+      req.body.imageUrl = req.file.cloudStoragePublicUrl;
+    }
+
+    getModel().updateMagazine(req.params.magazine, data, (err, savedData) => {
+      if (err) {
+        next(err);
+        return;
+      }
+      res.redirect(`/users/admin/magazines`);
+    });
+  }
+);
+
+
+/**
+ * GET /magazine/:id/delete
+ *
+ * Delete a magazine
+ */
+router.get('/admin/:magazine/delete', (req, res, next) => {
+  getModel().deleteMagazine(req.params.magazine, (err) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.redirect(req.baseUrl);
+  });
+});
+
+ //****************************************************************************************************************************/
 
 
 /**

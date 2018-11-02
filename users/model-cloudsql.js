@@ -167,7 +167,7 @@ function createBook (data, cb) {
         cb(err);
         return;
       }
-      read(result.insertId, cb);
+      readBook(result.insertId, cb);
     });
 }
 // [END createBook]
@@ -182,7 +182,7 @@ function createMagazine (data, cb) {
         cb(err);
         return;
       }
-      cb(null, result);
+      readMagazine(result.insertId, cb);
     });
 }
 
@@ -217,8 +217,10 @@ function createMusic (data, cb) {
 }
 // [END createMusic]
 
+
+//-------------------------------------------- START  READ ------------------------------------------------------------------//
 // [START read]
-function read (id, cb) {
+function readBook (id, cb) {
   connection.query(
     'SELECT * FROM `books` WHERE `id` = ?', id, (err, results) => {
       if (!err && !results.length) {
@@ -236,25 +238,77 @@ function read (id, cb) {
 }
 // [END read]
 
+
+// [START read]
+function readMagazine (id, cb) {
+  connection.query(
+    'SELECT * FROM `Magazines` WHERE `id` = ?', id, (err, results) => {
+      if (!err && !results.length) {
+        err = {
+          code: 404,
+          message: 'Not found!!'
+        };
+      }
+      if (err) {
+        cb(err);
+        return;
+      }
+      cb(null, results[0]);
+    });
+}
+// [END read]
+
+//-------------------------------------------- END OF READ ----------------------------------------------------------------//
+
+
+
+//-------------------------------------------- START  UPDATE ------------------------------------------------------------------//
 // [START update]
-function update (id, data, cb) {
+function updateBook (id, data, cb) {
   connection.query(
     'UPDATE `books` SET ? WHERE `id` = ?', [data, id], (err) => {
       if (err) {
         cb(err);
         return;
       }
-      read(id, cb);
+      readBook(id, cb);
     });
 }
 // [END update]
 
+// [START update]
+function updateMagazine (id, data, cb) {
+  connection.query(
+    'UPDATE `Magazines` SET ? WHERE `id` = ?', [data, id], (err) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      readMagazine(id, cb);
+    });
+}
+// [END update]
+
+
+//-------------------------------------------- END OF UPDATE ----------------------------------------------------------------//
+
+
+
+
+//-------------------------------------------- START  DELETE ------------------------------------------------------------------//
 //[START delete]
-function _delete (id, cb) {
+function _deleteBook (id, cb) {
   connection.query('DELETE FROM `books` WHERE `id` = ?', id, cb);
 }
 //[END delete]
 
+//[START delete]
+function _deleteMagazine (id, cb) {
+  connection.query('DELETE FROM `Magazines` WHERE `id` = ?', id, cb);
+}
+//[END delete]
+
+//-------------------------------------------- END DELETE ------------------------------------------------------------------//
 module.exports = {
   createSchema: createSchema,
   list: list,
@@ -269,9 +323,12 @@ module.exports = {
   createMagazine: createMagazine,
   createMovie: createMovie,
   createMusic: createMusic,
-  read: read,
-  delete: _delete,
-  update: update
+  readBook: readBook,
+  readMagazine: readMagazine,
+  deleteBook: _deleteBook,
+  deleteMagazine: _deleteMagazine,
+  updateBook: updateBook,
+  updateMagazine: updateMagazine
 };
 
 if (module === require.main) {

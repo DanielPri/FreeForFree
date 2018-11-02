@@ -29,3 +29,9 @@ block content
           td= magazine.ISBN13
   if !magazines.length
     p No magazines found.
+  if nextPageToken
+    nav
+      ul.pager
+        li
+          a(href=`?pageToken=${encodeURIComponent(nextPageToken)}`) Next
+
