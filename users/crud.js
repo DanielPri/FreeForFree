@@ -278,7 +278,7 @@ router.get('/admin/formMusic', oauth2.required, oauth2.adminRequired, (req, res)
   *
   * Display a book.
   */
- router.get('/admin/:book', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+ router.get('/admin/books/:book', oauth2.required, oauth2.adminRequired, (req, res, next) => {
    getModel().readBook(req.params.book, (err, entity) => {
      if (err) {
        next(err);
@@ -295,7 +295,7 @@ router.get('/admin/formMusic', oauth2.required, oauth2.adminRequired, (req, res)
  *
  * Display a book for editing.
  */
-router.get('/admin/:book/edit', (req, res, next) => {
+router.get('/admin/books/:book/edit', (req, res, next) => {
   getModel().readBook(req.params.book, (err, entity) => {
     if (err) {
       next(err);
@@ -314,7 +314,7 @@ router.get('/admin/:book/edit', (req, res, next) => {
  * Update a book.
  */
 router.post(
-  '/admin/:book/edit',
+  '/admin/books/:book/edit',
   images.multer.single('image'),
   images.sendUploadToGCS,
   (req, res, next) => {
@@ -342,7 +342,7 @@ router.post(
  *
  * Delete a book.
  */
-router.get('/admin/:book/delete', (req, res, next) => {
+router.get('/admin/books/:book/delete', (req, res, next) => {
   getModel().delete(req.params.book, (err) => {
     if (err) {
       next(err);
@@ -362,7 +362,7 @@ router.get('/admin/:book/delete', (req, res, next) => {
   *
   * Display a Magazine.
   */
- router.get('/admin/:magazine', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+ router.get('/admin/magazines/:magazine', oauth2.required, oauth2.adminRequired, (req, res, next) => {
   getModel().readMagazine(req.params.magazine, (err, entity) => {
     if (err) {
       next(err);
@@ -379,7 +379,7 @@ router.get('/admin/:book/delete', (req, res, next) => {
  *
  * Display a magazine for editing.
  */
-router.get('/admin/:magazine/edit', (req, res, next) => {
+router.get('/admin/magazines/:magazine/edit', (req, res, next) => {
   getModel().readMagazine(req.params.magazine, (err, entity) => {
     if (err) {
       next(err);
@@ -399,7 +399,7 @@ router.get('/admin/:magazine/edit', (req, res, next) => {
  * Update a magazine.
  */
 router.post(
-  '/admin/:magazine/edit',
+  '/admin/magazines/:magazine/edit',
   images.multer.single('image'),
   images.sendUploadToGCS,
   (req, res, next) => {
@@ -427,7 +427,7 @@ router.post(
  *
  * Delete a magazine
  */
-router.get('/admin/:magazine/delete', (req, res, next) => {
+router.get('/admin/magazines/:magazine/delete', (req, res, next) => {
   getModel().deleteMagazine(req.params.magazine, (err) => {
     if (err) {
       next(err);

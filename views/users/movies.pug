@@ -9,6 +9,7 @@ block content
     table(class='table')
      thead
       tr
+       td View
        td Title
        td Director
        td Producers
@@ -20,6 +21,10 @@ block content
      tbody
       each movie in movies
        tr
+        td
+         .media-left
+          a(href=`/users/admin/movies/${movie.id}`)
+           img(Id="image" src=movie.imageUrl)
         td= movie.title
         td= movie.director
         td= movie.producers

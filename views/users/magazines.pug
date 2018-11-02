@@ -20,7 +20,7 @@ block content
        tr
          td
           .media-left
-           a(href=`/users/admin/${magazine.id}`)
+           a(href=`/users/admin/magazines/${magazine.id}`)
             img(Id="image" src=magazine.imageUrl)
           td= magazine.title
           td= magazine.language
@@ -34,4 +34,3 @@ block content
       ul.pager
         li
           a(href=`?pageToken=${encodeURIComponent(nextPageToken)}`) Next
-

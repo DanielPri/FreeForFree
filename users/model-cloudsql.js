@@ -226,7 +226,7 @@ function readBook (id, cb) {
       if (!err && !results.length) {
         err = {
           code: 404,
-          message: 'Not found!!'
+          message: 'Not found!!book'
         };
       }
       if (err) {
@@ -246,7 +246,7 @@ function readMagazine (id, cb) {
       if (!err && !results.length) {
         err = {
           code: 404,
-          message: 'Not found!!'
+          message: 'Not found!!read'
         };
       }
       if (err) {
