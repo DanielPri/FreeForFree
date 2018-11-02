@@ -306,6 +306,23 @@ router.get('/admin/:book/edit', (req, res, next) => {
 });
 
 /**
+ * POST /books/:id/edit
+ *
+ * Update a book.
+ */
+router.post('/admin/:book/edit', (req, res, next) => {
+  const data = req.body;
+
+  getModel().update(req.params.book, data, (err, savedData) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.redirect(`${req.baseUrl}/${savedData.id}`);
+  });
+});
+
+/**
  * GET /books/:id/delete
  *
  * Delete a book.

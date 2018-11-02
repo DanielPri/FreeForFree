@@ -236,6 +236,19 @@ function read (id, cb) {
 }
 // [END read]
 
+// [START update]
+function update (id, data, cb) {
+  connection.query(
+    'UPDATE `books` SET ? WHERE `id` = ?', [data, id], (err) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      read(id, cb);
+    });
+}
+// [END update]
+
 //[START delete]
 function _delete (id, cb) {
   connection.query('DELETE FROM `books` WHERE `id` = ?', id, cb);
