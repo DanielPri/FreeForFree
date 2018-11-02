@@ -298,7 +298,7 @@ router.get('/admin/:book/edit', (req, res, next) => {
       next(err);
       return;
     }
-    res.render('books/formBook.pug', {
+    res.render('users/formBook.pug', {
       book: entity,
       action: 'Edit'
     });
@@ -310,17 +310,29 @@ router.get('/admin/:book/edit', (req, res, next) => {
  *
  * Update a book.
  */
-router.post('/admin/:book/edit', (req, res, next) => {
-  const data = req.body;
+router.post(
+  '/:book/edit',
+  images.multer.single('image'),
+  images.sendUploadToGCS,
+  (req, res, next) => {
+    let data = req.body;
 
-  getModel().update(req.params.book, data, (err, savedData) => {
-    if (err) {
-      next(err);
-      return;
+    // Was an image uploaded? If so, we'll use its public URL
+    // in cloud storage.
+    if (req.file && req.file.cloudStoragePublicUrl) {
+      req.body.imageUrl = req.file.cloudStoragePublicUrl;
     }
-    res.redirect(`${req.baseUrl}/${savedData.id}`);
-  });
-});
+
+    getModel().update(req.params.book, data, (err, savedData) => {
+      if (err) {
+        next(err);
+        return;
+      }
+      res.redirect(`${req.baseUrl}/${savedData.id}`);
+    });
+  }
+);
+
 
 /**
  * GET /books/:id/delete

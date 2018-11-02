@@ -270,7 +270,8 @@ module.exports = {
   createMovie: createMovie,
   createMusic: createMusic,
   read: read,
-  delete: _delete
+  delete: _delete,
+  update: update
 };
 
 if (module === require.main) {
