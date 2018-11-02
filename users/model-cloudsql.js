@@ -48,9 +48,9 @@ function list (isActive, limit, token, cb) {
 // [END active users list]
 
 // [Start create user]
-function createUser (data, profileName, cb) {
+function createUser (data, profileName, limit, cb) {
   connection.query(
-    'INSERT INTO `user` SET ? ON DUPLICATE KEY UPDATE `profileName` = ?', [data, profileName],
+    'INSERT INTO `user` SET ? ON DUPLICATE KEY UPDATE `profileName` = ?', [data, profileName, limit],
     (err, result) => {
       if (err) {
         cb(err);

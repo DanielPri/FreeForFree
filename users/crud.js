@@ -47,51 +47,48 @@ router.get('/admin/books', oauth2.required, oauth2.adminRequired, (req, res, nex
     if (err) {
       next(err);
       return;
-    }
-    res.render('users/books.pug', {
-      books: entities,
-      nextPageToken: cursor
-    });
+  }
+  res.render('users/books.pug', {
+    books: entities,
+    nextPageToken: cursor
   });
 });
-
+});
 router.get('/admin/magazines', oauth2.required, oauth2.adminRequired, (req, res, next) => {
   getModel().listMagazines(10, req.query.pageToken, (err, entities, cursor) => {
     if (err) {
       next(err);
       return;
-    }
-    res.render('users/magazines.pug', {
-      magazines: entities,
-      nextPageToken: cursor
-    });
+  }
+  res.render('users/magazines.pug', {
+    magazines: entities,
+    nextPageToken: cursor
   });
 });
-
+});
 router.get('/admin/movies', oauth2.required, oauth2.adminRequired, (req, res, next) => {
   getModel().listMovies(10, req.query.pageToken, (err, entities, cursor) => {
     if (err) {
       next(err);
       return;
-    }
-    res.render('users/movies.pug', {
-      movies: entities,
-      nextPageToken: cursor
-    });
+  }
+  res.render('users/movies.pug', {
+    movies: entities,
+    nextPageToken: cursor
   });
 });
-
+});
 router.get('/admin/music', oauth2.required, oauth2.adminRequired, (req, res, next) => {
   getModel().listMusics(10, req.query.pageToken, (err, entities, cursor) => {
     if (err) {
       next(err);
       return;
-    }
-    res.render('users/music.pug', {
-      musics: entities,
-      nextPageToken: cursor
-    });
+  }
+  res.render('users/music.pug', {
+    musics: entities,
+    nextPageToken: cursor
   });
+});
 });
 //--------//
 
@@ -258,16 +255,16 @@ router.get('/admin/formMusic', oauth2.required, oauth2.adminRequired, (req, res)
  * Display a page of users (up to ten at a time).
  */
  router.get('/admin/list', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-   getModel().list(1, 10, req.query.pageToken, (err, entities, cursor) => {
-     if (err) {
-       next(err);
-       return;
-     }
-     res.render('users/list.pug', {
-       users: entities,
-       nextPageToken: cursor
-     });
-   });
+      getModel().list(1, 10, req.query.pageToken, (err, entities, cursor) => {
+        if (err) {
+          next(err);
+          return;
+        }
+        res.render('users/list.pug', {
+          users: entities,
+          nextPageToken: cursor
+         });
+      });
  });
 
  /**
