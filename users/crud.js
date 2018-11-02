@@ -311,7 +311,7 @@ router.get('/admin/:book/edit', (req, res, next) => {
  * Update a book.
  */
 router.post(
-  '/:book/edit',
+  '/admin/:book/edit',
   images.multer.single('image'),
   images.sendUploadToGCS,
   (req, res, next) => {
@@ -328,7 +328,7 @@ router.post(
         next(err);
         return;
       }
-      res.redirect(`${req.baseUrl}/${savedData.id}`);
+      res.redirect(`/users/admin/books`);
     });
   }
 );
