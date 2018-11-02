@@ -43,7 +43,7 @@ router.get('/admin/catalog', oauth2.required, oauth2.adminRequired, (req, res, n
 });
 
 router.get('/admin/books', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().listBooks(3, req.query.pageToken, (err, entities, cursor) => {
+  getModel().listBooks(10, req.query.pageToken, (err, entities, cursor) => {
     if (err) {
       next(err);
       return;
@@ -283,6 +283,24 @@ router.get('/admin/formMusic', oauth2.required, oauth2.adminRequired, (req, res)
      });
    });
  });
+
+ /**
+ * GET /books/:id/edit
+ *
+ * Display a book for editing.
+ */
+router.get('/admin/:book/edit', (req, res, next) => {
+  getModel().read(req.params.book, (err, entity) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('books/formBook.pug', {
+      book: entity,
+      action: 'Edit'
+    });
+  });
+});
 
 /**
  * Errors on "/users/*" routes.

@@ -92,7 +92,7 @@ function setIsActive (tiny, userID, cb) {
 
 // [Start set listBooks]
 function listBooks (limit, token, cb) {
-  token = token ? parseInt(token, 3) : 0;
+  token = token ? parseInt(token, 10) : 0;
   connection.query(
     'SELECT * FROM `books` LIMIT ? OFFSET ?', [limit, token],
     (err, results) => {
@@ -167,7 +167,7 @@ function createBook (data, cb) {
         cb(err);
         return;
       }
-      read(res.insertId, cb);
+      read(result.insertId, cb);
     });
 }
 // [END createBook]
