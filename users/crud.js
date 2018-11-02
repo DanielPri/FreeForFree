@@ -168,7 +168,7 @@ router.post('/admin/formMagazine', images.multer.single('image'), images.sendUpl
  */
 // [START add_magazine]
 router.get('/admin/formMagazine', oauth2.required, oauth2.adminRequired, (req, res) => {
-  res.render('users/formMagaine.pug', {
+  res.render('users/formMagazine.pug', {
     magazine: {},
     action: 'Add'
   });
