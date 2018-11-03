@@ -31,3 +31,8 @@ block content
         td= music.ASIN
   if !musics.length
     p No musics found.
+  if nextPageToken
+    nav
+      ul.pager
+        li
+          a(href=`?pageToken=${encodeURIComponent(nextPageToken)}`) Next

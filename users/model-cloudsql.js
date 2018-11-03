@@ -158,6 +158,8 @@ function listMusics (limit, token, cb) {
 }
 //[End set listMusics]
 
+//-------------------------------------------- START  CREATE ------------------------------------------------------------------//
+
 // [START createBook]
 function createBook (data, cb) {
   connection.query(
@@ -198,7 +200,7 @@ function createMovie (data, cb) {
         cb(err);
         return;
       }
-      cb(null, result);
+      readMovie(result.insertId, cb);
     });
 }
 // [END createMovies]
@@ -212,13 +214,15 @@ function createMusic (data, cb) {
         cb(err);
         return;
       }
-      cb(null, result);
+      readMusic(result.insertId, cb);
     });
 }
 // [END createMusic]
+//-----------------------------------------------------------------------------------------------------------------------------//
 
 
-//-------------------------------------------- START  READ ------------------------------------------------------------------//
+
+//-------------------------------------------- START  READ --------------------------------------------------------------------//
 // [START read]
 function readBook (id, cb) {
   connection.query(
@@ -226,7 +230,7 @@ function readBook (id, cb) {
       if (!err && !results.length) {
         err = {
           code: 404,
-          message: 'Not found!!book'
+          message: 'Not found!!'
         };
       }
       if (err) {
@@ -246,7 +250,7 @@ function readMagazine (id, cb) {
       if (!err && !results.length) {
         err = {
           code: 404,
-          message: 'Not found!!read'
+          message: 'Not found!!'
         };
       }
       if (err) {
@@ -258,11 +262,31 @@ function readMagazine (id, cb) {
 }
 // [END read]
 
-//-------------------------------------------- END OF READ ----------------------------------------------------------------//
+// [START read]
+function readMusic (id, cb) {
+  connection.query(
+    'SELECT * FROM `musics` WHERE `id` = ?', id, (err, results) => {
+      if (!err && !results.length) {
+        err = {
+          code: 404,
+          message: 'Not found!!'
+        };
+      }
+      if (err) {
+        cb(err);
+        return;
+      }
+      cb(null, results[0]);
+    });
+}
+// [END read]
+
+//-----------------------------------------------------------------------------------------------------------------------------//
 
 
 
 //-------------------------------------------- START  UPDATE ------------------------------------------------------------------//
+
 // [START update]
 function updateBook (id, data, cb) {
   connection.query(
@@ -289,13 +313,27 @@ function updateMagazine (id, data, cb) {
 }
 // [END update]
 
+// [START update]
+function updateMusic (id, data, cb) {
+  connection.query(
+    'UPDATE `musics` SET ? WHERE `id` = ?', [data, id], (err) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      readMusic(id, cb);
+    });
+}
+// [END update]
 
-//-------------------------------------------- END OF UPDATE ----------------------------------------------------------------//
+
+//-----------------------------------------------------------------------------------------------------------------------------//
 
 
 
 
 //-------------------------------------------- START  DELETE ------------------------------------------------------------------//
+
 //[START delete]
 function _deleteBook (id, cb) {
   connection.query('DELETE FROM `books` WHERE `id` = ?', id, cb);
@@ -308,7 +346,13 @@ function _deleteMagazine (id, cb) {
 }
 //[END delete]
 
-//-------------------------------------------- END DELETE ------------------------------------------------------------------//
+//[START delete]
+function _deleteMusic (id, cb) {
+  connection.query('DELETE FROM `musics` WHERE `id` = ?', id, cb);
+}
+//[END delete]
+
+//-----------------------------------------------------------------------------------------------------------------------------//
 module.exports = {
   createSchema: createSchema,
   list: list,
@@ -325,10 +369,13 @@ module.exports = {
   createMusic: createMusic,
   readBook: readBook,
   readMagazine: readMagazine,
+  readMusic: readMusic,
   deleteBook: _deleteBook,
   deleteMagazine: _deleteMagazine,
+  deleteMusic: _deleteMusic,
   updateBook: updateBook,
-  updateMagazine: updateMagazine
+  updateMagazine: updateMagazine,
+  updateMusic: updateMusic
 };
 
 if (module === require.main) {

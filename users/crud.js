@@ -440,6 +440,90 @@ router.get('/admin/magazines/:magazine/delete', (req, res, next) => {
  //****************************************************************************************************************************/
 
 
+//*************************************************** Music *******************************************************************/
+
+ /**
+  * GET /Music/:id
+  *
+  * Display a Music.
+  */
+ router.get('/admin/music/:music', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().readMusic(req.params.music, (err, entity) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/viewMusic.pug', {
+      music: entity
+    });
+  });
+});
+
+ /**
+ * GET /music/:id/edit
+ *
+ * Display a music for editing.
+ */
+router.get('/admin/music/:music/edit', (req, res, next) => {
+  getModel().readMusic(req.params.music, (err, entity) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/formMusic.pug', {
+      music: entity,
+      action: 'Edit'
+    });
+  });
+});
+
+
+/**
+ * POST /music/:id/edit
+ *
+ * Update a music.
+ */
+router.post(
+  '/admin/music/:music/edit',
+  images.multer.single('image'),
+  images.sendUploadToGCS,
+  (req, res, next) => {
+    let data = req.body;
+
+    // Was an image uploaded? If so, we'll use its public URL
+    // in cloud storage.
+    if (req.file && req.file.cloudStoragePublicUrl) {
+      req.body.imageUrl = req.file.cloudStoragePublicUrl;
+    }
+
+    getModel().updateMusic(req.params.music, data, (err, savedData) => {
+      if (err) {
+        next(err);
+        return;
+      }
+      res.redirect(`/users/admin/music`);
+    });
+  }
+);
+
+
+/**
+ * GET /music/:id/delete
+ *
+ * Delete a music
+ */
+router.get('/admin/music/:music/delete', (req, res, next) => {
+  getModel().deleteMusic(req.params.music, (err) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.redirect(req.baseUrl);
+  });
+});
+
+ //****************************************************************************************************************************/
+
 /**
  * Errors on "/users/*" routes.
  */
