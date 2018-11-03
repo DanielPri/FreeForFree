@@ -343,7 +343,7 @@ router.post(
  * Delete a book.
  */
 router.get('/admin/books/:book/delete', (req, res, next) => {
-  getModel().delete(req.params.book, (err) => {
+  getModel().deleteBook(req.params.book, (err) => {
     if (err) {
       next(err);
       return;
