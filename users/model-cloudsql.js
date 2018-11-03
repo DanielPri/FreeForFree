@@ -281,6 +281,25 @@ function readMusic (id, cb) {
 }
 // [END read]
 
+// [START read]
+function readMovie (id, cb) {
+  connection.query(
+    'SELECT * FROM `movies` WHERE `id` = ?', id, (err, results) => {
+      if (!err && !results.length) {
+        err = {
+          code: 404,
+          message: 'Not found!!'
+        };
+      }
+      if (err) {
+        cb(err);
+        return;
+      }
+      cb(null, results[0]);
+    });
+}
+// [END read]
+
 //-----------------------------------------------------------------------------------------------------------------------------//
 
 
@@ -326,6 +345,19 @@ function updateMusic (id, data, cb) {
 }
 // [END update]
 
+// [START update]
+function updateMovie (id, data, cb) {
+  connection.query(
+    'UPDATE `movies` SET ? WHERE `id` = ?', [data, id], (err) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      readMovie(id, cb);
+    });
+}
+// [END update]
+
 
 //-----------------------------------------------------------------------------------------------------------------------------//
 
@@ -352,6 +384,12 @@ function _deleteMusic (id, cb) {
 }
 //[END delete]
 
+//[START delete]
+function _deleteMovie (id, cb) {
+  connection.query('DELETE FROM `movies` WHERE `id` = ?', id, cb);
+}
+//[END delete]
+
 //-----------------------------------------------------------------------------------------------------------------------------//
 module.exports = {
   createSchema: createSchema,
@@ -370,12 +408,15 @@ module.exports = {
   readBook: readBook,
   readMagazine: readMagazine,
   readMusic: readMusic,
+  readMovie: readMovie,
   deleteBook: _deleteBook,
   deleteMagazine: _deleteMagazine,
   deleteMusic: _deleteMusic,
+  deleteMovie: _deleteMovie,
   updateBook: updateBook,
   updateMagazine: updateMagazine,
-  updateMusic: updateMusic
+  updateMusic: updateMusic,
+  updateMovie: updateMovie
 };
 
 if (module === require.main) {
