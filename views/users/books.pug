@@ -9,7 +9,7 @@ block content
     table(class='table')
      thead
       tr
-       td
+       td View
        td Title
        td Format
        td Pages
@@ -23,7 +23,8 @@ block content
        tr
         td
          .media-left
-          img(Id="bookImage" src=book.imageUrl)
+          a(href=`/users/admin/books/${book.id}`)
+           img(Id="image" src=book.imageUrl)
         td= book.title
         td= book.format
         td= book.pages
@@ -31,6 +32,11 @@ block content
         td= book.author
         td= book.publishedDate
         td= book.ISBN10
-        td= book.ISBN13
+        td= book.ISBN13 
   if !books.length
     p No books found.
+  if nextPageToken
+    nav
+      ul.pager
+        li
+          a(href=`?pageToken=${encodeURIComponent(nextPageToken)}`) Next
