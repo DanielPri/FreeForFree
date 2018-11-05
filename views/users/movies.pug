@@ -35,3 +35,8 @@ block content
         td= movie.runTime
   if !movies.length
     p No movies found.
+  if nextPageToken
+    nav
+      ul.pager
+        li
+          a(href=`?pageToken=${encodeURIComponent(nextPageToken)}`) Next
