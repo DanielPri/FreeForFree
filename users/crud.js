@@ -91,9 +91,7 @@ router.post('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, 
       next(err);
       return;
     }
-    res.render('users/addUser.pug', {
-      users: entities
-     });
+    res.redirect('addUser');
   });
 });
   

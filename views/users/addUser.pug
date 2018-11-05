@@ -13,14 +13,14 @@ block content
             tbody(id='Unregistered_User_Table_body')
                 each user in users
                     tr
-                        form(method="POST" )
+                        form(method="POST" action="addUser")
                             td= user.profileName
                             td(name="userID")= user.profileID
                             td(class= "usertypeChoice" style="display: none") 
                                 .form-group
                                     select(class="selectType", name="userType", id=user.profileID)
                                         option(value='3 id='+user.profileID) Guest
-                                        option(value='2 id='+user.profileID) Client
+                                        option(value='2 id='+user.profileID) User
                                         option(value='1 id='+user.profileID) Admin
                             td(class = "usertypeText") Guest
                             td(class = "EditUserType" ) Edit
@@ -34,20 +34,7 @@ block content
         div    
             input(class="submit" type="submit" value="submit") 
         // replace these br with CSS whitespace later    
-    br 
-    br    
-    h3 Manually create user
-    table(class='table')
-        tbody  
-            tr
-                td Full Name
-                td
-                    input(type="text" name='fullName')
-            tr
-                td  Email
-                td
-                    input(type="text" name='fullName')
-    // in retro
+    
 
     script.
 
