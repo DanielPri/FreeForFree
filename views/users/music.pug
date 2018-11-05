@@ -1,0 +1,28 @@
+extends ../catalog.pug
+
+block content
+  .container
+    div(align="center")
+      a(class="btn btn-primary" href="/users/admin/formMusic") Add Music
+    br
+    header Music
+    table(class='table')
+     thead
+      tr
+       td Title
+       td Type
+       td Artist
+       td Label
+       td Release Date
+       td ASIN
+     tbody
+      each music in musics
+       tr
+        td= music.title
+        td= music.type
+        td= music.artist
+        td= music.label
+        td= music.releaseDate
+        td= music.ASIN
+  if !musics.length
+    p No musics found.

@@ -1,0 +1,32 @@
+extends ../catalog.pug
+
+block content
+  .container
+    div(align="center")
+      a(class="btn btn-primary" href="/users/admin/formMovie") Add Movie
+    br
+    header Movies
+    table(class='table')
+     thead
+      tr
+       td Title
+       td Director
+       td Producers
+       td Actors
+       td Language
+       td Subtitles
+       td Dubbed
+       td Run Time
+     tbody
+      each movie in movies
+       tr
+        td= movie.title
+        td= movie.director
+        td= movie.producers
+        td= movie.actors
+        td= movie.language
+        td= movie.subtitles
+        td= movie.dubbed
+        td= movie.runTime
+  if !movies.length
+    p No movies found.

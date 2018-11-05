@@ -1,23 +1,46 @@
-extends adminBase.pug
-
-block content
+doctype html
+html(lang="en")
   head
+    title FreeForFree - Library Management
+    meta(charset='utf-8')
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    link(rel="stylesheet", href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css")
     meta(http-equiv="refresh" content="5")
 
-  .container
-    h3 Active Users 
+  body
+    .navbar.navbar-default
+      .container
+        .navbar-header
+          .navbar-brand
+            a(href="/users") FreeForFree
 
-    table(class='table')
-      thead
-        tr
-          th Name
-          th ID
-      tbody
-        each user in users
-          tr
-            td= user.profileName
-            td= user.profileID
+        ul.nav.navbar-nav
+          li
+            a(href="/users/admin/list") Active Users
+          li
+            a(href="/users/admin/catalog") Catalog
+          li
+            a(href="/users/admin/addUser") Create Users
 
-    if !users.length
-      p No users found.
-  
+        p.navbar-text.navbar-right
+          if profile
+            span #{profile.displayName} &nbsp;
+              a(href=logout) (logout)
+
+    block content
+      .container
+        h3 Active Users
+
+        table(class='table')
+          thead
+            tr
+              th Name
+              th ID
+          tbody
+            each user in users
+              tr
+                td= user.profileName
+                td= user.profileID
+
+        if !users.length
+          p No users found.

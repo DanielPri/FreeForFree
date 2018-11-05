@@ -1,29 +1,29 @@
-doctype html
 html(lang="en")
   head
     title FreeForFree - Library Management
     meta(charset='utf-8')
     meta(name="viewport", content="width=device-width, initial-scale=1")
     link(rel="stylesheet", href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css")
-    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
-
-
+    link(rel='stylesheet' href='/css_styles/catalog_styles.css' type='text/css' media='screen' charset='utf-8')
   body
     .navbar.navbar-default
       .container
         .navbar-header
-          .navbar-brand
-            a(href="/users") FreeForFree
-
+          .navbar-brand FreeForFree
         ul.nav.navbar-nav
-          li
-            a(href="/users/admin/catalog") Catalog
           li
             a(href="/users/admin/list") Active Users
           li
-            a(href="/users/admin/addUser") Create New User
-       
-
+            a(href="/users/admin/catalog") Catalog
+            ul.nav.navbar-nav
+              li
+                a(href="/users/admin/books") Books
+              li 
+                a(href="/users/admin/magazines") Magazines
+              li 
+                a(href="/users/admin/movies") Movies
+              li 
+                a(href="/users/admin/music") Music
         p.navbar-text.navbar-right
           if profile
             span #{profile.displayName} &nbsp;

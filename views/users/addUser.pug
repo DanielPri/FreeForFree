@@ -3,63 +3,77 @@ extends adminBase.pug
 block content
     .container
         h3 Unregistered Users
-        form(method="POST" )
-            table(class='table', id='Unregistered_User_Table')
-                thead
+        
+        table(class='table', id='Unregistered_User_Table')
+            thead
+                tr
+                    th Name
+                    th ID
+                    th Type
+            tbody(id='Unregistered_User_Table_body')
+                each user in users
                     tr
-                        th Name
-                        th ID
-                        th Type
-                tbody(id='Unregistered_User_Table_body')
-                    each user in users
-                        tr
+                        form(method="POST" )
                             td= user.profileName
                             td(name="userID")= user.profileID
-                            td 
+                            td(class= "usertypeChoice" style="display: none") 
                                 .form-group
                                     select(class="selectType", name="userType", id=user.profileID)
-                                        option(value='3 id='+user.profileID) guest
-                                        option(value='2 id='+user.profileID) user
-                                        option(value='1 id='+user.profileID) admin
-                            
-            if !users.length
-                p No Unregistered users found.
+                                        option(value='3 id='+user.profileID) Guest
+                                        option(value='2 id='+user.profileID) Client
+                                        option(value='1 id='+user.profileID) Admin
+                            td(class = "usertypeText") Guest
+                            td(class = "EditUserType" ) Edit
+                            td(style = "display:none")
+                                input(class = "SaveUserType" type="submit" value="Save")
+                        
+                        
+        if !users.length
+            p No Unregistered users found.
 
-            div    
-                input(type="submit" value="submit") 
-            // replace these br with CSS whitespace later    
-        br 
-        br    
-        h3 Manually create user
-        table(class='table')
-            tbody  
-                tr
-                    td Full Name
-                    td
-                        input(type="text" name='fullName')
-                tr
-                    td  Email
-                    td
-                        input(type="text" name='fullName')
-        // in retro
+        div    
+            input(class="submit" type="submit" value="submit") 
+        // replace these br with CSS whitespace later    
+    br 
+    br    
+    h3 Manually create user
+    table(class='table')
+        tbody  
+            tr
+                td Full Name
+                td
+                    input(type="text" name='fullName')
+            tr
+                td  Email
+                td
+                    input(type="text" name='fullName')
+    // in retro
 
-        //- script.
-        //-     function getUserType(){
-        //-         console.log("hejfbsdkjfhlsdkflsdkgklsdj;dsjf;lsdfm;sldf");
-        //-         // const dom = new JSDOM.fromFile(`/users/addUser.pug`);
-        //-         console.log(document.getElementsByClassName("selectType"));
-        //-         console.log("BIIIIIIIIIIIIIIIIIIIIIITCH");
-        //-         var selectTypeArray = document.getElementsByClassName("selectType");
-        //-         var i=0;
-        //-         var allSelectedElements=[];
-        //-         for(i=0; i<selectTypeArray.length; i++){
-        //-         if(selectTypeArray[i].value==1 || selectTypeArray[i].value==2){
-        //-             allSelectedElements.push(selectTypeArray[0].parentNode.parentNode.parentNode.childNodes[1].innerText);
-        //-         }
-                    
-        //-         }
-        //-         console.log(allSelectedElements);
-        //-         return allSelectedElements;
-        //-     }
+    script.
+
+            $( document ).ready(function() {
+
+                
+                
+            });
+
+            //- console.log($(".usertypeText").html($(this).value));
+
+            $(".EditUserType").click(function(){
+                $(this).parent().children(".usertypeText").css("display","none");
+                $(this).parent().children(".usertypeChoice").css("display","block");
+                $(this).next().css("display","block"); // display Save button
+
+            });
+
+            $(".SaveUserType").click(function(){
+                $(this).css("display","none");
+                $(".submit").click();
+                
+            });
+        
+            
+
+
 
             

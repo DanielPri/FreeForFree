@@ -1,0 +1,26 @@
+extends ../catalog.pug
+
+block content
+  .container
+    div(align="center")
+      a(class="btn btn-primary" href="/users/admin/formMagazine") Add Magazine
+    br
+    header Magazines
+    table(class='table')
+     thead
+      tr
+       td Title
+       td Language
+       td Publisher
+       td ISBN-10
+       td ISBN-13
+     tbody   
+      each magazine in magazines
+       tr
+          td= magazine.title
+          td= magazine.language
+          td= magazine.publisher
+          td= magazine.ISBN10
+          td= magazine.ISBN13
+  if !magazines.length
+    p No magazines found.
