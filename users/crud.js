@@ -101,48 +101,51 @@ router.get('/admin/books', oauth2.required, oauth2.adminRequired, (req, res, nex
     if (err) {
       next(err);
       return;
-  }
-  res.render('users/books.pug', {
-    books: entities,
-    nextPageToken: cursor
+    }
+    res.render('users/books.pug', {
+      books: entities,
+      nextPageToken: cursor
+    });
   });
 });
-});
+
 router.get('/admin/magazines', oauth2.required, oauth2.adminRequired, (req, res, next) => {
   getModel().listMagazines(10, req.query.pageToken, (err, entities, cursor) => {
     if (err) {
       next(err);
       return;
-  }
-  res.render('users/magazines.pug', {
-    magazines: entities,
-    nextPageToken: cursor
+    }
+    res.render('users/magazines.pug', {
+      magazines: entities,
+      nextPageToken: cursor
+    });
   });
 });
-});
+
 router.get('/admin/movies', oauth2.required, oauth2.adminRequired, (req, res, next) => {
   getModel().listMovies(10, req.query.pageToken, (err, entities, cursor) => {
     if (err) {
       next(err);
       return;
-  }
-  res.render('users/movies.pug', {
-    movies: entities,
-    nextPageToken: cursor
+    }
+    res.render('users/movies.pug', {
+      movies: entities,
+      nextPageToken: cursor
+    });
   });
 });
-});
+
 router.get('/admin/music', oauth2.required, oauth2.adminRequired, (req, res, next) => {
   getModel().listMusics(10, req.query.pageToken, (err, entities, cursor) => {
     if (err) {
       next(err);
       return;
-  }
-  res.render('users/music.pug', {
-    musics: entities,
-    nextPageToken: cursor
+    }
+    res.render('users/music.pug', {
+      musics: entities,
+      nextPageToken: cursor
+    });
   });
-});
 });
 //--------//
 
@@ -219,7 +222,7 @@ router.post('/admin/formMagazine', images.multer.single('image'), images.sendUpl
  */
 // [START add_magazine]
 router.get('/admin/formMagazine', oauth2.required, oauth2.adminRequired, (req, res) => {
-  res.render('users/formMagaine.pug', {
+  res.render('users/formMagazine.pug', {
     magazine: {},
     action: 'Add'
   });
@@ -309,17 +312,359 @@ router.get('/admin/formMusic', oauth2.required, oauth2.adminRequired, (req, res)
  * Display a page of users (up to ten at a time).
  */
  router.get('/admin/list', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-      getModel().list(1, 10, req.query.pageToken, (err, entities, cursor) => {
-        if (err) {
-          next(err);
-          return;
-        }
-        res.render('users/list.pug', {
-          users: entities,
-          nextPageToken: cursor
-         });
-      });
+   getModel().list(1, 10, req.query.pageToken, (err, entities, cursor) => {
+     if (err) {
+       next(err);
+       return;
+     }
+     res.render('users/list.pug', {
+       users: entities,
+       nextPageToken: cursor
+     });
+   });
  });
+
+
+ //************************************************* BOOK *******************************************************************/
+
+ /**
+  * GET /books/:id
+  *
+  * Display a book.
+  */
+ router.get('/admin/books/:book', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+   getModel().readBook(req.params.book, (err, entity) => {
+     if (err) {
+       next(err);
+       return;
+     }
+     res.render('users/viewBook.pug', {
+       book: entity
+     });
+   });
+ });
+
+ /**
+ * GET /books/:id/edit
+ *
+ * Display a book for editing.
+ */
+router.get('/admin/books/:book/edit', (req, res, next) => {
+  getModel().readBook(req.params.book, (err, entity) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/formBook.pug', {
+      book: entity,
+      action: 'Edit'
+    });
+  });
+});
+
+/**
+ * POST /books/:id/edit
+ *
+ * Update a book.
+ */
+router.post(
+  '/admin/books/:book/edit',
+  images.multer.single('image'),
+  images.sendUploadToGCS,
+  (req, res, next) => {
+    let data = req.body;
+
+    // Was an image uploaded? If so, we'll use its public URL
+    // in cloud storage.
+    if (req.file && req.file.cloudStoragePublicUrl) {
+      req.body.imageUrl = req.file.cloudStoragePublicUrl;
+    }
+
+    getModel().updateBook(req.params.book, data, (err, savedData) => {
+      if (err) {
+        next(err);
+        return;
+      }
+      res.redirect(`/users/admin/books`);
+    });
+  }
+);
+
+
+/**
+ * GET /books/:id/delete
+ *
+ * Delete a book.
+ */
+router.get('/admin/books/:book/delete', (req, res, next) => {
+  getModel().deleteBook(req.params.book, (err) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.redirect(req.baseUrl);
+  });
+});
+
+ //****************************************************************************************************************************/
+
+
+//*************************************************** Magazine ****************************************************************/
+
+ /**
+  * GET /Magazine/:id
+  *
+  * Display a Magazine.
+  */
+ router.get('/admin/magazines/:magazine', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().readMagazine(req.params.magazine, (err, entity) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/viewMagazine.pug', {
+      magazine: entity
+    });
+  });
+});
+
+ /**
+ * GET /magazine/:id/edit
+ *
+ * Display a magazine for editing.
+ */
+router.get('/admin/magazines/:magazine/edit', (req, res, next) => {
+  getModel().readMagazine(req.params.magazine, (err, entity) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/formMagazine.pug', {
+      magazine: entity,
+      action: 'Edit'
+    });
+  });
+});
+
+
+/**
+ * POST /magazine/:id/edit
+ *
+ * Update a magazine.
+ */
+router.post(
+  '/admin/magazines/:magazine/edit',
+  images.multer.single('image'),
+  images.sendUploadToGCS,
+  (req, res, next) => {
+    let data = req.body;
+
+    // Was an image uploaded? If so, we'll use its public URL
+    // in cloud storage.
+    if (req.file && req.file.cloudStoragePublicUrl) {
+      req.body.imageUrl = req.file.cloudStoragePublicUrl;
+    }
+
+    getModel().updateMagazine(req.params.magazine, data, (err, savedData) => {
+      if (err) {
+        next(err);
+        return;
+      }
+      res.redirect(`/users/admin/magazines`);
+    });
+  }
+);
+
+
+/**
+ * GET /magazine/:id/delete
+ *
+ * Delete a magazine
+ */
+router.get('/admin/magazines/:magazine/delete', (req, res, next) => {
+  getModel().deleteMagazine(req.params.magazine, (err) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.redirect(req.baseUrl);
+  });
+});
+
+ //****************************************************************************************************************************/
+
+
+//*************************************************** Music *******************************************************************/
+
+ /**
+  * GET /Music/:id
+  *
+  * Display a Music.
+  */
+ router.get('/admin/music/:music', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().readMusic(req.params.music, (err, entity) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/viewMusic.pug', {
+      music: entity
+    });
+  });
+});
+
+ /**
+ * GET /music/:id/edit
+ *
+ * Display a music for editing.
+ */
+router.get('/admin/music/:music/edit', (req, res, next) => {
+  getModel().readMusic(req.params.music, (err, entity) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/formMusic.pug', {
+      music: entity,
+      action: 'Edit'
+    });
+  });
+});
+
+
+/**
+ * POST /music/:id/edit
+ *
+ * Update a music.
+ */
+router.post(
+  '/admin/music/:music/edit',
+  images.multer.single('image'),
+  images.sendUploadToGCS,
+  (req, res, next) => {
+    let data = req.body;
+
+    // Was an image uploaded? If so, we'll use its public URL
+    // in cloud storage.
+    if (req.file && req.file.cloudStoragePublicUrl) {
+      req.body.imageUrl = req.file.cloudStoragePublicUrl;
+    }
+
+    getModel().updateMusic(req.params.music, data, (err, savedData) => {
+      if (err) {
+        next(err);
+        return;
+      }
+      res.redirect(`/users/admin/music`);
+    });
+  }
+);
+
+
+/**
+ * GET /music/:id/delete
+ *
+ * Delete a music
+ */
+router.get('/admin/music/:music/delete', (req, res, next) => {
+  getModel().deleteMusic(req.params.music, (err) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.redirect(req.baseUrl);
+  });
+});
+
+ //****************************************************************************************************************************/
+
+
+//*************************************************** MOVIES *******************************************************************/
+
+ /**
+  * GET /Movie/:id
+  *
+  * Display a Movie.
+  */
+ router.get('/admin/movies/:movie', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().readMovie(req.params.movie, (err, entity) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/viewMovie.pug', {
+      movie: entity
+    });
+  });
+});
+
+ /**
+ * GET /movie/:id/edit
+ *
+ * Display a movie for editing.
+ */
+router.get('/admin/movies/:movie/edit', (req, res, next) => {
+  getModel().readMovie(req.params.movie, (err, entity) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/formMovie.pug', {
+      movie: entity,
+      action: 'Edit'
+    });
+  });
+});
+
+
+/**
+ * POST /movie/:id/edit
+ *
+ * Update a movie.
+ */
+router.post(
+  '/admin/movies/:movie/edit',
+  images.multer.single('image'),
+  images.sendUploadToGCS,
+  (req, res, next) => {
+    let data = req.body;
+
+    // Was an image uploaded? If so, we'll use its public URL
+    // in cloud storage.
+    if (req.file && req.file.cloudStoragePublicUrl) {
+      req.body.imageUrl = req.file.cloudStoragePublicUrl;
+    }
+
+    getModel().updateMovie(req.params.movie, data, (err, savedData) => {
+      if (err) {
+        next(err);
+        return;
+      }
+      res.redirect(`/users/admin/movies`);
+    });
+  }
+);
+
+
+/**
+ * GET /movie/:id/delete
+ *
+ * Delete a movie
+ */
+router.get('/admin/movies/:movie/delete', (req, res, next) => {
+  getModel().deleteMovie(req.params.movie, (err) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.redirect(req.baseUrl);
+  });
+});
+
+ //****************************************************************************************************************************/
+
+
+
 
 /**
  * Errors on "/users/*" routes.

@@ -1,0 +1,23 @@
+extends ../catalog.pug
+
+block content
+  h3 Magazine
+   small
+
+  .btn-group
+   a(href=`/users/admin/magazines/${magazine.id}/edit`, class='btn btn-primary btn-sm')
+     i.glyphicon.glyphicon-edit
+     span  Edit Magazine
+   a(href=`/users/admin/magazines/${magazine.id}/delete`, class='btn btn-danger btn-sm')
+     i.glyphicon.glyphicon-trash
+     span  Delete Magazine
+
+  .media
+      .media-left
+        img(Id="image" src=magazine.imageUrl)
+      .media-body
+        h4= magazine.title
+          | &nbsp;
+          small= magazine.publishedDate
+        h5 By #{magazine.author||'unknown'}
+        p= magazine.description

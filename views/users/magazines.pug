@@ -9,6 +9,7 @@ block content
     table(class='table')
      thead
       tr
+       td View
        td Title
        td Language
        td Publisher
@@ -17,6 +18,10 @@ block content
      tbody   
       each magazine in magazines
        tr
+         td
+          .media-left
+           a(href=`/users/admin/magazines/${magazine.id}`)
+            img(Id="image" src=magazine.imageUrl)
           td= magazine.title
           td= magazine.language
           td= magazine.publisher
@@ -24,3 +29,8 @@ block content
           td= magazine.ISBN13
   if !magazines.length
     p No magazines found.
+  if nextPageToken
+    nav
+      ul.pager
+        li
+          a(href=`?pageToken=${encodeURIComponent(nextPageToken)}`) Next

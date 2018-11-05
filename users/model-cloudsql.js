@@ -48,9 +48,9 @@ function list (isActive, limit, token, cb) {
 // [END active users list]
 
 // [Start create user]
-function createUser (data, profileName, limit, cb) {
+function createUser (data, profileName, cb) {
   connection.query(
-    'INSERT INTO `user` SET ? ON DUPLICATE KEY UPDATE `profileName` = ?', [data, profileName, limit],
+    'INSERT INTO `user` SET ? ON DUPLICATE KEY UPDATE `profileName` = ?', [data, profileName],
     (err, result) => {
       if (err) {
         cb(err);
@@ -234,6 +234,8 @@ function listMusics (limit, token, cb) {
 }
 //[End set listMusics]
 
+//-------------------------------------------- START  CREATE ------------------------------------------------------------------//
+
 // [START createBook]
 function createBook (data, cb) {
   connection.query(
@@ -243,7 +245,7 @@ function createBook (data, cb) {
         cb(err);
         return;
       }
-      cb(null, result);
+      readBook(result.insertId, cb);
     });
 }
 // [END createBook]
@@ -258,7 +260,7 @@ function createMagazine (data, cb) {
         cb(err);
         return;
       }
-      cb(null, result);
+      readMagazine(result.insertId, cb);
     });
 }
 
@@ -274,12 +276,9 @@ function createMovie (data, cb) {
         cb(err);
         return;
       }
-      cb(null, result);
+      readMovie(result.insertId, cb);
     });
 }
-
-
-
 // [END createMovies]
 
 // [START createMusic]
@@ -291,11 +290,183 @@ function createMusic (data, cb) {
         cb(err);
         return;
       }
-      cb(null, result);
+      readMusic(result.insertId, cb);
     });
 }
 // [END createMusic]
+//-----------------------------------------------------------------------------------------------------------------------------//
 
+
+
+//-------------------------------------------- START  READ --------------------------------------------------------------------//
+// [START read]
+function readBook (id, cb) {
+  connection.query(
+    'SELECT * FROM `books` WHERE `id` = ?', id, (err, results) => {
+      if (!err && !results.length) {
+        err = {
+          code: 404,
+          message: 'Not found!!'
+        };
+      }
+      if (err) {
+        cb(err);
+        return;
+      }
+      cb(null, results[0]);
+    });
+}
+// [END read]
+
+
+// [START read]
+function readMagazine (id, cb) {
+  connection.query(
+    'SELECT * FROM `Magazines` WHERE `id` = ?', id, (err, results) => {
+      if (!err && !results.length) {
+        err = {
+          code: 404,
+          message: 'Not found!!'
+        };
+      }
+      if (err) {
+        cb(err);
+        return;
+      }
+      cb(null, results[0]);
+    });
+}
+// [END read]
+
+// [START read]
+function readMusic (id, cb) {
+  connection.query(
+    'SELECT * FROM `musics` WHERE `id` = ?', id, (err, results) => {
+      if (!err && !results.length) {
+        err = {
+          code: 404,
+          message: 'Not found!!'
+        };
+      }
+      if (err) {
+        cb(err);
+        return;
+      }
+      cb(null, results[0]);
+    });
+}
+// [END read]
+
+// [START read]
+function readMovie (id, cb) {
+  connection.query(
+    'SELECT * FROM `movies` WHERE `id` = ?', id, (err, results) => {
+      if (!err && !results.length) {
+        err = {
+          code: 404,
+          message: 'Not found!!'
+        };
+      }
+      if (err) {
+        cb(err);
+        return;
+      }
+      cb(null, results[0]);
+    });
+}
+// [END read]
+
+//-----------------------------------------------------------------------------------------------------------------------------//
+
+
+
+//-------------------------------------------- START  UPDATE ------------------------------------------------------------------//
+
+// [START update]
+function updateBook (id, data, cb) {
+  connection.query(
+    'UPDATE `books` SET ? WHERE `id` = ?', [data, id], (err) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      readBook(id, cb);
+    });
+}
+// [END update]
+
+// [START update]
+function updateMagazine (id, data, cb) {
+  connection.query(
+    'UPDATE `Magazines` SET ? WHERE `id` = ?', [data, id], (err) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      readMagazine(id, cb);
+    });
+}
+// [END update]
+
+// [START update]
+function updateMusic (id, data, cb) {
+  connection.query(
+    'UPDATE `musics` SET ? WHERE `id` = ?', [data, id], (err) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      readMusic(id, cb);
+    });
+}
+// [END update]
+
+// [START update]
+function updateMovie (id, data, cb) {
+  connection.query(
+    'UPDATE `movies` SET ? WHERE `id` = ?', [data, id], (err) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      readMovie(id, cb);
+    });
+}
+// [END update]
+
+
+//-----------------------------------------------------------------------------------------------------------------------------//
+
+
+
+
+//-------------------------------------------- START  DELETE ------------------------------------------------------------------//
+
+//[START delete]
+function _deleteBook (id, cb) {
+  connection.query('DELETE FROM `books` WHERE `id` = ?', id, cb);
+}
+//[END delete]
+
+//[START delete]
+function _deleteMagazine (id, cb) {
+  connection.query('DELETE FROM `Magazines` WHERE `id` = ?', id, cb);
+}
+//[END delete]
+
+//[START delete]
+function _deleteMusic (id, cb) {
+  connection.query('DELETE FROM `musics` WHERE `id` = ?', id, cb);
+}
+//[END delete]
+
+//[START delete]
+function _deleteMovie (id, cb) {
+  connection.query('DELETE FROM `movies` WHERE `id` = ?', id, cb);
+}
+//[END delete]
+
+//-----------------------------------------------------------------------------------------------------------------------------//
 module.exports = {
   createSchema: createSchema,
   list: list,
@@ -311,7 +482,19 @@ module.exports = {
   createBook: createBook,
   createMagazine: createMagazine,
   createMovie: createMovie,
-  createMusic: createMusic
+  createMusic: createMusic,
+  readBook: readBook,
+  readMagazine: readMagazine,
+  readMusic: readMusic,
+  readMovie: readMovie,
+  deleteBook: _deleteBook,
+  deleteMagazine: _deleteMagazine,
+  deleteMusic: _deleteMusic,
+  deleteMovie: _deleteMovie,
+  updateBook: updateBook,
+  updateMagazine: updateMagazine,
+  updateMusic: updateMusic,
+  updateMovie: updateMovie
 };
 
 if (module === require.main) {
