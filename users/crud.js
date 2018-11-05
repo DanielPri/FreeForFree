@@ -16,16 +16,22 @@
 const express = require('express');
 const images = require('../lib/images');
 const oauth2 = require('../lib/oauth2');
+const bodyParser = require('body-parser');
 
 function getModel () {
   return require(`./model-${require('../config').get('DATA_BACKEND')}`);
 }
 
 const router = express.Router();
+//////////////////////////////////////////////
+// var app     = express();
+// app.use(bodyParser.urlencoded({ extended: true })); 
+////////////
 
 // Use the oauth middleware to automatically get the user's profile
 // information and expose login/logout URLs to templates.
 router.use(oauth2.template);
+router.use(bodyParser.urlencoded({ extended: true }));
 
 // Set Content-Type for all responses for these routes
 router.use((req, res, next) => {
@@ -41,6 +47,54 @@ router.get('/', (req, res, next) => {
 router.get('/admin/catalog', oauth2.required, oauth2.adminRequired, (req, res, next) => {
   res.render('users/catalog.pug')
 });
+
+//--------Add User----------//
+router.get('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().findUnregisteredUser(3, (err, entities) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/addUser.pug', {
+      users: entities
+     });
+  });
+});
+
+//--------EDit user----------//
+// router.get('/admin/editUser', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+//   getModel().findUserByType(0,(err, entities) => {
+//     if (err) {
+//       next(err);
+//       return;
+//     }
+//     res.render('users/addUser.pug', {
+//       users: entities
+//      });
+//   });
+//   res.render('users/editUser.pug')
+// });
+
+//--------Submit button to change user type status----------//
+// const jsdom = require("jsdom");
+// const { JSDOM } = jsdom;
+
+
+router.post('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, next) => { 
+  // var allSelectedElements= getUserType();
+  console.log("---------------------------------begining----------------------------------------------");
+  console.log(req.body.userType);
+  console.log("-----------------------------------end-------------------------------------------------");
+  getModel().chooseUserType(req.body.userType, (err, entities) => {
+    if (err) {
+
+      next(err);
+      return;
+    }
+    res.redirect('addUser');
+  });
+});
+  
 
 router.get('/admin/books', oauth2.required, oauth2.adminRequired, (req, res, next) => {
   getModel().listBooks(10, req.query.pageToken, (err, entities, cursor) => {

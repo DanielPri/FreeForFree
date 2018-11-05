@@ -61,6 +61,65 @@ function createUser (data, profileName, cb) {
 }
 // [End create user]
 
+// [Find unregistered users]
+function findUnregisteredUser (userType, cb) {
+  // var i=0;
+  // for(i=0; i<userType.length; i++){
+    connection.query(
+      // 'UPDATE `user` SET `userType`= ? where `profileID` = ?' , [3, userType[i]],
+      'SELECT * FROM `user` WHERE `userType` = ?', [userType],
+      (err, result) => {
+        if (err) {
+          cb(err);
+          return;
+        }
+        cb(null, result);
+    });
+  // }
+  
+}
+// [End find unregistered users]
+
+function chooseUserType (userType, cb) {
+  var i=0;
+  var userTypeValue= userType[0];
+  var id= userType.substr(5);
+  var query = 'UPDATE user SET userType= '+userTypeValue+' where profileID = '+id+'; ';
+  console.log("-----------------DATABASE---------------");
+  console.log(userType);
+  console.log(userTypeValue);
+  console.log(userTypeValue);
+  // for(i=0; i<userType.length; i++){
+  //   console.log("userType[i]");
+  //   console.log(userType[i][0]);
+  //   console.log("userType[i].substr(5)");
+  //   console.log(userType[i].substr(5));
+
+  //   userTypeValue = userType[i][0];
+  //   id = userType[i].substr(5);
+  //   console.log(userTypeValue);
+  //   console.log(id); 
+  //   query+= 'UPDATE user SET userType= '+userTypeValue+' where profileID = '+id+'; ';
+
+  //   console.log(query);
+  //   console.log("end query");
+  // }
+    connection.query(
+      // UPDATE user SET userType= 3 where profileID = 111595700919556005339
+      // 'UPDATE `user` SET `userType`= ? where `profileID` = ?' , [userTypeValue, id],
+      // 'SELECT * FROM `user` WHERE `userType` = ?', [userType],
+      query,
+      (err, result) => {
+        if (err) {
+          cb(err);
+          return;
+        }
+        cb(null, result);
+    });
+  
+  
+}
+
 // [Start verify admin]
 function verifyAdmin (profileID, userType, cb) {
   connection.query(
@@ -88,6 +147,23 @@ function setIsActive (tiny, userID, cb) {
       cb(null, result);
     });
 }
+// [End set user's activity state]
+
+
+// [Start Change user's type]
+function changeUserType (data, cb) {
+  connection.query(
+    'UPDATE `user` SET `userType` = ? WHERE `profileID` = ?', [userType, userID],
+    (err, result) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      cb(null, result);
+    });
+}
+// [END Change user's type]
+
 // [End set user's activity state]
 
 // [Start set listBooks]
@@ -397,6 +473,8 @@ module.exports = {
   createUser: createUser,
   setIsActive: setIsActive,
   verifyAdmin: verifyAdmin,
+  findUnregisteredUser: findUnregisteredUser,
+  chooseUserType: chooseUserType,
   listBooks: listBooks,
   listMagazines: listMagazines,
   listMovies: listMovies,
