@@ -1,10 +1,7 @@
-<<<<<<< HEAD
-=======
 header {
   font-size: 20pt;
   text-align: center;
 }
->>>>>>> PerCatalog
 body {
     background: #fff;
     color: #333;

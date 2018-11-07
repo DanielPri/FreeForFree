@@ -1,23 +1,24 @@
 extends ../catalog.pug
 
 block content
-  h3 Music
-   small
+  div(class="container")
+    div(class="row justify-content-md-center")
+      h3 Music
+       small
+      .btn-group
+       a(href=`/users/admin/music/${music.id}/edit`, class='btn btn-primary btn-sm')
+         i.glyphicon.glyphicon-edit
+         span  Edit music
+       a(href=`/users/admin/music/${music.id}/delete`, class='btn btn-danger btn-sm')
+         i.glyphicon.glyphicon-trash
+         span  Delete music
 
-  .btn-group
-   a(href=`/users/admin/music/${music.id}/edit`, class='btn btn-primary btn-sm')
-     i.glyphicon.glyphicon-edit
-     span  Edit music
-   a(href=`/users/admin/music/${music.id}/delete`, class='btn btn-danger btn-sm')
-     i.glyphicon.glyphicon-trash
-     span  Delete music
-
-  .media
-      .media-left
-        img(Id="image" src=music.imageUrl)
-      .media-body
-        h4= music.title
-          | &nbsp;
-          small= music.publishedDate
-        h5 By #{music.author||'unknown'}
-        p= music.description
+      .media
+          .media-left
+            img(Id="image" src=music.imageUrl)
+          .media-body
+            h4= music.title
+              | &nbsp;
+              small= music.publishedDate
+            h5 By #{music.author||'unknown'}
+            p= music.description
