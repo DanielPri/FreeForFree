@@ -62,9 +62,10 @@ router.get('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, n
 });
 
 //-------Search Catalogue------//
-router.get('/admin/Search&Sort', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-    res.render('users/Search&Sort.pug')
+router.get('/admin/adminSearch', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+    res.render('users/adminSearch.pug')
 });
+
 //--------EDit user----------//
 // router.get('/admin/editUser', oauth2.required, oauth2.adminRequired, (req, res, next) => {
 //   getModel().findUserByType(0,(err, entities) => {
@@ -672,7 +673,7 @@ router.get('/admin/movies/:movie/delete', (req, res, next) => {
 
 router.get(['/admin/music/search','/search'], (req, res, next) => {
 
-    res.render('users/Search&Sort.pug');
+    res.render('users/adminSearch.pug');
 
 });
 
