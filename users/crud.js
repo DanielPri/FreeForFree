@@ -43,7 +43,7 @@ router.get('/admin/catalog', oauth2.required, oauth2.adminRequired, (req, res, n
 });
 
 router.get('/admin/books', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().listBooks(10, req.query.pageToken, (err, entities, cursor) => {
+  getModel().listBooks(10, req.query.pageToke, (err, entities, cursor) => {
     if (err) {
       next(err);
       return;
@@ -464,7 +464,7 @@ router.get('/admin/magazines/:magazine/delete', (req, res, next) => {
  *
  * Display a music for editing.
  */
-router.get('/admin/music/:music/edit', (req, res, next) => {
+router.get('/admin/music/:music/edit', oauth2.required, oauth2.adminRequired, (req, res, next) => {
   getModel().readMusic(req.params.music, (err, entity) => {
     if (err) {
       next(err);
@@ -609,6 +609,29 @@ router.get('/admin/movies/:movie/delete', (req, res, next) => {
 
  //****************************************************************************************************************************/
 
+//********************************************************Search And Sort*****************************************************//
+
+
+router.get(['/admin/music/search','/search'], (req, res, next) => {
+
+    res.render('users/Search&Sort.pug');
+
+});
+
+
+
+router.get('/admin/magazines/:magazine/delete', (req, res, next) => {
+    getModel().deleteMagazine(req.params.magazine, (err) => {
+        if (err) {
+            next(err);
+            return;
+        }
+        res.redirect(req.baseUrl);
+    });
+});
+
+
+
 
 
 
@@ -616,10 +639,10 @@ router.get('/admin/movies/:movie/delete', (req, res, next) => {
  * Errors on "/users/*" routes.
  */
 router.use((err, req, res, next) => {
-  // Format error and forward to generic error handler for logging and
-  // responding to the request
-  err.response = err.message;
-  next(err);
+    // Format error and forward to generic error handler for logging and
+    // responding to the request
+    err.response = err.message;
+    next(err);
 });
 
 module.exports = router;
