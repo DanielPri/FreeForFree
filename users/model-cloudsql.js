@@ -577,6 +577,91 @@ function sortBooksByISBN13(limit, token, cb) {
 }
 //[End set sortBooksByISBN13]
 
+// [Start set sortMagazinesByTitle]
+function sortMagazinesByTitle(limit, token, cb) {
+    token = token ? parseInt(token, 10) : 0;
+    connection.query(
+        'SELECT * FROM `Magazines` ORDER BY `title`  LIMIT ? OFFSET ?', [limit, token],
+        (err, results) => {
+            if (err) {
+                cb(err);
+                return;
+            }
+            const hasMore = results.length === limit ? token + results.length : false;
+            cb(null, results, hasMore);
+        }
+    );
+}
+//[End set sortMagazinesByTitle]
+
+// [Start set sortMagazinesByLanguage]
+function sortMagazinesByLanguage(limit, token, cb) {
+    token = token ? parseInt(token, 10) : 0;
+    connection.query(
+        'SELECT * FROM `Magazines` ORDER BY `language`  LIMIT ? OFFSET ?', [limit, token],
+        (err, results) => {
+            if (err) {
+                cb(err);
+                return;
+            }
+            const hasMore = results.length === limit ? token + results.length : false;
+            cb(null, results, hasMore);
+        }
+    );
+}
+//[End set sortMagazinesByLanguage]
+
+// [Start set sortMagazinesByPublisher]
+function sortMagazinesByPublisher(limit, token, cb) {
+    token = token ? parseInt(token, 10) : 0;
+    connection.query(
+        'SELECT * FROM `Magazines` ORDER BY `publisher`  LIMIT ? OFFSET ?', [limit, token],
+        (err, results) => {
+            if (err) {
+                cb(err);
+                return;
+            }
+            const hasMore = results.length === limit ? token + results.length : false;
+            cb(null, results, hasMore);
+        }
+    );
+}
+//[End set sortMagazinesByPublisher]
+
+// [Start set sortMagazinesByISBN10]
+function sortMagazinesByISBN10(limit, token, cb) {
+    token = token ? parseInt(token, 10) : 0;
+    connection.query(
+        'SELECT * FROM `Magazines` ORDER BY `isbn10`  LIMIT ? OFFSET ?', [limit, token],
+        (err, results) => {
+            if (err) {
+                cb(err);
+                return;
+            }
+            const hasMore = results.length === limit ? token + results.length : false;
+            cb(null, results, hasMore);
+        }
+    );
+}
+//[End set sortMagazinesByISBN10]
+
+// [Start set sortMagazinesByISBN13]
+function sortMagazinesByISBN13(limit, token, cb) {
+    token = token ? parseInt(token, 10) : 0;
+    connection.query(
+        'SELECT * FROM `Magazines` ORDER BY `isbn13`  LIMIT ? OFFSET ?', [limit, token],
+        (err, results) => {
+            if (err) {
+                cb(err);
+                return;
+            }
+            const hasMore = results.length === limit ? token + results.length : false;
+            cb(null, results, hasMore);
+        }
+    );
+}
+//[End set sortMagazinesByISBN13]
+
 //-------------------------------------------- START  DELETE ------------------------------------------------------------------//
 
 //[START delete]
@@ -636,6 +721,11 @@ module.exports = {
   sortBooksByPublished: sortBooksByPublished,
   sortBooksByISBN10: sortBooksByISBN10,
   sortBooksByISBN13: sortBooksByISBN13,
+  sortMagazinesByTitle: sortMagazinesByTitle,
+  sortMagazinesByLanguage: sortMagazinesByLanguage,
+  sortMagazinesByPublisher: sortMagazinesByPublisher,
+  sortMagazinesByISBN10: sortMagazinesByISBN10,
+  sortMagazinesByISBN13: sortMagazinesByISBN13,
   updateBook: updateBook,
   updateMagazine: updateMagazine,
   updateMusic: updateMusic,
