@@ -437,20 +437,17 @@ function updateMovie (id, data, cb) {
 
 //------------------------------------------------Search-------------------------------------------------------------------------//
 
-function findItem( type, columnValue, cb){
+function findItem(type, searchType, columnValue, cb){
 
     connection.query(
-
-        'SELECT * FROM ? WHERE `id` = ?', [type, columnValue],
+        'SELECT * FROM ?? WHERE ?? = ?', [type, searchType, columnValue],
         (err, results) => {
             if (err) {
                 cb(err);
                 return;
             }
-
             cb(null, results);
         });
-
 }
 
 

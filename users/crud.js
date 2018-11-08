@@ -681,13 +681,13 @@ router.get(['/admin/music/search','/search'], (req, res, next) => {
 
 router.get('/admin/search', (req, res, next) => {
 
-    getModel().findItem('movies', 12, (err, entities) => {
+    getModel().findItem('movies', 'title', 'Halloween', (err, entities) => {
         if (err) {
             next(err);
             return;
         }
         res.render('users/adminSearch.pug', {
-            magazines: entities
+            movies: entities
         });
     });
 });
