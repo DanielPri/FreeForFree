@@ -680,7 +680,7 @@ router.get('/admin/sortBooksByTitle', oauth2.required, oauth2.adminRequired, (re
     });
 });
 
-// Create Page: Sort Books By Title
+// Create Page: Sort Books By Format
 router.get('/admin/sortBooksByFormat', oauth2.required, oauth2.adminRequired, (req, res, next) => {
     getModel().sortBooksByFormat(10, req.query.pageToken, (err, entities, cursor) => {
         if (err) {
@@ -688,6 +688,90 @@ router.get('/admin/sortBooksByFormat', oauth2.required, oauth2.adminRequired, (r
             return;
         }
         res.render('users/sortBooksByFormat.pug', {
+            books: entities,
+            nextPageToken: cursor
+        });
+    });
+});
+
+// Create Page: Sort Books By Pages
+router.get('/admin/sortBooksByPages', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+    getModel().sortBooksByPages(10, req.query.pageToken, (err, entities, cursor) => {
+        if (err) {
+            next(err);
+            return;
+        }
+        res.render('users/sortBooksByPages.pug', {
+            books: entities,
+            nextPageToken: cursor
+        });
+    });
+});
+
+// Create Page: Sort Books By Language
+router.get('/admin/sortBooksByLanguage', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+    getModel().sortBooksByLanguage(10, req.query.pageToken, (err, entities, cursor) => {
+        if (err) {
+            next(err);
+            return;
+        }
+        res.render('users/sortBooksByLanguage.pug', {
+            books: entities,
+            nextPageToken: cursor
+        });
+    });
+});
+
+// Create Page: Sort Books By Author
+router.get('/admin/sortBooksByAuthor', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+    getModel().sortBooksByAuthor(10, req.query.pageToken, (err, entities, cursor) => {
+        if (err) {
+            next(err);
+            return;
+        }
+        res.render('users/sortBooksByAuthor.pug', {
+            books: entities,
+            nextPageToken: cursor
+        });
+    });
+});
+
+// Create Page: Sort Books By Published
+router.get('/admin/sortBooksByPublished', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+    getModel().sortBooksByPublished(10, req.query.pageToken, (err, entities, cursor) => {
+        if (err) {
+            next(err);
+            return;
+        }
+        res.render('users/sortBooksByPublished.pug', {
+            books: entities,
+            nextPageToken: cursor
+        });
+    });
+});
+
+// Create Page: Sort Books By ISBN-10
+router.get('/admin/sortBooksByISBN10', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+    getModel().sortBooksByISBN10(10, req.query.pageToken, (err, entities, cursor) => {
+        if (err) {
+            next(err);
+            return;
+        }
+        res.render('users/sortBooksByISBN10.pug', {
+            books: entities,
+            nextPageToken: cursor
+        });
+    });
+});
+
+// Create Page: Sort Books By ISBN-13
+router.get('/admin/sortBooksByISBN13', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+    getModel().sortBooksByISBN13(10, req.query.pageToken, (err, entities, cursor) => {
+        if (err) {
+            next(err);
+            return;
+        }
+        res.render('users/sortBooksByISBN13.pug', {
             books: entities,
             nextPageToken: cursor
         });
@@ -709,4 +793,5 @@ router.use((err, req, res, next) => {
 });
 
 module.exports = router;
+
 
