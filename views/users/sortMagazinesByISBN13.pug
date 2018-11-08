@@ -1,0 +1,43 @@
+extends ../catalog.pug
+
+block content
+  .container
+    div(align="center")
+      a(class="btn btn-primary" href="/users/admin/formMagazine") Add Magazine
+    br
+    div(align="center")
+      a(class="btn btn-primary" href="/users/admin/sortMagazinesByTitle") Sort By Title
+      a(class="btn btn-primary" href="/users/admin/sortMagazinesByLanguage") Sort By Language
+      a(class="btn btn-primary" href="/users/admin/sortMagazinesByPublisher") Sort By Publisher
+      a(class="btn btn-primary" href="/users/admin/sortMagazinesByISBN10") Sort By ISBN10
+      a(class="btn btn-primary" href="/users/admin/sortMagazinesByISBN13") Sort By ISBN13
+    br
+    header Magazines
+    table(class='table')
+     thead
+      tr
+       td View
+       td Title
+       td Language
+       td Publisher
+       td ISBN-10
+       td ISBN-13
+     tbody   
+      each magazine in magazines
+       tr
+         td
+          .media-left
+           a(href=`/users/admin/magazines/${magazine.id}`)
+            img(Id="image" src=magazine.imageUrl)
+          td= magazine.title
+          td= magazine.language
+          td= magazine.publisher
+          td= magazine.ISBN10
+          td= magazine.ISBN13
+  if !magazines.length
+    p No magazines found.
+  if nextPageToken
+    nav
+      ul.pager
+        li
+          a(href=`?pageToken=${encodeURIComponent(nextPageToken)}`) Next
