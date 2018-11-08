@@ -354,7 +354,7 @@ router.get('/admin/formMusic', oauth2.required, oauth2.adminRequired, (req, res)
  *
  * Display a book for editing.
  */
-router.get('/admin/books/:book/edit', (req, res, next) => {
+router.get('/admin/books/:book/edit',  oauth2.required, oauth2.adminRequired, (req, res, next) => {
   getModel().readBook(req.params.book, (err, entity) => {
     if (err) {
       next(err);
@@ -401,7 +401,7 @@ router.post(
  *
  * Delete a book.
  */
-router.get('/admin/books/:book/delete', (req, res, next) => {
+router.get('/admin/books/:book/delete',   oauth2.required, oauth2.adminRequired, (req, res, next) => {
   getModel().deleteBook(req.params.book, (err) => {
     if (err) {
       next(err);
@@ -438,7 +438,7 @@ router.get('/admin/books/:book/delete', (req, res, next) => {
  *
  * Display a magazine for editing.
  */
-router.get('/admin/magazines/:magazine/edit', (req, res, next) => {
+router.get('/admin/magazines/:magazine/edit', oauth2.required, oauth2.adminRequired,(req, res, next) => {
   getModel().readMagazine(req.params.magazine, (err, entity) => {
     if (err) {
       next(err);
@@ -486,7 +486,7 @@ router.post(
  *
  * Delete a magazine
  */
-router.get('/admin/magazines/:magazine/delete', (req, res, next) => {
+router.get('/admin/magazines/:magazine/delete', oauth2.required, oauth2.adminRequired, (req, res, next) => {
   getModel().deleteMagazine(req.params.magazine, (err) => {
     if (err) {
       next(err);
@@ -571,7 +571,7 @@ router.post(
  *
  * Delete a music
  */
-router.get('/admin/music/:music/delete', (req, res, next) => {
+router.get('/admin/music/:music/delete',  oauth2.required, oauth2.adminRequired, (req, res, next) => {
   getModel().deleteMusic(req.params.music, (err) => {
     if (err) {
       next(err);
@@ -608,7 +608,7 @@ router.get('/admin/music/:music/delete', (req, res, next) => {
  *
  * Display a movie for editing.
  */
-router.get('/admin/movies/:movie/edit', (req, res, next) => {
+router.get('/admin/movies/:movie/edit', oauth2.required, oauth2.adminRequired, (req, res, next) => {
   getModel().readMovie(req.params.movie, (err, entity) => {
     if (err) {
       next(err);
@@ -656,7 +656,7 @@ router.post(
  *
  * Delete a movie
  */
-router.get('/admin/movies/:movie/delete', (req, res, next) => {
+router.get('/admin/movies/:movie/delete', oauth2.required, oauth2.adminRequired, (req, res, next) => {
   getModel().deleteMovie(req.params.movie, (err) => {
     if (err) {
       next(err);
