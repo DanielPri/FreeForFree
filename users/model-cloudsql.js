@@ -84,30 +84,8 @@ function chooseUserType (userType, cb) {
   var i=0;
   var userTypeValue= userType[0];
   var id= userType.substr(5);
-  var query = 'UPDATE user SET userType= '+userTypeValue+' where profileID = '+id+'; ';
-  console.log("-----------------DATABASE---------------");
-  console.log(userType);
-  console.log(userTypeValue);
-  console.log(userTypeValue);
-  // for(i=0; i<userType.length; i++){
-  //   console.log("userType[i]");
-  //   console.log(userType[i][0]);
-  //   console.log("userType[i].substr(5)");
-  //   console.log(userType[i].substr(5));
-
-  //   userTypeValue = userType[i][0];
-  //   id = userType[i].substr(5);
-  //   console.log(userTypeValue);
-  //   console.log(id); 
-  //   query+= 'UPDATE user SET userType= '+userTypeValue+' where profileID = '+id+'; ';
-
-  //   console.log(query);
-  //   console.log("end query");
-  // }
+  var query = 'UPDATE user SET userType= '+userTypeValue+' where profileID = '+id+'; ';  
     connection.query(
-      // UPDATE user SET userType= 3 where profileID = 111595700919556005339
-      // 'UPDATE `user` SET `userType`= ? where `profileID` = ?' , [userTypeValue, id],
-      // 'SELECT * FROM `user` WHERE `userType` = ?', [userType],
       query,
       (err, result) => {
         if (err) {
