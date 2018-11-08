@@ -666,6 +666,7 @@ router.get('/admin/movies/:movie/delete', (req, res, next) => {
 
 //*************************************************** SORTING FUNCTIONS *******************************************************************/
 
+//BOOKS
 // Create Page: Sort Books By Title
 router.get('/admin/sortBooksByTitle', oauth2.required, oauth2.adminRequired, (req, res, next) => {
     getModel().sortBooksByTitle(10, req.query.pageToken, (err, entities, cursor) => {
@@ -778,6 +779,7 @@ router.get('/admin/sortBooksByISBN13', oauth2.required, oauth2.adminRequired, (r
     });
 });
 
+//MOVIES
 // Create Page: Sort Movies By Title
 router.get('/admin/sortMoviesByTitle', oauth2.required, oauth2.adminRequired, (req, res, next) => {
   getModel().sortMoviesByTitle(10, req.query.pageToken, (err, entities, cursor) => {
@@ -785,8 +787,106 @@ router.get('/admin/sortMoviesByTitle', oauth2.required, oauth2.adminRequired, (r
           next(err);
           return;
       }
-      res.render('users/sortMoviesByTitle.pug', {
-          books: entities,
+      res.render('users/movies.pug', {
+          movies: entities,
+          nextPageToken: cursor
+      });
+  });
+});
+
+// Create Page: Sort Movies By Director
+router.get('/admin/sortMoviesByDirector', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().sortMoviesByDirector(10, req.query.pageToken, (err, entities, cursor) => {
+      if (err) {
+          next(err);
+          return;
+      }
+      res.render('users/movies.pug', {
+          movies: entities,
+          nextPageToken: cursor
+      });
+  });
+});
+
+// Create Page: Sort Movies By Producers
+router.get('/admin/sortMoviesByProducers', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().sortMoviesByProducers(10, req.query.pageToken, (err, entities, cursor) => {
+      if (err) {
+          next(err);
+          return;
+      }
+      res.render('users/movies.pug', {
+          movies: entities,
+          nextPageToken: cursor
+      });
+  });
+});
+
+// Create Page: Sort Movies By Actors
+router.get('/admin/sortMoviesByActors', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().sortMoviesByActors(10, req.query.pageToken, (err, entities, cursor) => {
+      if (err) {
+          next(err);
+          return;
+      }
+      res.render('users/movies.pug', {
+          movies: entities,
+          nextPageToken: cursor
+      });
+  });
+});
+
+// Create Page: Sort Movies By Language
+router.get('/admin/sortMoviesByLanguage', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().sortMoviesByLanguage(10, req.query.pageToken, (err, entities, cursor) => {
+      if (err) {
+          next(err);
+          return;
+      }
+      res.render('users/movies.pug', {
+          movies: entities,
+          nextPageToken: cursor
+      });
+  });
+});
+
+// Create Page: Sort Movies By Subtitles
+router.get('/admin/sortMoviesBySubtitles', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().sortMoviesBySubtitles(10, req.query.pageToken, (err, entities, cursor) => {
+      if (err) {
+          next(err);
+          return;
+      }
+      res.render('users/movies.pug', {
+          movies: entities,
+          nextPageToken: cursor
+      });
+  });
+});
+
+// Create Page: Sort Movies By Dubbed
+router.get('/admin/sortMoviesByDubbed', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().sortMoviesByDubbed(10, req.query.pageToken, (err, entities, cursor) => {
+      if (err) {
+          next(err);
+          return;
+      }
+      res.render('users/movies.pug', {
+          movies: entities,
+          nextPageToken: cursor
+      });
+  });
+});
+
+// Create Page: Sort Movies By Runtime
+router.get('/admin/sortMoviesByRuntime', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().sortMoviesByRuntime(10, req.query.pageToken, (err, entities, cursor) => {
+      if (err) {
+          next(err);
+          return;
+      }
+      res.render('users/movies.pug', {
+          movies: entities,
           nextPageToken: cursor
       });
   });

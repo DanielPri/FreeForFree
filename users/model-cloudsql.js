@@ -575,7 +575,23 @@ function sortBooksByISBN13(limit, token, cb) {
         }
     );
 }
-//[End set sortBooksByISBN13]
+
+// [Start set sortMoviesByTitle]
+function sortMoviesByTitle(limit, token, cb) {
+  token = token ? parseInt(token, 10) : 0;
+  connection.query(
+      'SELECT * FROM `movies` ORDER BY `title`  LIMIT ? OFFSET ?', [limit, token],
+      (err, results) => {
+          if (err) {
+              cb(err);
+              return;
+          }
+          const hasMore = results.length === limit ? token + results.length : false;
+          cb(null, results, hasMore);
+      }
+  );
+}
+//[End set sortMoviesByTitle]
 
 //-------------------------------------------- START  DELETE ------------------------------------------------------------------//
 
