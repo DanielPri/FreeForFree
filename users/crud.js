@@ -62,8 +62,8 @@ router.get('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, n
 });
 
 //-------Search Catalogue------//
-router.get('/admin/adminSearch', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-    res.render('users/adminSearch.pug')
+router.get('/admin/test', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+    res.render('users/test.pug')
 });
 
 //--------EDit user----------//
