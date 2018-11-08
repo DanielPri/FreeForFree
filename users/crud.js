@@ -778,6 +778,19 @@ router.get('/admin/sortBooksByISBN13', oauth2.required, oauth2.adminRequired, (r
     });
 });
 
+// Create Page: Sort Movies By Title
+router.get('/admin/sortMoviesByTitle', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().sortMoviesByTitle(10, req.query.pageToken, (err, entities, cursor) => {
+      if (err) {
+          next(err);
+          return;
+      }
+      res.render('users/sortMoviesByTitle.pug', {
+          books: entities,
+          nextPageToken: cursor
+      });
+  });
+});
 //*************************************************** END SORTING FUNCTIONS *******************************************************************/
 
 //*************************************************** ERROR HANDLING *******************************************************************/

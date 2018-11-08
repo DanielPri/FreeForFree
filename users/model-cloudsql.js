@@ -636,6 +636,7 @@ module.exports = {
   sortBooksByPublished: sortBooksByPublished,
   sortBooksByISBN10: sortBooksByISBN10,
   sortBooksByISBN13: sortBooksByISBN13,
+  sortMoviesByTitle: sortMoviesByTitle,
   updateBook: updateBook,
   updateMagazine: updateMagazine,
   updateMusic: updateMusic,
