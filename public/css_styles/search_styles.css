@@ -5,3 +5,13 @@
     text-align: center;
 }
 
+.bookRadioButton{
+    border-style: solid;
+    border-color: #333333;
+    border-width: 1px;
+    display: inline-block;
+    overflow: hidden;
+}
+#books{
+    display: inline-block;
+}
