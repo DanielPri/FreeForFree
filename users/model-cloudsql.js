@@ -593,6 +593,244 @@ function sortMoviesByTitle(limit, token, cb) {
 }
 //[End set sortMoviesByTitle]
 
+// [Start set sortMoviesByDirector]
+function sortMoviesByDirector(limit, token, cb) {
+  token = token ? parseInt(token, 10) : 0;
+  connection.query(
+      'SELECT * FROM `movies` ORDER BY `director`  LIMIT ? OFFSET ?', [limit, token],
+      (err, results) => {
+          if (err) {
+              cb(err);
+              return;
+          }
+          const hasMore = results.length === limit ? token + results.length : false;
+          cb(null, results, hasMore);
+      }
+  );
+}
+//[End set sortMoviesByDirector]
+
+// [Start set sortMoviesByProducers]
+function sortMoviesByProducers(limit, token, cb) {
+  token = token ? parseInt(token, 10) : 0;
+  connection.query(
+      'SELECT * FROM `movies` ORDER BY `producers`  LIMIT ? OFFSET ?', [limit, token],
+      (err, results) => {
+          if (err) {
+              cb(err);
+              return;
+          }
+          const hasMore = results.length === limit ? token + results.length : false;
+          cb(null, results, hasMore);
+      }
+  );
+}
+//[End set sortMoviesByProducers]
+
+// [Start set sortMoviesByActors]
+function sortMoviesByLanguage(limit, token, cb) {
+  token = token ? parseInt(token, 10) : 0;
+  connection.query(
+      'SELECT * FROM `movies` ORDER BY `language`  LIMIT ? OFFSET ?', [limit, token],
+      (err, results) => {
+          if (err) {
+              cb(err);
+              return;
+          }
+          const hasMore = results.length === limit ? token + results.length : false;
+          cb(null, results, hasMore);
+      }
+  );
+}
+//[End set sortMoviesByActors]
+
+// [Start set sortMoviesBySubtitles]
+function sortMoviesBySubtitles(limit, token, cb) {
+  token = token ? parseInt(token, 10) : 0;
+  connection.query(
+      'SELECT * FROM `movies` ORDER BY `subtitles`  LIMIT ? OFFSET ?', [limit, token],
+      (err, results) => {
+          if (err) {
+              cb(err);
+              return;
+          }
+          const hasMore = results.length === limit ? token + results.length : false;
+          cb(null, results, hasMore);
+      }
+  );
+}
+//[End set sortMoviesBySubtitles]
+
+// [Start set sortMoviesByLanguage]
+function sortMoviesByActors(limit, token, cb) {
+  token = token ? parseInt(token, 10) : 0;
+  connection.query(
+      'SELECT * FROM `movies` ORDER BY `actors`  LIMIT ? OFFSET ?', [limit, token],
+      (err, results) => {
+          if (err) {
+              cb(err);
+              return;
+          }
+          const hasMore = results.length === limit ? token + results.length : false;
+          cb(null, results, hasMore);
+      }
+  );
+}
+//[End set sortMoviesByLanguage]
+
+// [Start set sortMoviesByDubbed]
+function sortMoviesByDubbed(limit, token, cb) {
+  token = token ? parseInt(token, 10) : 0;
+  connection.query(
+      'SELECT * FROM `movies` ORDER BY `dubbed`  LIMIT ? OFFSET ?', [limit, token],
+      (err, results) => {
+          if (err) {
+              cb(err);
+              return;
+          }
+          const hasMore = results.length === limit ? token + results.length : false;
+          cb(null, results, hasMore);
+      }
+  );
+}
+//[End set sortMoviesByDubbed]
+
+// [Start set sortMoviesByRuntime]
+function sortMoviesByRuntime(limit, token, cb) {
+  token = token ? parseInt(token, 10) : 0;
+  connection.query(
+      'SELECT * FROM `movies` ORDER BY `runtime`  LIMIT ? OFFSET ?', [limit, token],
+      (err, results) => {
+          if (err) {
+              cb(err);
+              return;
+          }
+          const hasMore = results.length === limit ? token + results.length : false;
+          cb(null, results, hasMore);
+      }
+  );
+}
+//[End set sortMoviesByRuntime]
+
+// [Start set sortMusicByTitle]
+function sortMusicByTitle(limit, token, cb) {
+  token = token ? parseInt(token, 10) : 0;
+  connection.query(
+      'SELECT * FROM `musics` ORDER BY `title`  LIMIT ? OFFSET ?', [limit, token],
+      (err, results) => {
+          if (err) {
+              cb(err);
+              return;
+          }
+          const hasMore = results.length === limit ? token + results.length : false;
+          cb(null, results, hasMore);
+      }
+  );
+}
+//[End set sortMusicByTitle]
+
+// [Start set sortMusicByType]
+function sortMusicByType(limit, token, cb) {
+  token = token ? parseInt(token, 10) : 0;
+  connection.query(
+      'SELECT * FROM `musics` ORDER BY `type`  LIMIT ? OFFSET ?', [limit, token],
+      (err, results) => {
+          if (err) {
+              cb(err);
+              return;
+          }
+          const hasMore = results.length === limit ? token + results.length : false;
+          cb(null, results, hasMore);
+      }
+  );
+}
+//[End set sortMusicByType]
+
+// [Start set sortMusicByProducers]
+function sortMusicByProducers(limit, token, cb) {
+  token = token ? parseInt(token, 10) : 0;
+  connection.query(
+      'SELECT * FROM `musics` ORDER BY `producers`  LIMIT ? OFFSET ?', [limit, token],
+      (err, results) => {
+          if (err) {
+              cb(err);
+              return;
+          }
+          const hasMore = results.length === limit ? token + results.length : false;
+          cb(null, results, hasMore);
+      }
+  );
+}
+//[End set sortMusicByProducers]
+
+// [Start set sortMusicByArtist]
+function sortMusicByArtist(limit, token, cb) {
+  token = token ? parseInt(token, 10) : 0;
+  connection.query(
+      'SELECT * FROM `musics` ORDER BY `artist`  LIMIT ? OFFSET ?', [limit, token],
+      (err, results) => {
+          if (err) {
+              cb(err);
+              return;
+          }
+          const hasMore = results.length === limit ? token + results.length : false;
+          cb(null, results, hasMore);
+      }
+  );
+}
+//[End set sortMusicByArtist]
+
+// [Start set sortMusicByLabel]
+function sortMusicByLabel(limit, token, cb) {
+  token = token ? parseInt(token, 10) : 0;
+  connection.query(
+      'SELECT * FROM `musics` ORDER BY `label`  LIMIT ? OFFSET ?', [limit, token],
+      (err, results) => {
+          if (err) {
+              cb(err);
+              return;
+          }
+          const hasMore = results.length === limit ? token + results.length : false;
+          cb(null, results, hasMore);
+      }
+  );
+}
+//[End set sortMusicByLabel]
+
+// [Start set sortMusicByReleaseDate]
+function sortMusicByReleaseDate(limit, token, cb) {
+  token = token ? parseInt(token, 10) : 0;
+  connection.query(
+      'SELECT * FROM `musics` ORDER BY `releaseDate`  LIMIT ? OFFSET ?', [limit, token],
+      (err, results) => {
+          if (err) {
+              cb(err);
+              return;
+          }
+          const hasMore = results.length === limit ? token + results.length : false;
+          cb(null, results, hasMore);
+      }
+  );
+}
+//[End set sortMusicByASIN]
+
+// [Start set sortMusicByASIN]
+function sortMusicByASIN(limit, token, cb) {
+  token = token ? parseInt(token, 10) : 0;
+  connection.query(
+      'SELECT * FROM `musics` ORDER BY `ASIN`  LIMIT ? OFFSET ?', [limit, token],
+      (err, results) => {
+          if (err) {
+              cb(err);
+              return;
+          }
+          const hasMore = results.length === limit ? token + results.length : false;
+          cb(null, results, hasMore);
+      }
+  );
+}
+//[End set sortMusicByASIN]
+
 //-------------------------------------------- START  DELETE ------------------------------------------------------------------//
 
 //[START delete]
@@ -653,6 +891,20 @@ module.exports = {
   sortBooksByISBN10: sortBooksByISBN10,
   sortBooksByISBN13: sortBooksByISBN13,
   sortMoviesByTitle: sortMoviesByTitle,
+  sortMoviesByDirector: sortMoviesByDirector,
+  sortMoviesByProducers: sortMoviesByProducers,
+  sortMoviesByActors: sortMoviesByActors,
+  sortMoviesByLanguage: sortMoviesByLanguage,
+  sortMoviesBySubtitles: sortMoviesBySubtitles,
+  sortMoviesByDubbed: sortMoviesByDubbed,
+  sortMoviesByRuntime: sortMoviesByRuntime,
+  sortMusicByTitle: sortMusicByTitle,
+  sortMusicByType: sortMusicByType,
+  sortMusicByProducers: sortMusicByProducers, 
+  sortMusicByArtist: sortMusicByArtist,
+  sortMusicByLabel: sortMusicByLabel,
+  sortMusicByReleaseDate: sortMusicByReleaseDate,
+  sortMusicByASIN: sortMusicByASIN,
   updateBook: updateBook,
   updateMagazine: updateMagazine,
   updateMusic: updateMusic,

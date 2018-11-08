@@ -891,6 +891,105 @@ router.get('/admin/sortMoviesByRuntime', oauth2.required, oauth2.adminRequired, 
       });
   });
 });
+
+//MUSIC
+// Create Page: Sort Music By Title
+router.get('/admin/sortMusicByTitle', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().sortMusicByTitle(10, req.query.pageToken, (err, entities, cursor) => {
+      if (err) {
+          next(err);
+          return;
+      }
+      res.render('users/music.pug', {
+          musics: entities,
+          nextPageToken: cursor
+      });
+  });
+});
+
+// Create Page: Sort Music By Type
+router.get('/admin/sortMusicByType', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().sortMusicByType(10, req.query.pageToken, (err, entities, cursor) => {
+      if (err) {
+          next(err);
+          return;
+      }
+      res.render('users/music.pug', {
+          musics: entities,
+          nextPageToken: cursor
+      });
+  });
+});
+
+// Create Page: Sort Music By Producers
+router.get('/admin/sortMusicByProducers', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().sortMusicByProducers(10, req.query.pageToken, (err, entities, cursor) => {
+      if (err) {
+          next(err);
+          return;
+      }
+      res.render('users/music.pug', {
+          musics: entities,
+          nextPageToken: cursor
+      });
+  });
+});
+
+// Create Page: Sort Music By Artist
+router.get('/admin/sortMusicByArtist', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().sortMusicByArtist(10, req.query.pageToken, (err, entities, cursor) => {
+      if (err) {
+          next(err);
+          return;
+      }
+      res.render('users/music.pug', {
+          musics: entities,
+          nextPageToken: cursor
+      });
+  });
+});
+
+// Create Page: Sort Music By Label
+router.get('/admin/sortMusicByLabel', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().sortMusicByLabel(10, req.query.pageToken, (err, entities, cursor) => {
+      if (err) {
+          next(err);
+          return;
+      }
+      res.render('users/music.pug', {
+          musics: entities,
+          nextPageToken: cursor
+      });
+  });
+});
+
+// Create Page: Sort Music By Release Date
+router.get('/admin/sortMusicByReleaseDate', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().sortMusicByReleaseDate(10, req.query.pageToken, (err, entities, cursor) => {
+      if (err) {
+          next(err);
+          return;
+      }
+      res.render('users/music.pug', {
+          musics: entities,
+          nextPageToken: cursor
+      });
+  });
+});
+
+// Create Page: Sort Music By ASIN
+router.get('/admin/sortMusicByASIN', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().sortMusicByASIN(10, req.query.pageToken, (err, entities, cursor) => {
+      if (err) {
+          next(err);
+          return;
+      }
+      res.render('users/music.pug', {
+          musics: entities,
+          nextPageToken: cursor
+      });
+  });
+});
 //*************************************************** END SORTING FUNCTIONS *******************************************************************/
 
 //*************************************************** ERROR HANDLING *******************************************************************/
