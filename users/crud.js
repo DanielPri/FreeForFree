@@ -778,6 +778,76 @@ router.get('/admin/sortBooksByISBN13', oauth2.required, oauth2.adminRequired, (r
     });
 });
 
+// Create Page: Sort Magazines By Title
+router.get('/admin/sortMagazinesByTitle', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+    getModel().sortMagazinesByTitle(10, req.query.pageToken, (err, entities, cursor) => {
+        if (err) {
+            next(err);
+            return;
+        }
+        res.render('users/sortMagazinesByTitle.pug', {
+            magazines: entities,
+            nextPageToken: cursor
+        });
+    });
+});
+
+// Create Page: Sort Magazines By Language
+router.get('/admin/sortMagazinesByLanguage', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+    getModel().sortMagazinesByLanguage(10, req.query.pageToken, (err, entities, cursor) => {
+        if (err) {
+            next(err);
+            return;
+        }
+        res.render('users/sortMagazinesByLanguage.pug', {
+            magazines: entities,
+            nextPageToken: cursor
+        });
+    });
+});
+
+// Create Page: Sort Magazines By Publisher
+router.get('/admin/sortMagazinesByPublisher', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+    getModel().sortMagazinesByPublisher(10, req.query.pageToken, (err, entities, cursor) => {
+        if (err) {
+            next(err);
+            return;
+        }
+        res.render('users/sortMagazinesByPublisher.pug', {
+            magazines: entities,
+            nextPageToken: cursor
+        });
+    });
+});
+
+// Create Page: Sort Magazines By ISBN-10
+router.get('/admin/sortMagazinesByISBN10', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+    getModel().sortMagazinesByISBN10(10, req.query.pageToken, (err, entities, cursor) => {
+        if (err) {
+            next(err);
+            return;
+        }
+        res.render('users/sortMagazinesByISBN10.pug', {
+            magazines: entities,
+            nextPageToken: cursor
+        });
+    });
+});
+
+// Create Page: Sort Magazines By ISBN-13
+router.get('/admin/sortMagazinesByISBN13', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+    getModel().sortMagazinesByISBN13(10, req.query.pageToken, (err, entities, cursor) => {
+        if (err) {
+            next(err);
+            return;
+        }
+        res.render('users/sortMagazinesByISBN13.pug', {
+            magazines: entities,
+            nextPageToken: cursor
+        });
+    });
+});
+
 //*************************************************** END SORTING FUNCTIONS *******************************************************************/
 
 //*************************************************** ERROR HANDLING *******************************************************************/
