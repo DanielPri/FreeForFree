@@ -439,6 +439,43 @@ function updateMovie (id, data, cb) {
 
 
 
+//-------------------------------------------- START  SORT --------------------------------------------------------------------//
+
+// [Start set sortBooksByTitle]
+function sortBooksByTitle(limit, token, cb) {
+    token = token ? parseInt(token, 10) : 0;
+    connection.query(
+        'SELECT * FROM `books` ORDER BY `title`  LIMIT ? OFFSET ?', [limit, token],
+        (err, results) => {
+            if (err) {
+                cb(err);
+                return;
+            }
+            const hasMore = results.length === limit ? token + results.length : false;
+            cb(null, results, hasMore);
+        }
+    );
+}
+//[End set sortBooksByTitle]
+
+// [Start set sortBooksByFormat]
+function sortBooksByFormat(limit, token, cb) {
+    token = token ? parseInt(token, 10) : 0;
+    connection.query(
+        'SELECT * FROM `books` ORDER BY `format`  LIMIT ? OFFSET ?', [limit, token],
+        (err, results) => {
+            if (err) {
+                cb(err);
+                return;
+            }
+            const hasMore = results.length === limit ? token + results.length : false;
+            cb(null, results, hasMore);
+        }
+    );
+}
+//[End set sortBooksByFormat]
+
+
 
 //-------------------------------------------- START  DELETE ------------------------------------------------------------------//
 
@@ -491,6 +528,8 @@ module.exports = {
   deleteMagazine: _deleteMagazine,
   deleteMusic: _deleteMusic,
   deleteMovie: _deleteMovie,
+  sortBooksByTitle: sortBooksByTitle,
+  sortBooksByFormat: sortBooksByFormat,
   updateBook: updateBook,
   updateMagazine: updateMagazine,
   updateMusic: updateMusic,
@@ -546,3 +585,4 @@ function createSchema (config) {
     }
   );
 }
+
