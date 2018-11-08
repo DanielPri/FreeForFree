@@ -475,7 +475,107 @@ function sortBooksByFormat(limit, token, cb) {
 }
 //[End set sortBooksByFormat]
 
+// [Start set sortBooksByPages]
+function sortBooksByPages(limit, token, cb) {
+    token = token ? parseInt(token, 10) : 0;
+    connection.query(
+        'SELECT * FROM `books` ORDER BY `pages`  LIMIT ? OFFSET ?', [limit, token],
+        (err, results) => {
+            if (err) {
+                cb(err);
+                return;
+            }
+            const hasMore = results.length === limit ? token + results.length : false;
+            cb(null, results, hasMore);
+        }
+    );
+}
+//[End set sortBooksByPages]
 
+// [Start set sortBooksByLanguage]
+function sortBooksByLanguage(limit, token, cb) {
+    token = token ? parseInt(token, 10) : 0;
+    connection.query(
+        'SELECT * FROM `books` ORDER BY `language`  LIMIT ? OFFSET ?', [limit, token],
+        (err, results) => {
+            if (err) {
+                cb(err);
+                return;
+            }
+            const hasMore = results.length === limit ? token + results.length : false;
+            cb(null, results, hasMore);
+        }
+    );
+}
+//[End set sortBooksByLanguage]
+
+// [Start set sortBooksByAuthor]
+function sortBooksByAuthor(limit, token, cb) {
+    token = token ? parseInt(token, 10) : 0;
+    connection.query(
+        'SELECT * FROM `books` ORDER BY `author`  LIMIT ? OFFSET ?', [limit, token],
+        (err, results) => {
+            if (err) {
+                cb(err);
+                return;
+            }
+            const hasMore = results.length === limit ? token + results.length : false;
+            cb(null, results, hasMore);
+        }
+    );
+}
+//[End set sortBooksByAuthor]
+
+// [Start set sortBooksByPublished]
+function sortBooksByPublished(limit, token, cb) {
+    token = token ? parseInt(token, 10) : 0;
+    connection.query(
+        'SELECT * FROM `books` ORDER BY `publishedDate`  LIMIT ? OFFSET ?', [limit, token],
+        (err, results) => {
+            if (err) {
+                cb(err);
+                return;
+            }
+            const hasMore = results.length === limit ? token + results.length : false;
+            cb(null, results, hasMore);
+        }
+    );
+}
+//[End set sortBooksByPublished]
+
+// [Start set sortBooksByISBN10]
+function sortBooksByISBN10(limit, token, cb) {
+    token = token ? parseInt(token, 10) : 0;
+    connection.query(
+        'SELECT * FROM `books` ORDER BY `isbn10`  LIMIT ? OFFSET ?', [limit, token],
+        (err, results) => {
+            if (err) {
+                cb(err);
+                return;
+            }
+            const hasMore = results.length === limit ? token + results.length : false;
+            cb(null, results, hasMore);
+        }
+    );
+}
+//[End set sortBooksByISBN10]
+
+// [Start set sortBooksByISBN13]
+function sortBooksByISBN13(limit, token, cb) {
+    token = token ? parseInt(token, 10) : 0;
+    connection.query(
+        'SELECT * FROM `books` ORDER BY `isbn13`  LIMIT ? OFFSET ?', [limit, token],
+        (err, results) => {
+            if (err) {
+                cb(err);
+                return;
+            }
+            const hasMore = results.length === limit ? token + results.length : false;
+            cb(null, results, hasMore);
+        }
+    );
+}
+//[End set sortBooksByISBN13]
 
 //-------------------------------------------- START  DELETE ------------------------------------------------------------------//
 
@@ -530,6 +630,12 @@ module.exports = {
   deleteMovie: _deleteMovie,
   sortBooksByTitle: sortBooksByTitle,
   sortBooksByFormat: sortBooksByFormat,
+  sortBooksByPages: sortBooksByPages,
+  sortBooksByLanguage: sortBooksByLanguage,
+  sortBooksByAuthor: sortBooksByAuthor,
+  sortBooksByPublished: sortBooksByPublished,
+  sortBooksByISBN10: sortBooksByISBN10,
+  sortBooksByISBN13: sortBooksByISBN13,
   updateBook: updateBook,
   updateMagazine: updateMagazine,
   updateMusic: updateMusic,
@@ -585,4 +691,5 @@ function createSchema (config) {
     }
   );
 }
+
 
