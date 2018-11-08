@@ -435,9 +435,23 @@ function updateMovie (id, data, cb) {
 // [END update]
 
 
-//-----------------------------------------------------------------------------------------------------------------------------//
+//------------------------------------------------Search-------------------------------------------------------------------------//
 
+function findItem( type, columnValue, cb){
 
+    connection.query(
+
+        'SELECT * FROM ? WHERE `id` = ?', [type, columnValue],
+        (err, results) => {
+            if (err) {
+                cb(err);
+                return;
+            }
+
+            cb(null, results);
+        });
+
+}
 
 
 //-------------------------------------------- START  DELETE ------------------------------------------------------------------//
@@ -494,7 +508,8 @@ module.exports = {
   updateBook: updateBook,
   updateMagazine: updateMagazine,
   updateMusic: updateMusic,
-  updateMovie: updateMovie
+  updateMovie: updateMovie,
+  findItem: findItem
 };
 
 if (module === require.main) {

@@ -679,16 +679,18 @@ router.get(['/admin/music/search','/search'], (req, res, next) => {
 
 
 
-router.get('/admin/magazines/:magazine/delete', (req, res, next) => {
-    getModel().deleteMagazine(req.params.magazine, (err) => {
+router.get('/admin/search', (req, res, next) => {
+
+    getModel().findItem('movies', 12, (err, entities) => {
         if (err) {
             next(err);
             return;
         }
-        res.redirect(req.baseUrl);
+        res.render('users/adminSearch.pug', {
+            magazines: entities
+        });
     });
 });
-
 
 
 
