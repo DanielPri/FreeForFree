@@ -37,17 +37,32 @@ block content
         .form-group
             h1
             label(for="search") Search
-            input.form-control(type="text", name="Search", id="searchBar")
-        div(class="filterCheckbox")
-            div(class="checkboxBook")
+            form(action = "search" method = "post")
+              input.form-control(type="text", name="searchBar")
+              button(type = "submit")
+                span Submit
+
+            form(action = "/search" method = "post")
+             div(class="filterCheckbox")
+             div(class="checkboxBook")
                 label(for="books") Book
                 input(type="checkbox", name="books", id="books")
-            div(class="checkboxMovie")
+             div(class="checkboxMovie")
                 label(for="movies") Movie
                 input(type="checkbox", name="movies", id="movies")
-            div(class="checkboxMagazine")
+             div(class="checkboxMagazine")
                 label(for="magazines") Magazine
                 input(type="checkbox", name="magazines", id="magazines")
-            div(class="checkboxMusic")
+             div(class="checkboxMusic")
                 label(for="musics") Music
                 input(type="checkbox", name="musics", id="musics")
+                button(type = "submit")
+                 span Submit
+
+
+      if type==='movies'
+        each item in items
+         tr
+          td
+          td= item.title
+      

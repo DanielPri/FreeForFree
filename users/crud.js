@@ -671,23 +671,49 @@ router.get('/admin/movies/:movie/delete', oauth2.required, oauth2.adminRequired,
 //********************************************************Search And Sort*****************************************************//
 
 
-router.get(['/admin/music/search','/search'], (req, res, next) => {
+router.get('/admin/search/', (req, res, next) => {
 
-    res.render('users/adminSearch.pug');
-
+    res.render('users/adminSearch.pug', {});
 });
 
 
 
-router.get('/admin/search', (req, res, next) => {
+router.post('/admin/search', (req, res, next) => {
 
-    getModel().findItem('movies', 'title', 'Halloween', (err, entities) => {
+    var anything = req.body.searchBar;
+
+    res.redirect('/users/admin/search/'+anything);
+});
+
+
+
+router.get('/admin/search/:anything', (req, res, next) => {
+
+    var anyPossibility = req.params.anything;
+    getModel().findByAttribute( anyPossibility, (err, entities) => {
         if (err) {
             next(err);
             return;
         }
         res.render('users/adminSearch.pug', {
-            movies: entities
+            items: entities,
+            type: 'movies'
+        });
+    });
+});
+
+
+router.get('/admin/search/:anything', (req, res, next) => {
+
+    var anyPossibility = req.params.anything;
+    getModel().findItem('movies', 'title', anyPossibility, (err, entities) => {
+        if (err) {
+            next(err);
+            return;
+        }
+        res.render('users/adminSearch.pug', {
+            items: entities,
+            type: 'movies'
         });
     });
 });

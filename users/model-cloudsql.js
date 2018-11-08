@@ -451,6 +451,22 @@ function findItem(type, searchType, columnValue, cb){
 }
 
 
+
+function findByAttribute(columnValue, cb) {
+
+    connection.query(
+        'SELECT * FROM * WHERE * = ?', [columnValue],
+        (err, results) => {
+            if (err) {
+                cb(err);
+                return;
+            }
+            cb(null, results);
+        });
+}
+
+
+
 //-------------------------------------------- START  DELETE ------------------------------------------------------------------//
 
 //[START delete]
@@ -506,7 +522,8 @@ module.exports = {
   updateMagazine: updateMagazine,
   updateMusic: updateMusic,
   updateMovie: updateMovie,
-  findItem: findItem
+  findItem: findItem,
+  findByAttribute: findByAttribute
 };
 
 if (module === require.main) {
