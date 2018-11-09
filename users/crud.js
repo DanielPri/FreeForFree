@@ -23,10 +23,6 @@ function getModel () {
 }
 
 const router = express.Router();
-//////////////////////////////////////////////
-// var app     = express();
-// app.use(bodyParser.urlencoded({ extended: true })); 
-////////////
 
 // Use the oauth middleware to automatically get the user's profile
 // information and expose login/logout URLs to templates.
@@ -61,39 +57,18 @@ router.get('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, n
   });
 });
 
-//--------EDit user----------//
-// router.get('/admin/editUser', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-//   getModel().findUserByType(0,(err, entities) => {
-//     if (err) {
-//       next(err);
-//       return;
-//     }
-//     res.render('users/addUser.pug', {
-//       users: entities
-//      });
-//   });
-//   res.render('users/editUser.pug')
-// });
-
-//--------Submit button to change user type status----------//
-// const jsdom = require("jsdom");
-// const { JSDOM } = jsdom;
-
-
+//----------Choosing User Type-------------------//
 router.post('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, next) => { 
-  // var allSelectedElements= getUserType();
-  console.log("---------------------------------begining----------------------------------------------");
-  console.log(req.body.userType);
-  console.log("-----------------------------------end-------------------------------------------------");
   getModel().chooseUserType(req.body.userType, (err, entities) => {
     if (err) {
-
       next(err);
       return;
     }
     res.redirect('addUser');
   });
 });
+
+//----------------End choose User Type ------------//
   
 
 router.get('/admin/books', oauth2.required, oauth2.adminRequired, (req, res, next) => {
@@ -778,6 +753,75 @@ router.get('/admin/sortBooksByISBN13', oauth2.required, oauth2.adminRequired, (r
         });
     });
 });
+// Create Page: Sort Magazines By Title
+router.get('/admin/sortMagazinesByTitle', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+    getModel().sortMagazinesByTitle(10, req.query.pageToken, (err, entities, cursor) => {
+        if (err) {
+            next(err);
+            return;
+        }
+        res.render('users/sortMagazinesByTitle.pug', {
+            magazines: entities,
+            nextPageToken: cursor
+        });
+    });
+});
+
+// Create Page: Sort Magazines By Language
+router.get('/admin/sortMagazinesByLanguage', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+    getModel().sortMagazinesByLanguage(10, req.query.pageToken, (err, entities, cursor) => {
+        if (err) {
+            next(err);
+            return;
+        }
+        res.render('users/sortMagazinesByLanguage.pug', {
+            magazines: entities,
+            nextPageToken: cursor
+        });
+    });
+});
+
+// Create Page: Sort Magazines By Publisher
+router.get('/admin/sortMagazinesByPublisher', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+    getModel().sortMagazinesByPublisher(10, req.query.pageToken, (err, entities, cursor) => {
+        if (err) {
+            next(err);
+            return;
+        }
+        res.render('users/sortMagazinesByPublisher.pug', {
+            magazines: entities,
+            nextPageToken: cursor
+        });
+    });
+});
+
+// Create Page: Sort Magazines By ISBN-10
+router.get('/admin/sortMagazinesByISBN10', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+    getModel().sortMagazinesByISBN10(10, req.query.pageToken, (err, entities, cursor) => {
+        if (err) {
+            next(err);
+            return;
+        }
+        res.render('users/sortMagazinesByISBN10.pug', {
+            magazines: entities,
+            nextPageToken: cursor
+        });
+    });
+});
+
+// Create Page: Sort Magazines By ISBN-13
+router.get('/admin/sortMagazinesByISBN13', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+    getModel().sortMagazinesByISBN13(10, req.query.pageToken, (err, entities, cursor) => {
+        if (err) {
+            next(err);
+            return;
+        }
+        res.render('users/sortMagazinesByISBN13.pug', {
+            magazines: entities,
+            nextPageToken: cursor
+        });
+    });
+});
 
 //MOVIES
 // Create Page: Sort Movies By Title
@@ -990,6 +1034,7 @@ router.get('/admin/sortMusicByASIN', oauth2.required, oauth2.adminRequired, (req
       });
   });
 });
+
 //*************************************************** END SORTING FUNCTIONS *******************************************************************/
 
 //*************************************************** ERROR HANDLING *******************************************************************/
