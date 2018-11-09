@@ -58,7 +58,7 @@ router.get('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, n
 });
 
 //----------Choosing User Type-------------------//
-router.post('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, next) => { 
+router.post('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, next) => {
   getModel().chooseUserType(req.body.userType, (err, entities) => {
     if (err) {
       next(err);
@@ -69,7 +69,7 @@ router.post('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, 
 });
 
 //----------------End choose User Type ------------//
-  
+
 
 router.get('/admin/books', oauth2.required, oauth2.adminRequired, (req, res, next) => {
   getModel().listBooks(10, req.query.pageToken, (err, entities, cursor) => {
@@ -1050,5 +1050,3 @@ router.use((err, req, res, next) => {
 });
 
 module.exports = router;
-
-

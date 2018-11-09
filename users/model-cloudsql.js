@@ -76,7 +76,7 @@ function findUnregisteredUser (userType, cb) {
         cb(null, result);
     });
   // }
-  
+
 }
 // [End find unregistered users]
 
@@ -84,7 +84,7 @@ function chooseUserType (userType, cb) {
   var i=0;
   var userTypeValue= userType[0];
   var id= userType.substr(5);
-  var query = 'UPDATE user SET userType= '+userTypeValue+' where profileID = '+id+'; ';  
+  var query = 'UPDATE user SET userType= '+userTypeValue+' where profileID = '+id+'; ';
     connection.query(
       query,
       (err, result) => {
@@ -94,8 +94,8 @@ function chooseUserType (userType, cb) {
         }
         cb(null, result);
     });
-  
-  
+
+
 }
 
 // [Start verify admin]
@@ -957,7 +957,8 @@ module.exports = {
   sortMagazinesByLanguage: sortMagazinesByLanguage,
   sortMagazinesByPublisher: sortMagazinesByPublisher,
   sortMagazinesByISBN10: sortMagazinesByISBN10,
-  sortMagazinesByISBN13: sortMagazinesByISBN13,  sortMoviesByTitle: sortMoviesByTitle,
+  sortMagazinesByISBN13: sortMagazinesByISBN13,
+  sortMoviesByTitle: sortMoviesByTitle,
   sortMoviesByDirector: sortMoviesByDirector,
   sortMoviesByProducers: sortMoviesByProducers,
   sortMoviesByActors: sortMoviesByActors,
@@ -967,7 +968,7 @@ module.exports = {
   sortMoviesByRuntime: sortMoviesByRuntime,
   sortMusicByTitle: sortMusicByTitle,
   sortMusicByType: sortMusicByType,
-  sortMusicByProducers: sortMusicByProducers, 
+  sortMusicByProducers: sortMusicByProducers,
   sortMusicByArtist: sortMusicByArtist,
   sortMusicByLabel: sortMusicByLabel,
   sortMusicByReleaseDate: sortMusicByReleaseDate,
@@ -1027,5 +1028,3 @@ function createSchema (config) {
     }
   );
 }
-
-
