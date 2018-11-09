@@ -649,7 +649,7 @@ router.get('/admin/sortBooksByTitle', oauth2.required, oauth2.adminRequired, (re
             next(err);
             return;
         }
-        res.render('users/sortBooksByTitle.pug', {
+        res.render('users/books.pug', {
             books: entities,
             nextPageToken: cursor
         });
@@ -663,7 +663,7 @@ router.get('/admin/sortBooksByFormat', oauth2.required, oauth2.adminRequired, (r
             next(err);
             return;
         }
-        res.render('users/sortBooksByFormat.pug', {
+        res.render('users/books.pug', {
             books: entities,
             nextPageToken: cursor
         });
@@ -677,7 +677,7 @@ router.get('/admin/sortBooksByPages', oauth2.required, oauth2.adminRequired, (re
             next(err);
             return;
         }
-        res.render('users/sortBooksByPages.pug', {
+        res.render('users/books.pug', {
             books: entities,
             nextPageToken: cursor
         });
@@ -691,7 +691,7 @@ router.get('/admin/sortBooksByLanguage', oauth2.required, oauth2.adminRequired, 
             next(err);
             return;
         }
-        res.render('users/sortBooksByLanguage.pug', {
+        res.render('users/books.pug', {
             books: entities,
             nextPageToken: cursor
         });
@@ -705,7 +705,7 @@ router.get('/admin/sortBooksByAuthor', oauth2.required, oauth2.adminRequired, (r
             next(err);
             return;
         }
-        res.render('users/sortBooksByAuthor.pug', {
+        res.render('users/books.pug', {
             books: entities,
             nextPageToken: cursor
         });
@@ -719,7 +719,7 @@ router.get('/admin/sortBooksByPublished', oauth2.required, oauth2.adminRequired,
             next(err);
             return;
         }
-        res.render('users/sortBooksByPublished.pug', {
+        res.render('users/books.pug', {
             books: entities,
             nextPageToken: cursor
         });
@@ -733,7 +733,7 @@ router.get('/admin/sortBooksByISBN10', oauth2.required, oauth2.adminRequired, (r
             next(err);
             return;
         }
-        res.render('users/sortBooksByISBN10.pug', {
+        res.render('users/books.pug', {
             books: entities,
             nextPageToken: cursor
         });
@@ -747,7 +747,7 @@ router.get('/admin/sortBooksByISBN13', oauth2.required, oauth2.adminRequired, (r
             next(err);
             return;
         }
-        res.render('users/sortBooksByISBN13.pug', {
+        res.render('users/books.pug', {
             books: entities,
             nextPageToken: cursor
         });
@@ -760,7 +760,7 @@ router.get('/admin/sortMagazinesByTitle', oauth2.required, oauth2.adminRequired,
             next(err);
             return;
         }
-        res.render('users/sortMagazinesByTitle.pug', {
+        res.render('users/magazines.pug', {
             magazines: entities,
             nextPageToken: cursor
         });
@@ -774,7 +774,7 @@ router.get('/admin/sortMagazinesByLanguage', oauth2.required, oauth2.adminRequir
             next(err);
             return;
         }
-        res.render('users/sortMagazinesByLanguage.pug', {
+        res.render('users/magazines.pug', {
             magazines: entities,
             nextPageToken: cursor
         });
@@ -788,7 +788,7 @@ router.get('/admin/sortMagazinesByPublisher', oauth2.required, oauth2.adminRequi
             next(err);
             return;
         }
-        res.render('users/sortMagazinesByPublisher.pug', {
+        res.render('users/magazines.pug', {
             magazines: entities,
             nextPageToken: cursor
         });
@@ -802,7 +802,7 @@ router.get('/admin/sortMagazinesByISBN10', oauth2.required, oauth2.adminRequired
             next(err);
             return;
         }
-        res.render('users/sortMagazinesByISBN10.pug', {
+        res.render('users/magazines.pug', {
             magazines: entities,
             nextPageToken: cursor
         });
@@ -816,7 +816,7 @@ router.get('/admin/sortMagazinesByISBN13', oauth2.required, oauth2.adminRequired
             next(err);
             return;
         }
-        res.render('users/sortMagazinesByISBN13.pug', {
+        res.render('users/magazines.pug', {
             magazines: entities,
             nextPageToken: cursor
         });
