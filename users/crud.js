@@ -641,6 +641,7 @@ router.get('/admin/movies/:movie/delete', (req, res, next) => {
 
 //*************************************************** SORTING FUNCTIONS *******************************************************************/
 
+//BOOKS
 // Create Page: Sort Books By Title
 router.get('/admin/sortBooksByTitle', oauth2.required, oauth2.adminRequired, (req, res, next) => {
     getModel().sortBooksByTitle(10, req.query.pageToken, (err, entities, cursor) => {
@@ -752,7 +753,6 @@ router.get('/admin/sortBooksByISBN13', oauth2.required, oauth2.adminRequired, (r
         });
     });
 });
-
 // Create Page: Sort Magazines By Title
 router.get('/admin/sortMagazinesByTitle', oauth2.required, oauth2.adminRequired, (req, res, next) => {
     getModel().sortMagazinesByTitle(10, req.query.pageToken, (err, entities, cursor) => {
@@ -821,6 +821,218 @@ router.get('/admin/sortMagazinesByISBN13', oauth2.required, oauth2.adminRequired
             nextPageToken: cursor
         });
     });
+});
+
+//MOVIES
+// Create Page: Sort Movies By Title
+router.get('/admin/sortMoviesByTitle', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().sortMoviesByTitle(10, req.query.pageToken, (err, entities, cursor) => {
+      if (err) {
+          next(err);
+          return;
+      }
+      res.render('users/movies.pug', {
+          movies: entities,
+          nextPageToken: cursor
+      });
+  });
+});
+
+// Create Page: Sort Movies By Director
+router.get('/admin/sortMoviesByDirector', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().sortMoviesByDirector(10, req.query.pageToken, (err, entities, cursor) => {
+      if (err) {
+          next(err);
+          return;
+      }
+      res.render('users/movies.pug', {
+          movies: entities,
+          nextPageToken: cursor
+      });
+  });
+});
+
+// Create Page: Sort Movies By Producers
+router.get('/admin/sortMoviesByProducers', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().sortMoviesByProducers(10, req.query.pageToken, (err, entities, cursor) => {
+      if (err) {
+          next(err);
+          return;
+      }
+      res.render('users/movies.pug', {
+          movies: entities,
+          nextPageToken: cursor
+      });
+  });
+});
+
+// Create Page: Sort Movies By Actors
+router.get('/admin/sortMoviesByActors', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().sortMoviesByActors(10, req.query.pageToken, (err, entities, cursor) => {
+      if (err) {
+          next(err);
+          return;
+      }
+      res.render('users/movies.pug', {
+          movies: entities,
+          nextPageToken: cursor
+      });
+  });
+});
+
+// Create Page: Sort Movies By Language
+router.get('/admin/sortMoviesByLanguage', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().sortMoviesByLanguage(10, req.query.pageToken, (err, entities, cursor) => {
+      if (err) {
+          next(err);
+          return;
+      }
+      res.render('users/movies.pug', {
+          movies: entities,
+          nextPageToken: cursor
+      });
+  });
+});
+
+// Create Page: Sort Movies By Subtitles
+router.get('/admin/sortMoviesBySubtitles', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().sortMoviesBySubtitles(10, req.query.pageToken, (err, entities, cursor) => {
+      if (err) {
+          next(err);
+          return;
+      }
+      res.render('users/movies.pug', {
+          movies: entities,
+          nextPageToken: cursor
+      });
+  });
+});
+
+// Create Page: Sort Movies By Dubbed
+router.get('/admin/sortMoviesByDubbed', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().sortMoviesByDubbed(10, req.query.pageToken, (err, entities, cursor) => {
+      if (err) {
+          next(err);
+          return;
+      }
+      res.render('users/movies.pug', {
+          movies: entities,
+          nextPageToken: cursor
+      });
+  });
+});
+
+// Create Page: Sort Movies By Runtime
+router.get('/admin/sortMoviesByRuntime', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().sortMoviesByRuntime(10, req.query.pageToken, (err, entities, cursor) => {
+      if (err) {
+          next(err);
+          return;
+      }
+      res.render('users/movies.pug', {
+          movies: entities,
+          nextPageToken: cursor
+      });
+  });
+});
+
+//MUSIC
+// Create Page: Sort Music By Title
+router.get('/admin/sortMusicByTitle', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().sortMusicByTitle(10, req.query.pageToken, (err, entities, cursor) => {
+      if (err) {
+          next(err);
+          return;
+      }
+      res.render('users/music.pug', {
+          musics: entities,
+          nextPageToken: cursor
+      });
+  });
+});
+
+// Create Page: Sort Music By Type
+router.get('/admin/sortMusicByType', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().sortMusicByType(10, req.query.pageToken, (err, entities, cursor) => {
+      if (err) {
+          next(err);
+          return;
+      }
+      res.render('users/music.pug', {
+          musics: entities,
+          nextPageToken: cursor
+      });
+  });
+});
+
+// Create Page: Sort Music By Producers
+router.get('/admin/sortMusicByProducers', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().sortMusicByProducers(10, req.query.pageToken, (err, entities, cursor) => {
+      if (err) {
+          next(err);
+          return;
+      }
+      res.render('users/music.pug', {
+          musics: entities,
+          nextPageToken: cursor
+      });
+  });
+});
+
+// Create Page: Sort Music By Artist
+router.get('/admin/sortMusicByArtist', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().sortMusicByArtist(10, req.query.pageToken, (err, entities, cursor) => {
+      if (err) {
+          next(err);
+          return;
+      }
+      res.render('users/music.pug', {
+          musics: entities,
+          nextPageToken: cursor
+      });
+  });
+});
+
+// Create Page: Sort Music By Label
+router.get('/admin/sortMusicByLabel', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().sortMusicByLabel(10, req.query.pageToken, (err, entities, cursor) => {
+      if (err) {
+          next(err);
+          return;
+      }
+      res.render('users/music.pug', {
+          musics: entities,
+          nextPageToken: cursor
+      });
+  });
+});
+
+// Create Page: Sort Music By Release Date
+router.get('/admin/sortMusicByReleaseDate', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().sortMusicByReleaseDate(10, req.query.pageToken, (err, entities, cursor) => {
+      if (err) {
+          next(err);
+          return;
+      }
+      res.render('users/music.pug', {
+          musics: entities,
+          nextPageToken: cursor
+      });
+  });
+});
+
+// Create Page: Sort Music By ASIN
+router.get('/admin/sortMusicByASIN', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().sortMusicByASIN(10, req.query.pageToken, (err, entities, cursor) => {
+      if (err) {
+          next(err);
+          return;
+      }
+      res.render('users/music.pug', {
+          musics: entities,
+          nextPageToken: cursor
+      });
+  });
 });
 
 //*************************************************** END SORTING FUNCTIONS *******************************************************************/
