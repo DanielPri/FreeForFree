@@ -452,15 +452,16 @@ function findItem(type, searchType, columnValue, cb){
 
 
 
-function findByAttribute(columnValue, cb) {
+function findByAttribute(itemType, column, columnValue, cb) {
 
     connection.query(
-        'SELECT * FROM * WHERE * = ?', [columnValue],
+        'SELECT * FROM ?? WHERE ?? = ?', [itemType, column, columnValue],
         (err, results) => {
             if (err) {
                 cb(err);
                 return;
             }
+            console.log(results);
             cb(null, results);
         });
 }

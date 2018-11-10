@@ -671,31 +671,19 @@ router.get('/admin/movies/:movie/delete', oauth2.required, oauth2.adminRequired,
 //********************************************************Search And Sort*****************************************************//
 
 
-router.get('/admin/search/', (req, res, next) => {
-
-    res.render('users/adminSearch.pug', {});
-});
 
 
 
-router.post('/admin/search', (req, res, next) => {
+router.post('/admin/catalog', (req, res, next) => {
 
-    var anything = req.body.searchBar;
-
-    res.redirect('/users/admin/search/'+anything);
-});
-
-
-
-router.get('/admin/search/:anything', (req, res, next) => {
-
-    var anyPossibility = req.params.anything;
-    getModel().findByAttribute( anyPossibility, (err, entities) => {
+    const anyPossibility = req.body.searchBar;
+    console.log(anyPossibility);
+    getModel().findByAttribute(anyPossibility, (err, entities) => {
         if (err) {
             next(err);
             return;
         }
-        res.render('users/adminSearch.pug', {
+        res.render('users/catalog.pug', {
             items: entities,
             type: 'movies'
         });
@@ -703,20 +691,35 @@ router.get('/admin/search/:anything', (req, res, next) => {
 });
 
 
-router.get('/admin/search/:anything', (req, res, next) => {
 
-    var anyPossibility = req.params.anything;
-    getModel().findItem('movies', 'title', anyPossibility, (err, entities) => {
+
+router.post('/admin/books', (req, res, next) => {
+
+    const bookSearchBy = req.body;
+    console.log("HELLLLLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+    console.log(bookSearchBy.books);
+    console.log(bookSearchBy.searchBar);
+    getModel().findByAttribute("books", bookSearchBy.books, bookSearchBy.searchBar,(err, entities) => {
         if (err) {
             next(err);
             return;
         }
-        res.render('users/adminSearch.pug', {
-            items: entities,
-            type: 'movies'
+        res.render('users/books.pug', {
+            books: entities,
         });
     });
 });
+
+
+
+router.get('/admin/search', (req, res, next) => {
+
+    res.render('users/adminSearch.pug', {
+        items: entities,
+        type: 'movies'
+    });
+});
+
 
 
 
