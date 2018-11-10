@@ -10,20 +10,23 @@ block content
           label(for="search") Search <span class="glyphicon glyphicon-search"></span>
           form(action = "books" method = "post" name = "books")
             input.form-control(type="text", name="searchBar")
-            br
-            select(name = "books")
-              option.form-control(value="title") Title
-              option.form-control(value="author") Author
-              option.form-control(value="publishedDate") Published Date
-              option.form-control(value="language") Language
-              option.form-control(value="format") Format
-              option.form-control(value="pages") Pages
-              option.form-control(value="ISBN10") ISBN-10
-              option.form-control(value="ISBN13") ISBN-13
-              br
-            button(type = "submit" class="btn btn-primary")
-             span Submit
-             
+      div(class="searchDropDown")
+        select(name = "books")
+          option.form-control(value="title") Title
+          option.form-control(value="author") Author
+          option.form-control(value="publishedDate") Published Date
+          option.form-control(value="language") Language
+          option.form-control(value="format") Format
+          option.form-control(value="pages") Pages
+          option.form-control(value="ISBN10") ISBN-10
+          option.form-control(value="ISBN13") ISBN-13
+      br
+      br
+      div(class="submitSearch")
+        button(type = "submit" class="btn btn-primary")
+         span Submit
+      br
+      br
 
 
 

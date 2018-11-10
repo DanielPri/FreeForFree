@@ -8,21 +8,24 @@ block content
           label(for="search") Search <span class="glyphicon glyphicon-search"></span>
           form(action = "music" method = "post" name = "music")
             input.form-control(type="text", name="searchBar")
-            br
-            select(name = "music")
-              option.form-control(value="title") Title
-              option.form-control(value = "type") Type
-              option.form-control(value="artist") Artist
-              option.form-control(value="label") Label
-              option.form-control(value="releaseDate") Release Date
-              option.form-control(value="asin") ASIN
-              br
-            button(type = "submit" class="btn btn-primary")
-             span Submit
+      div(class="searchDropDown")
+        select(name = "music")
+          option.form-control(value="title") Title
+          option.form-control(value = "type") Type
+          option.form-control(value="artist") Artist
+          option.form-control(value="label") Label
+          option.form-control(value="releaseDate") Release Date
+          option.form-control(value="asin") ASIN
+      br
+      br
+      div(class="submitSearch")
+        button(type = "submit" class="btn btn-primary")
+         span Submit
+      br
+      br
 
 
-
-
+    br
     div(align="center")
       a(class="btn btn-primary" href="/users/admin/formMusic") Add Music
     br
