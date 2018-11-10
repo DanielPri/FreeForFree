@@ -723,6 +723,23 @@ router.post('/admin/magazines', (req, res, next) => {
 });
 
 
+//Search for specific movie attributes
+router.post('/admin/movies', (req, res, next) => {
+
+    const moviesSearchBy = req.body;
+    console.log(moviesSearchBy.movies);
+    getModel().findByAttribute("movies", moviesSearchBy.movies, moviesSearchBy.searchBar, (err, entities) => {
+        if (err) {
+            next(err);
+            return;
+        }
+        res.render('users/movies.pug', {
+            movies: entities,
+        });
+    });
+});
+
+
 
 router.get('/admin/search', (req, res, next) => {
 

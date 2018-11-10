@@ -1,7 +1,32 @@
 extends ../catalog.pug
 
 block content
+
   .container
+    div(class="searchForm")
+      .form-group
+        h1
+          label(for="search") Search <span class="glyphicon glyphicon-search"></span>
+            form(action = "movies" method = "post" name = "movies")
+              input.form-control(type="text", name="searchBar")
+              br
+              select(name = "movies")
+                option.form-control(name="title") Title
+                option.form-control(name="director") Director
+                option.form-control(name="producers") Producers
+                option.form-control(name="actors") Actors
+                option.form-control(name="language") Language
+                option.form-control(name="subtitles") Subtitles
+                option.form-control(name="dubbed") Dubbed
+                option.form-control(name="releaseDate") Release Date
+                option.form-control(name="runTime") Length
+                br
+              button(type = "submit" class="btn btn-primary")
+                span Submit
+
+
+
+
     div(align="center")
       a(class="btn btn-primary" href="/users/admin/formMovie") Add Movie
     br
