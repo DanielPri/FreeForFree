@@ -1,7 +1,27 @@
 extends ../catalog.pug
 
+
 block content
   .container
+    div(class="searchForm")
+      .form-group
+        h1
+          label(for="search") Search <span class="glyphicon glyphicon-search"></span>
+          form(action = "magazines" method = "post" name = "magazines")
+            input.form-control(type="text", name="searchBar")
+            br
+            select(name = "magazines")
+              option.form-control(name="title" value = "title") Title
+              option.form-control(name = "publisher") Publisher
+              option.form-control(name="language") Language
+              option.form-control(name="ISBN-10") ISBN-10
+              option.form-control(name="ISBN-13") ISBN-13
+              br
+            button(type = "submit" class="btn btn-primary")
+             span Submit
+
+
+
     div(align="center")
       a(class="btn btn-primary" href="/users/admin/formMagazine") Add Magazine
     br

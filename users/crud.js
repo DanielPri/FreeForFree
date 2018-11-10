@@ -673,7 +673,7 @@ router.get('/admin/movies/:movie/delete', oauth2.required, oauth2.adminRequired,
 
 
 
-
+//For catalog.  Will eventually search the entire  database for any matches in search bar
 router.post('/admin/catalog', (req, res, next) => {
 
     const anyPossibility = req.body.searchBar;
@@ -691,14 +691,10 @@ router.post('/admin/catalog', (req, res, next) => {
 });
 
 
-
-
+//Search for specific book attributes
 router.post('/admin/books', (req, res, next) => {
 
     const bookSearchBy = req.body;
-    console.log("HELLLLLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-    console.log(bookSearchBy.books);
-    console.log(bookSearchBy.searchBar);
     getModel().findByAttribute("books", bookSearchBy.books, bookSearchBy.searchBar,(err, entities) => {
         if (err) {
             next(err);
@@ -706,6 +702,22 @@ router.post('/admin/books', (req, res, next) => {
         }
         res.render('users/books.pug', {
             books: entities,
+        });
+    });
+});
+
+
+//Search for specific magazine attributes
+router.post('/admin/magazines', (req, res, next) => {
+
+    const magazinesSearchBy = req.body;
+    getModel().findByAttribute("Magazines", magazinesSearchBy.magazines, magazinesSearchBy.searchBar, (err, entities) => {
+        if (err) {
+            next(err);
+            return;
+        }
+        res.render('users/magazines.pug', {
+            magazines: entities,
         });
     });
 });
