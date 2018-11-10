@@ -452,16 +452,20 @@ function findItem(type, searchType, columnValue, cb){
 
 
 
-function findByAttribute(itemType, column, columnValue, cb) {
+function findByAttribute(itemType, column, columnValue, orderBy, cb) {
+
+    if (columnValue == 1)
+        var mysql = 'SELECT * FROM ?? WHERE ? = ? ORDER BY ??'
+    else
+        var mysql = 'SELECT * FROM ?? WHERE ?? = ? ORDER BY ??'
 
     connection.query(
-        'SELECT * FROM ?? WHERE ?? = ?', [itemType, column, columnValue],
+        mysql, [itemType, column, columnValue, orderBy],
         (err, results) => {
             if (err) {
                 cb(err);
                 return;
             }
-            console.log(results);
             cb(null, results);
         });
 }

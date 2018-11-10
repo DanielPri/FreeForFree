@@ -695,7 +695,11 @@ router.post('/admin/catalog', (req, res, next) => {
 router.post('/admin/books', (req, res, next) => {
 
     const bookSearchBy = req.body;
-    getModel().findByAttribute("books", bookSearchBy.books, bookSearchBy.searchBar,(err, entities) => {
+    if (bookSearchBy.searchBar.length == 0) {
+        bookSearchBy.searchBar = 1;
+        bookSearchBy.books = 1;
+    }
+    getModel().findByAttribute("books", bookSearchBy.books, bookSearchBy.searchBar, bookSearchBy.sortBy, (err, entities) => {
         if (err) {
             next(err);
             return;
@@ -711,7 +715,12 @@ router.post('/admin/books', (req, res, next) => {
 router.post('/admin/magazines', (req, res, next) => {
 
     const magazinesSearchBy = req.body;
-    getModel().findByAttribute("Magazines", magazinesSearchBy.magazines, magazinesSearchBy.searchBar, (err, entities) => {
+    if (magazinesSearchBy.searchBar.length == 0) {
+        magazinesSearchBy.searchBar = 1;
+        magazinesSearchBy.magazines = 1;
+    }
+    getModel().findByAttribute("Magazines", magazinesSearchBy.magazines, magazinesSearchBy.searchBar, magazinesSearchBy.sortBy,
+                               (err, entities) => {
         if (err) {
             next(err);
             return;
@@ -727,7 +736,11 @@ router.post('/admin/magazines', (req, res, next) => {
 router.post('/admin/movies', (req, res, next) => {
 
     const moviesSearchBy = req.body;
-    getModel().findByAttribute("movies", moviesSearchBy.movies, moviesSearchBy.searchBar, (err, entities) => {
+    if (moviesSearchBy.searchBar.length == 0) {
+        moviesSearchBy.searchBar = 1;
+        moviesSearchBy.movies = 1;
+    }
+    getModel().findByAttribute("movies", moviesSearchBy.movies, moviesSearchBy.searchBar, moviesSearchBy.sortBy, (err, entities) => {
         if (err) {
             next(err);
             return;
@@ -743,7 +756,11 @@ router.post('/admin/movies', (req, res, next) => {
 router.post('/admin/music', (req, res, next) => {
 
     const musicSearchBy = req.body;
-    getModel().findByAttribute("musics", musicSearchBy.music, musicSearchBy.searchBar, (err, entities) => {
+    if (musicSearchBy.searchBar.length == 0) {
+        musicSearchBy.searchBar = 1;
+        musicSearchBy.music = 1;
+    }
+    getModel().findByAttribute("musics", musicSearchBy.music, musicSearchBy.searchBar, musicSearchBy.sortBy,(err, entities) => {
         if (err) {
             next(err);
             return;
