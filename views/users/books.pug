@@ -12,14 +12,14 @@ block content
             input.form-control(type="text", name="searchBar")
             br
             select(name = "books")
-              option.form-control(name="title" value = "title") Title
-              option.form-control(name = "author") Author
-              option.form-control(name="publishedDate") Published Date
-              option.form-control(name="language") Language
-              option.form-control(name="format") Format
-              option.form-control(name="pages") Pages
-              option.form-control(name="ISBN-10") ISBN-10
-              option.form-control(name="ISBN-13") ISBN-13
+              option.form-control(value="title") Title
+              option.form-control(value="author") Author
+              option.form-control(value="publishedDate") Published Date
+              option.form-control(value="language") Language
+              option.form-control(value="format") Format
+              option.form-control(value="pages") Pages
+              option.form-control(value="ISBN10") ISBN-10
+              option.form-control(value="ISBN13") ISBN-13
               br
             button(type = "submit" class="btn btn-primary")
              span Submit
@@ -27,9 +27,6 @@ block content
 
 
 
-
-
-  .container
     br
     div(align="center")
       a(class="btn btn-primary" href="/users/admin/formBook") Add Book
