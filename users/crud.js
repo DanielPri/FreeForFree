@@ -727,7 +727,6 @@ router.post('/admin/magazines', (req, res, next) => {
 router.post('/admin/movies', (req, res, next) => {
 
     const moviesSearchBy = req.body;
-    console.log(moviesSearchBy.movies);
     getModel().findByAttribute("movies", moviesSearchBy.movies, moviesSearchBy.searchBar, (err, entities) => {
         if (err) {
             next(err);
@@ -735,6 +734,22 @@ router.post('/admin/movies', (req, res, next) => {
         }
         res.render('users/movies.pug', {
             movies: entities,
+        });
+    });
+});
+
+
+//Search for specific music attributes
+router.post('/admin/music', (req, res, next) => {
+
+    const musicSearchBy = req.body;
+    getModel().findByAttribute("musics", musicSearchBy.music, musicSearchBy.searchBar, (err, entities) => {
+        if (err) {
+            next(err);
+            return;
+        }
+        res.render('users/music.pug', {
+            musics: entities,
         });
     });
 });
