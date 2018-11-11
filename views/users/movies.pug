@@ -1,34 +1,49 @@
 extends ../catalog.pug
 
+
 block content
   .container
     div(class="searchForm")
       .form-group
         h1
           label(for="search") Search <span class="glyphicon glyphicon-search"></span>
-          form(action = "movies" method = "post" name = "movies")
-            input.form-control(type="text", name="searchBar")
-      div(class="searchDropDown")
-        select(name = "movies")
-            option.form-control(value="title") Title
-            option.form-control(value="director") Director
-            option.form-control(value="producers") Producer
-            option.form-control(value="actors") Actor
-            option.form-control(value="language") Language
-            option.form-control(value="subtitles") Subtitles
-            option.form-control(value="dubbed") Dubbed
-            option.form-control(value="releaseDate") Release Date
-            option.form-control(value="runTime") Length
-      br
-      br
-      div(class="submitSearch")
-        button(type = "submit" class="btn btn-primary")
-          span Submit
-      br
-      br
+        form(action = "movies" method = "post" name = "movies")
+          input.form-control(type="text", name="searchBar")
+          br
+          div(class="searchDropDown")
+            select(name = "movies")
+               option.form-control(value="title") Title
+               option.form-control(value="director") Director
+               option.form-control(value="producers") Producer
+               option.form-control(value="actors") Actor
+               option.form-control(value="language") Language
+               option.form-control(value="subtitles") Subtitles
+               option.form-control(value="dubbed") Dubbed
+               option.form-control(value="releaseDate") Release Date
+               option.form-control(value="runTime") Length
+            br
+            br  
+            br
+            h3 Search by
+            select(name = "sortBy")
+               option.form-control(value="title") Title
+               option.form-control(value="director") Director
+               option.form-control(value="producers") Producer
+               option.form-control(value="actors") Actor
+               option.form-control(value="language") Language
+               option.form-control(value="subtitles") Subtitles
+               option.form-control(value="dubbed") Dubbed
+               option.form-control(value="releaseDate") Release Date
+               option.form-control(value="runTime") Length
+            br
+            br
+            div(class="submitSearch")
+            button(type = "submit" class="btn btn-primary")
+             span Submit
+     
 
-
-
+    br
+    br
     br
     div(align="center")
       a(class="btn btn-primary" href="/users/admin/formMovie") Add Movie
