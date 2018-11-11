@@ -10,6 +10,7 @@ block content
         form(action = "magazines" method = "post" name = "magazines")
           input.form-control(type="text", name="searchBar")
           br
+          h3 Search by
           div(class="searchDropDown")
             select(name = "magazines")
               option.form-control(value="title") Title
@@ -19,16 +20,7 @@ block content
               option.form-control(value="ISBN13") ISBN-13
             br
             br
-            br
-            h3 Search by
-            select(name = "sortBy")
-              option.form-control(value="title") Title
-              option.form-control(value= "publisher") Publisher
-              option.form-control(value="language") Language
-              option.form-control(value="ISBN10") ISBN-10
-              option.form-control(value="ISBN13") ISBN-13
-            br
-            br
+
             div(class="submitSearch")
             button(type = "submit" class="btn btn-primary")
              span Submit

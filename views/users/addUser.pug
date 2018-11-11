@@ -4,12 +4,13 @@ block content
     .container
         h3 Unregistered Users
         
-        table(class='table', id='Unregistered_User_Table')
+        table(class='table table-bordered', id='Unregistered_User_Table')
             thead
                 tr
                     th Name
                     th ID
                     th Type
+
             tbody(id='Unregistered_User_Table_body')
                 each user in users
                     tr
@@ -23,7 +24,7 @@ block content
                                         option(value='2 id='+user.profileID) User
                                         option(value='1 id='+user.profileID) Admin
                             td(class = "usertypeText") Guest
-                            td(class = "EditUserType btn btn-primary" ) Edit
+                            td(class = "EditUserType" ) Edit
                             td(style = "display:none")
                                 input(class = "SaveUserType" type="submit" value="Save")
                         
