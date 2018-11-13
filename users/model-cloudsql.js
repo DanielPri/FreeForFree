@@ -452,12 +452,21 @@ function findItem(type, searchType, columnValue, cb){
 
 
 
-function findByAttribute(itemType, column, columnValue, orderBy, cb) {
+function findByAttribute(itemType, column, columnValue, orderBy, sortUpDown, cb) {
 
-    if (columnValue == 1)
-        var mysql = 'SELECT * FROM ?? WHERE ? = ? ORDER BY ??'
-    else
-        var mysql = 'SELECT * FROM ?? WHERE ?? = ? ORDER BY ??'
+    if (sortUpDown === 'ASC') { // Sort Ascending
+        if (columnValue == 1)
+            var mysql = 'SELECT * FROM ?? WHERE ? = ? ORDER BY ?? ASC'
+        else
+            var mysql = 'SELECT * FROM ?? WHERE ?? = ? ORDER BY ?? ASC'
+    }
+    else if (sortUpDown === 'DESC') { // Sort Descending
+        if (columnValue == 1)
+            var mysql = 'SELECT * FROM ?? WHERE ? = ? ORDER BY ?? DESC'
+
+        else
+            var mysql = 'SELECT * FROM ?? WHERE ?? = ? ORDER BY ?? DESC'
+    }
 
     connection.query(
         mysql, [itemType, column, columnValue, orderBy],
