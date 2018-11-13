@@ -699,7 +699,7 @@ router.post('/admin/books', (req, res, next) => {
         bookSearchBy.searchBar = 1;
         bookSearchBy.books = 1;
     }
-    getModel().findByAttribute("books", bookSearchBy.books, bookSearchBy.searchBar, bookSearchBy.sortBy, (err, entities) => {
+    getModel().findByAttribute("books", bookSearchBy.books, bookSearchBy.searchBar, bookSearchBy.sortBy, bookSearchBy.sortUpDown, (err, entities) => {
         if (err) {
             next(err);
             return;
@@ -719,7 +719,7 @@ router.post('/admin/magazines', (req, res, next) => {
         magazinesSearchBy.searchBar = 1;
         magazinesSearchBy.magazines = 1;
     }
-    getModel().findByAttribute("Magazines", magazinesSearchBy.magazines, magazinesSearchBy.searchBar, magazinesSearchBy.sortBy,
+    getModel().findByAttribute("Magazines", magazinesSearchBy.magazines, magazinesSearchBy.searchBar, magazinesSearchBy.sortBy, magazinesSearchBy.sortUpDown, 
                                (err, entities) => {
         if (err) {
             next(err);
@@ -740,7 +740,7 @@ router.post('/admin/movies', (req, res, next) => {
         moviesSearchBy.searchBar = 1;
         moviesSearchBy.movies = 1;
     }
-    getModel().findByAttribute("movies", moviesSearchBy.movies, moviesSearchBy.searchBar, moviesSearchBy.sortBy, (err, entities) => {
+    getModel().findByAttribute("movies", moviesSearchBy.movies, moviesSearchBy.searchBar, moviesSearchBy.sortBy, moviesSearchBy.sortUpDown,  (err, entities) => {
         if (err) {
             next(err);
             return;
@@ -760,7 +760,7 @@ router.post('/admin/music', (req, res, next) => {
         musicSearchBy.searchBar = 1;
         musicSearchBy.music = 1;
     }
-    getModel().findByAttribute("musics", musicSearchBy.music, musicSearchBy.searchBar, musicSearchBy.sortBy,(err, entities) => {
+    getModel().findByAttribute("musics", musicSearchBy.music, musicSearchBy.searchBar, musicSearchBy.sortBy, musicSearchBy.sortUpDown, (err, entities) => {
         if (err) {
             next(err);
             return;
