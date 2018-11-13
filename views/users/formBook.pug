@@ -56,8 +56,9 @@ html(lang="en")
             label(for="language") Language
             input.form-control(type="text", name="Language", id="language", value=book.language)
           .form-group
-            label(for="format") Format
-            input.form-control(type="text", name="Format", id="format", value=book.format)
+            select(class="selectType", name="Format", id=book.format)
+              option(value="Paperback") Paperback
+              option(value="Hardcover") Hardcover
           .form-group
             label(for="pages") Pages
             input.form-control(type="INT", name="Pages", id="pages", value=book.pages)

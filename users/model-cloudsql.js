@@ -76,7 +76,7 @@ function findUnregisteredUser (userType, cb) {
         cb(null, result);
     });
   // }
-  
+
 }
 // [End find unregistered users]
 
@@ -85,29 +85,7 @@ function chooseUserType (userType, cb) {
   var userTypeValue= userType[0];
   var id= userType.substr(5);
   var query = 'UPDATE user SET userType= '+userTypeValue+' where profileID = '+id+'; ';
-  console.log("-----------------DATABASE---------------");
-  console.log(userType);
-  console.log(userTypeValue);
-  console.log(userTypeValue);
-  // for(i=0; i<userType.length; i++){
-  //   console.log("userType[i]");
-  //   console.log(userType[i][0]);
-  //   console.log("userType[i].substr(5)");
-  //   console.log(userType[i].substr(5));
-
-  //   userTypeValue = userType[i][0];
-  //   id = userType[i].substr(5);
-  //   console.log(userTypeValue);
-  //   console.log(id); 
-  //   query+= 'UPDATE user SET userType= '+userTypeValue+' where profileID = '+id+'; ';
-
-  //   console.log(query);
-  //   console.log("end query");
-  // }
     connection.query(
-      // UPDATE user SET userType= 3 where profileID = 111595700919556005339
-      // 'UPDATE `user` SET `userType`= ? where `profileID` = ?' , [userTypeValue, id],
-      // 'SELECT * FROM `user` WHERE `userType` = ?', [userType],
       query,
       (err, result) => {
         if (err) {
@@ -116,8 +94,8 @@ function chooseUserType (userType, cb) {
         }
         cb(null, result);
     });
-  
-  
+
+
 }
 
 // [Start verify admin]
@@ -480,6 +458,482 @@ function findByAttribute(itemType, column, columnValue, orderBy, sortUpDown, cb)
 }
 
 
+//-------------------------------------------- START  SORT --------------------------------------------------------------------//
+
+// [Start set sortBooksByTitle]
+function sortBooksByTitle(limit, token, cb) {
+    token = token ? parseInt(token, 10) : 0;
+    connection.query(
+        'SELECT * FROM `books` ORDER BY `title`  LIMIT ? OFFSET ?', [limit, token],
+        (err, results) => {
+            if (err) {
+                cb(err);
+                return;
+            }
+            const hasMore = results.length === limit ? token + results.length : false;
+            cb(null, results, hasMore);
+        }
+    );
+}
+//[End set sortBooksByTitle]
+
+// [Start set sortBooksByFormat]
+function sortBooksByFormat(limit, token, cb) {
+    token = token ? parseInt(token, 10) : 0;
+    connection.query(
+        'SELECT * FROM `books` ORDER BY `format`  LIMIT ? OFFSET ?', [limit, token],
+        (err, results) => {
+            if (err) {
+                cb(err);
+                return;
+            }
+            const hasMore = results.length === limit ? token + results.length : false;
+            cb(null, results, hasMore);
+        }
+    );
+}
+//[End set sortBooksByFormat]
+
+// [Start set sortBooksByPages]
+function sortBooksByPages(limit, token, cb) {
+    token = token ? parseInt(token, 10) : 0;
+    connection.query(
+        'SELECT * FROM `books` ORDER BY `pages`  LIMIT ? OFFSET ?', [limit, token],
+        (err, results) => {
+            if (err) {
+                cb(err);
+                return;
+            }
+            const hasMore = results.length === limit ? token + results.length : false;
+            cb(null, results, hasMore);
+        }
+    );
+}
+//[End set sortBooksByPages]
+
+// [Start set sortBooksByLanguage]
+function sortBooksByLanguage(limit, token, cb) {
+    token = token ? parseInt(token, 10) : 0;
+    connection.query(
+        'SELECT * FROM `books` ORDER BY `language`  LIMIT ? OFFSET ?', [limit, token],
+        (err, results) => {
+            if (err) {
+                cb(err);
+                return;
+            }
+            const hasMore = results.length === limit ? token + results.length : false;
+            cb(null, results, hasMore);
+        }
+    );
+}
+//[End set sortBooksByLanguage]
+
+// [Start set sortBooksByAuthor]
+function sortBooksByAuthor(limit, token, cb) {
+    token = token ? parseInt(token, 10) : 0;
+    connection.query(
+        'SELECT * FROM `books` ORDER BY `author`  LIMIT ? OFFSET ?', [limit, token],
+        (err, results) => {
+            if (err) {
+                cb(err);
+                return;
+            }
+            const hasMore = results.length === limit ? token + results.length : false;
+            cb(null, results, hasMore);
+        }
+    );
+}
+//[End set sortBooksByAuthor]
+
+// [Start set sortBooksByPublished]
+function sortBooksByPublished(limit, token, cb) {
+    token = token ? parseInt(token, 10) : 0;
+    connection.query(
+        'SELECT * FROM `books` ORDER BY `publishedDate`  LIMIT ? OFFSET ?', [limit, token],
+        (err, results) => {
+            if (err) {
+                cb(err);
+                return;
+            }
+            const hasMore = results.length === limit ? token + results.length : false;
+            cb(null, results, hasMore);
+        }
+    );
+}
+//[End set sortBooksByPublished]
+
+// [Start set sortBooksByISBN10]
+function sortBooksByISBN10(limit, token, cb) {
+    token = token ? parseInt(token, 10) : 0;
+    connection.query(
+        'SELECT * FROM `books` ORDER BY `isbn10`  LIMIT ? OFFSET ?', [limit, token],
+        (err, results) => {
+            if (err) {
+                cb(err);
+                return;
+            }
+            const hasMore = results.length === limit ? token + results.length : false;
+            cb(null, results, hasMore);
+        }
+    );
+}
+//[End set sortBooksByISBN10]
+
+// [Start set sortBooksByISBN13]
+function sortBooksByISBN13(limit, token, cb) {
+    token = token ? parseInt(token, 10) : 0;
+    connection.query(
+        'SELECT * FROM `books` ORDER BY `isbn13`  LIMIT ? OFFSET ?', [limit, token],
+        (err, results) => {
+            if (err) {
+                cb(err);
+                return;
+            }
+            const hasMore = results.length === limit ? token + results.length : false;
+            cb(null, results, hasMore);
+        }
+    );
+}
+
+// [Start set sortMoviesByTitle]
+function sortMoviesByTitle(limit, token, cb) {
+  token = token ? parseInt(token, 10) : 0;
+  connection.query(
+      'SELECT * FROM `movies` ORDER BY `title`  LIMIT ? OFFSET ?', [limit, token],
+      (err, results) => {
+          if (err) {
+              cb(err);
+              return;
+          }
+          const hasMore = results.length === limit ? token + results.length : false;
+          cb(null, results, hasMore);
+      }
+  );
+}
+//[End set sortMoviesByTitle]
+
+// [Start set sortMoviesByDirector]
+function sortMoviesByDirector(limit, token, cb) {
+  token = token ? parseInt(token, 10) : 0;
+  connection.query(
+      'SELECT * FROM `movies` ORDER BY `director`  LIMIT ? OFFSET ?', [limit, token],
+      (err, results) => {
+          if (err) {
+              cb(err);
+              return;
+          }
+          const hasMore = results.length === limit ? token + results.length : false;
+          cb(null, results, hasMore);
+      }
+  );
+}
+//[End set sortMoviesByDirector]
+
+// [Start set sortMoviesByProducers]
+function sortMoviesByProducers(limit, token, cb) {
+  token = token ? parseInt(token, 10) : 0;
+  connection.query(
+      'SELECT * FROM `movies` ORDER BY `producers`  LIMIT ? OFFSET ?', [limit, token],
+      (err, results) => {
+          if (err) {
+              cb(err);
+              return;
+          }
+          const hasMore = results.length === limit ? token + results.length : false;
+          cb(null, results, hasMore);
+      }
+  );
+}
+//[End set sortMoviesByProducers]
+
+// [Start set sortMoviesByActors]
+function sortMoviesByLanguage(limit, token, cb) {
+  token = token ? parseInt(token, 10) : 0;
+  connection.query(
+      'SELECT * FROM `movies` ORDER BY `language`  LIMIT ? OFFSET ?', [limit, token],
+      (err, results) => {
+          if (err) {
+              cb(err);
+              return;
+          }
+          const hasMore = results.length === limit ? token + results.length : false;
+          cb(null, results, hasMore);
+      }
+  );
+}
+//[End set sortMoviesByActors]
+
+// [Start set sortMoviesBySubtitles]
+function sortMoviesBySubtitles(limit, token, cb) {
+  token = token ? parseInt(token, 10) : 0;
+  connection.query(
+      'SELECT * FROM `movies` ORDER BY `subtitles`  LIMIT ? OFFSET ?', [limit, token],
+      (err, results) => {
+          if (err) {
+              cb(err);
+              return;
+          }
+          const hasMore = results.length === limit ? token + results.length : false;
+          cb(null, results, hasMore);
+      }
+  );
+}
+//[End set sortMoviesBySubtitles]
+
+// [Start set sortMoviesByLanguage]
+function sortMoviesByActors(limit, token, cb) {
+  token = token ? parseInt(token, 10) : 0;
+  connection.query(
+      'SELECT * FROM `movies` ORDER BY `actors`  LIMIT ? OFFSET ?', [limit, token],
+      (err, results) => {
+          if (err) {
+              cb(err);
+              return;
+          }
+          const hasMore = results.length === limit ? token + results.length : false;
+          cb(null, results, hasMore);
+      }
+  );
+}
+//[End set sortMoviesByLanguage]
+
+// [Start set sortMoviesByDubbed]
+function sortMoviesByDubbed(limit, token, cb) {
+  token = token ? parseInt(token, 10) : 0;
+  connection.query(
+      'SELECT * FROM `movies` ORDER BY `dubbed`  LIMIT ? OFFSET ?', [limit, token],
+      (err, results) => {
+          if (err) {
+              cb(err);
+              return;
+          }
+          const hasMore = results.length === limit ? token + results.length : false;
+          cb(null, results, hasMore);
+      }
+  );
+}
+//[End set sortMoviesByDubbed]
+
+// [Start set sortMoviesByRuntime]
+function sortMoviesByRuntime(limit, token, cb) {
+  token = token ? parseInt(token, 10) : 0;
+  connection.query(
+      'SELECT * FROM `movies` ORDER BY `runtime`  LIMIT ? OFFSET ?', [limit, token],
+      (err, results) => {
+          if (err) {
+              cb(err);
+              return;
+          }
+          const hasMore = results.length === limit ? token + results.length : false;
+          cb(null, results, hasMore);
+      }
+  );
+}
+//[End set sortMoviesByRuntime]
+
+// [Start set sortMusicByTitle]
+function sortMusicByTitle(limit, token, cb) {
+  token = token ? parseInt(token, 10) : 0;
+  connection.query(
+      'SELECT * FROM `musics` ORDER BY `title`  LIMIT ? OFFSET ?', [limit, token],
+      (err, results) => {
+          if (err) {
+              cb(err);
+              return;
+          }
+          const hasMore = results.length === limit ? token + results.length : false;
+          cb(null, results, hasMore);
+      }
+  );
+}
+//[End set sortMusicByTitle]
+
+// [Start set sortMusicByType]
+function sortMusicByType(limit, token, cb) {
+  token = token ? parseInt(token, 10) : 0;
+  connection.query(
+      'SELECT * FROM `musics` ORDER BY `type`  LIMIT ? OFFSET ?', [limit, token],
+      (err, results) => {
+          if (err) {
+              cb(err);
+              return;
+          }
+          const hasMore = results.length === limit ? token + results.length : false;
+          cb(null, results, hasMore);
+      }
+  );
+}
+//[End set sortMusicByType]
+
+// [Start set sortMusicByProducers]
+function sortMusicByProducers(limit, token, cb) {
+  token = token ? parseInt(token, 10) : 0;
+  connection.query(
+      'SELECT * FROM `musics` ORDER BY `producers`  LIMIT ? OFFSET ?', [limit, token],
+      (err, results) => {
+          if (err) {
+              cb(err);
+              return;
+          }
+          const hasMore = results.length === limit ? token + results.length : false;
+          cb(null, results, hasMore);
+      }
+  );
+}
+//[End set sortMusicByProducers]
+
+// [Start set sortMusicByArtist]
+function sortMusicByArtist(limit, token, cb) {
+  token = token ? parseInt(token, 10) : 0;
+  connection.query(
+      'SELECT * FROM `musics` ORDER BY `artist`  LIMIT ? OFFSET ?', [limit, token],
+      (err, results) => {
+          if (err) {
+              cb(err);
+              return;
+          }
+          const hasMore = results.length === limit ? token + results.length : false;
+          cb(null, results, hasMore);
+      }
+  );
+}
+//[End set sortMusicByArtist]
+
+// [Start set sortMusicByLabel]
+function sortMusicByLabel(limit, token, cb) {
+  token = token ? parseInt(token, 10) : 0;
+  connection.query(
+      'SELECT * FROM `musics` ORDER BY `label`  LIMIT ? OFFSET ?', [limit, token],
+      (err, results) => {
+          if (err) {
+              cb(err);
+              return;
+          }
+          const hasMore = results.length === limit ? token + results.length : false;
+          cb(null, results, hasMore);
+      }
+  );
+}
+//[End set sortMusicByLabel]
+
+// [Start set sortMusicByReleaseDate]
+function sortMusicByReleaseDate(limit, token, cb) {
+  token = token ? parseInt(token, 10) : 0;
+  connection.query(
+      'SELECT * FROM `musics` ORDER BY `releaseDate`  LIMIT ? OFFSET ?', [limit, token],
+      (err, results) => {
+          if (err) {
+              cb(err);
+              return;
+          }
+          const hasMore = results.length === limit ? token + results.length : false;
+          cb(null, results, hasMore);
+      }
+  );
+}
+//[End set sortMusicByASIN]
+
+// [Start set sortMusicByASIN]
+function sortMusicByASIN(limit, token, cb) {
+  token = token ? parseInt(token, 10) : 0;
+  connection.query(
+      'SELECT * FROM `musics` ORDER BY `ASIN`  LIMIT ? OFFSET ?', [limit, token],
+      (err, results) => {
+          if (err) {
+              cb(err);
+              return;
+          }
+          const hasMore = results.length === limit ? token + results.length : false;
+          cb(null, results, hasMore);
+      }
+  );
+}
+//[End set sortMusicByASIN]
+
+// [Start set sortMagazinesByTitle]
+function sortMagazinesByTitle(limit, token, cb) {
+    token = token ? parseInt(token, 10) : 0;
+    connection.query(
+        'SELECT * FROM `Magazines` ORDER BY `title`  LIMIT ? OFFSET ?', [limit, token],
+        (err, results) => {
+            if (err) {
+                cb(err);
+                return;
+            }
+            const hasMore = results.length === limit ? token + results.length : false;
+            cb(null, results, hasMore);
+        }
+    );
+}
+//[End set sortMagazinesByTitle]
+
+// [Start set sortMagazinesByLanguage]
+function sortMagazinesByLanguage(limit, token, cb) {
+    token = token ? parseInt(token, 10) : 0;
+    connection.query(
+        'SELECT * FROM `Magazines` ORDER BY `language`  LIMIT ? OFFSET ?', [limit, token],
+        (err, results) => {
+            if (err) {
+                cb(err);
+                return;
+            }
+            const hasMore = results.length === limit ? token + results.length : false;
+            cb(null, results, hasMore);
+        }
+    );
+}
+//[End set sortMagazinesByLanguage]
+
+// [Start set sortMagazinesByPublisher]
+function sortMagazinesByPublisher(limit, token, cb) {
+    token = token ? parseInt(token, 10) : 0;
+    connection.query(
+        'SELECT * FROM `Magazines` ORDER BY `publisher`  LIMIT ? OFFSET ?', [limit, token],
+        (err, results) => {
+            if (err) {
+                cb(err);
+                return;
+            }
+            const hasMore = results.length === limit ? token + results.length : false;
+            cb(null, results, hasMore);
+        }
+    );
+}
+//[End set sortMagazinesByPublisher]
+
+// [Start set sortMagazinesByISBN10]
+function sortMagazinesByISBN10(limit, token, cb) {
+    token = token ? parseInt(token, 10) : 0;
+    connection.query(
+        'SELECT * FROM `Magazines` ORDER BY `isbn10`  LIMIT ? OFFSET ?', [limit, token],
+        (err, results) => {
+            if (err) {
+                cb(err);
+                return;
+            }
+            const hasMore = results.length === limit ? token + results.length : false;
+            cb(null, results, hasMore);
+        }
+    );
+}
+//[End set sortMagazinesByISBN10]
+
+// [Start set sortMagazinesByISBN13]
+function sortMagazinesByISBN13(limit, token, cb) {
+    token = token ? parseInt(token, 10) : 0;
+    connection.query(
+        'SELECT * FROM `Magazines` ORDER BY `isbn13`  LIMIT ? OFFSET ?', [limit, token],
+        (err, results) => {
+            if (err) {
+                cb(err);
+                return;
+            }
+            const hasMore = results.length === limit ? token + results.length : false;
+            cb(null, results, hasMore);
+        }
+    );
+}
+//[End set sortMagazinesByISBN13]
 
 //-------------------------------------------- START  DELETE ------------------------------------------------------------------//
 
@@ -532,6 +986,34 @@ module.exports = {
   deleteMagazine: _deleteMagazine,
   deleteMusic: _deleteMusic,
   deleteMovie: _deleteMovie,
+  sortBooksByTitle: sortBooksByTitle,
+  sortBooksByFormat: sortBooksByFormat,
+  sortBooksByPages: sortBooksByPages,
+  sortBooksByLanguage: sortBooksByLanguage,
+  sortBooksByAuthor: sortBooksByAuthor,
+  sortBooksByPublished: sortBooksByPublished,
+  sortBooksByISBN10: sortBooksByISBN10,
+  sortBooksByISBN13: sortBooksByISBN13,
+  sortMagazinesByTitle: sortMagazinesByTitle,
+  sortMagazinesByLanguage: sortMagazinesByLanguage,
+  sortMagazinesByPublisher: sortMagazinesByPublisher,
+  sortMagazinesByISBN10: sortMagazinesByISBN10,
+  sortMagazinesByISBN13: sortMagazinesByISBN13,
+  sortMoviesByTitle: sortMoviesByTitle,
+  sortMoviesByDirector: sortMoviesByDirector,
+  sortMoviesByProducers: sortMoviesByProducers,
+  sortMoviesByActors: sortMoviesByActors,
+  sortMoviesByLanguage: sortMoviesByLanguage,
+  sortMoviesBySubtitles: sortMoviesBySubtitles,
+  sortMoviesByDubbed: sortMoviesByDubbed,
+  sortMoviesByRuntime: sortMoviesByRuntime,
+  sortMusicByTitle: sortMusicByTitle,
+  sortMusicByType: sortMusicByType,
+  sortMusicByProducers: sortMusicByProducers,
+  sortMusicByArtist: sortMusicByArtist,
+  sortMusicByLabel: sortMusicByLabel,
+  sortMusicByReleaseDate: sortMusicByReleaseDate,
+  sortMusicByASIN: sortMusicByASIN,
   updateBook: updateBook,
   updateMagazine: updateMagazine,
   updateMusic: updateMusic,

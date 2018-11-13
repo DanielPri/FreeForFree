@@ -44,6 +44,13 @@ block content
     div(align="center")
       a(class="btn btn-primary" href="/users/admin/formMagazine") Add Magazine
     br
+    div(align="center")
+      a(class="btn btn-primary" href="/users/admin/sortMagazinesByTitle") Sort By Title
+      a(class="btn btn-primary" href="/users/admin/sortMagazinesByLanguage") Sort By Language
+      a(class="btn btn-primary" href="/users/admin/sortMagazinesByPublisher") Sort By Publisher
+      a(class="btn btn-primary" href="/users/admin/sortMagazinesByISBN10") Sort By ISBN10
+      a(class="btn btn-primary" href="/users/admin/sortMagazinesByISBN13") Sort By ISBN13
+    br
     header Magazines
     table(class="table table-striped table-bordered")
      thead
@@ -73,3 +80,4 @@ block content
       ul.pager
         li
           a(href=`?pageToken=${encodeURIComponent(nextPageToken)}`) Next
+
