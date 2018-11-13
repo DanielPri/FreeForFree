@@ -4,12 +4,13 @@ block content
     .container
         h3 Unregistered Users
         
-        table(class='table', id='Unregistered_User_Table')
+        table(class='table table-bordered', id='Unregistered_User_Table')
             thead
                 tr
                     th Name
                     th ID
                     th Type
+
             tbody(id='Unregistered_User_Table_body')
                 each user in users
                     tr

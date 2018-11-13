@@ -125,3 +125,95 @@ body {
   #catalogContent ul li.editMode label {
     display:none;
   }
+
+.searchForm{
+  padding-left: 10%;
+  padding-right: 10%;
+  border-style: solid;
+  border-radius: 25px;
+  text-align: center;
+
+}
+
+.searchBarSection{
+  /*border-style: solid;*/
+  /*border-color: #333333;*/
+  /*border-width: 1px;*/
+  text-align: center;
+}
+
+.searchDropDown{
+  /*border-style: solid;*/
+  /*border-color: #333333;*/
+  /*border-width: 1px;*/
+  overflow: hidden;
+    display: inline-block;
+}
+
+.submitSearch{
+    /*border-style: solid;*/
+    /*border-color: #333333;*/
+    /*border-width: 1px;*/
+    overflow: hidden;
+    display: inline-block;
+}
+
+#books{
+  display: inline-block;
+}
+
+.mediaType{
+    text-align: center;
+}
+
+.searchButton{
+    display: inline-block;
+    overflow: hidden;
+    padding: 0.5%;
+    border-radius: 25px;
+    padding:0.5%;
+}
+
+.bookButton{
+    /*border-style: solid;*/
+    /*border-color: #333333;*/
+    /*border-width: 2px;*/
+    display: inline-block;
+    overflow: hidden;
+    padding: 0.5%;
+    border-radius: 25px;
+    margin-left: 1%;
+}
+
+.magazineButton{
+    /*border-style: solid;*/
+    /*border-color: #333333;*/
+    /*border-width: 2px;*/
+    display: inline-block;
+    overflow: hidden;
+    padding: 0.5%;
+    border-radius: 25px;
+    margin-left: 1%;
+}
+
+.movieButton{
+    /*border-style: solid;*/
+    /*border-color: #333333;*/
+    /*border-width: 2px;*/
+    display: inline-block;
+    overflow: hidden;
+    padding: 0.5%;
+    border-radius: 25px;
+    margin-left: 1%;
+}
+
+.musicButton{
+    /*border-style: solid;*/
+    /*border-color: #333333;*/
+    /*border-width: 2px;*/
+    display: inline-block;
+    overflow: hidden;
+    padding: 0.5%;
+    border-radius: 25px;
+    margin-left: 1%;
+}

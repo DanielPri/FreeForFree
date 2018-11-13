@@ -57,8 +57,10 @@ router.get('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, n
   });
 });
 
+
 //----------Choosing User Type-------------------//
 router.post('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+
   getModel().chooseUserType(req.body.userType, (err, entities) => {
     if (err) {
       next(err);
@@ -72,7 +74,7 @@ router.post('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, 
 
 
 router.get('/admin/books', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().listBooks(10, req.query.pageToken, (err, entities, cursor) => {
+  getModel().listBooks(10, req.query.pageToke, (err, entities, cursor) => {
     if (err) {
       next(err);
       return;
@@ -324,7 +326,7 @@ router.get('/admin/formMusic', oauth2.required, oauth2.adminRequired, (req, res)
  *
  * Display a book for editing.
  */
-router.get('/admin/books/:book/edit', (req, res, next) => {
+router.get('/admin/books/:book/edit',  oauth2.required, oauth2.adminRequired, (req, res, next) => {
   getModel().readBook(req.params.book, (err, entity) => {
     if (err) {
       next(err);
@@ -371,7 +373,7 @@ router.post(
  *
  * Delete a book.
  */
-router.get('/admin/books/:book/delete', (req, res, next) => {
+router.get('/admin/books/:book/delete',   oauth2.required, oauth2.adminRequired, (req, res, next) => {
   getModel().deleteBook(req.params.book, (err) => {
     if (err) {
       next(err);
@@ -408,7 +410,7 @@ router.get('/admin/books/:book/delete', (req, res, next) => {
  *
  * Display a magazine for editing.
  */
-router.get('/admin/magazines/:magazine/edit', (req, res, next) => {
+router.get('/admin/magazines/:magazine/edit', oauth2.required, oauth2.adminRequired,(req, res, next) => {
   getModel().readMagazine(req.params.magazine, (err, entity) => {
     if (err) {
       next(err);
@@ -456,7 +458,7 @@ router.post(
  *
  * Delete a magazine
  */
-router.get('/admin/magazines/:magazine/delete', (req, res, next) => {
+router.get('/admin/magazines/:magazine/delete', oauth2.required, oauth2.adminRequired, (req, res, next) => {
   getModel().deleteMagazine(req.params.magazine, (err) => {
     if (err) {
       next(err);
@@ -493,7 +495,7 @@ router.get('/admin/magazines/:magazine/delete', (req, res, next) => {
  *
  * Display a music for editing.
  */
-router.get('/admin/music/:music/edit', (req, res, next) => {
+router.get('/admin/music/:music/edit', oauth2.required, oauth2.adminRequired, (req, res, next) => {
   getModel().readMusic(req.params.music, (err, entity) => {
     if (err) {
       next(err);
@@ -541,7 +543,7 @@ router.post(
  *
  * Delete a music
  */
-router.get('/admin/music/:music/delete', (req, res, next) => {
+router.get('/admin/music/:music/delete',  oauth2.required, oauth2.adminRequired, (req, res, next) => {
   getModel().deleteMusic(req.params.music, (err) => {
     if (err) {
       next(err);
@@ -578,7 +580,7 @@ router.get('/admin/music/:music/delete', (req, res, next) => {
  *
  * Display a movie for editing.
  */
-router.get('/admin/movies/:movie/edit', (req, res, next) => {
+router.get('/admin/movies/:movie/edit', oauth2.required, oauth2.adminRequired, (req, res, next) => {
   getModel().readMovie(req.params.movie, (err, entity) => {
     if (err) {
       next(err);
@@ -626,7 +628,7 @@ router.post(
  *
  * Delete a movie
  */
-router.get('/admin/movies/:movie/delete', (req, res, next) => {
+router.get('/admin/movies/:movie/delete', oauth2.required, oauth2.adminRequired, (req, res, next) => {
   getModel().deleteMovie(req.params.movie, (err) => {
     if (err) {
       next(err);
@@ -639,403 +641,112 @@ router.get('/admin/movies/:movie/delete', (req, res, next) => {
  //*************************************************** END MOVIES *******************************************************************/
 
 
-//*************************************************** SORTING FUNCTIONS *******************************************************************/
 
-//BOOKS
-// Create Page: Sort Books By Title
-router.get('/admin/sortBooksByTitle', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-    getModel().sortBooksByTitle(10, req.query.pageToken, (err, entities, cursor) => {
+
+//********************************************************SEARCH AND SORT*****************************************************//
+
+
+
+//For catalog.  Will eventually search the entire  database for any matches in search bar
+router.post('/admin/catalog', (req, res, next) => {
+
+    const anyPossibility = req.body.searchBar;
+    console.log(anyPossibility);
+    getModel().findByAttribute(anyPossibility, (err, entities) => {
+        if (err) {
+            next(err);
+            return;
+        }
+        res.render('users/catalog.pug', {
+            items: entities,
+            type: 'movies'
+        });
+    });
+});
+
+
+//Search for specific book attributes
+router.post('/admin/books', (req, res, next) => {
+
+    const bookSearchBy = req.body;
+    if (bookSearchBy.searchBar.length == 0) {
+        bookSearchBy.searchBar = 1;
+        bookSearchBy.books = 1;
+    }
+    getModel().findByAttribute("books", bookSearchBy.books, bookSearchBy.searchBar, bookSearchBy.sortBy, bookSearchBy.sortUpDown, (err, entities) => {
         if (err) {
             next(err);
             return;
         }
         res.render('users/books.pug', {
             books: entities,
-            nextPageToken: cursor
         });
     });
 });
 
-// Create Page: Sort Books By Format
-router.get('/admin/sortBooksByFormat', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-    getModel().sortBooksByFormat(10, req.query.pageToken, (err, entities, cursor) => {
-        if (err) {
-            next(err);
-            return;
-        }
-        res.render('users/books.pug', {
-            books: entities,
-            nextPageToken: cursor
-        });
-    });
-});
 
-// Create Page: Sort Books By Pages
-router.get('/admin/sortBooksByPages', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-    getModel().sortBooksByPages(10, req.query.pageToken, (err, entities, cursor) => {
-        if (err) {
-            next(err);
-            return;
-        }
-        res.render('users/books.pug', {
-            books: entities,
-            nextPageToken: cursor
-        });
-    });
-});
+//Search for specific magazine attributes
+router.post('/admin/magazines', (req, res, next) => {
 
-// Create Page: Sort Books By Language
-router.get('/admin/sortBooksByLanguage', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-    getModel().sortBooksByLanguage(10, req.query.pageToken, (err, entities, cursor) => {
-        if (err) {
-            next(err);
-            return;
-        }
-        res.render('users/books.pug', {
-            books: entities,
-            nextPageToken: cursor
-        });
-    });
-});
-
-// Create Page: Sort Books By Author
-router.get('/admin/sortBooksByAuthor', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-    getModel().sortBooksByAuthor(10, req.query.pageToken, (err, entities, cursor) => {
-        if (err) {
-            next(err);
-            return;
-        }
-        res.render('users/books.pug', {
-            books: entities,
-            nextPageToken: cursor
-        });
-    });
-});
-
-// Create Page: Sort Books By Published
-router.get('/admin/sortBooksByPublished', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-    getModel().sortBooksByPublished(10, req.query.pageToken, (err, entities, cursor) => {
-        if (err) {
-            next(err);
-            return;
-        }
-        res.render('users/books.pug', {
-            books: entities,
-            nextPageToken: cursor
-        });
-    });
-});
-
-// Create Page: Sort Books By ISBN-10
-router.get('/admin/sortBooksByISBN10', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-    getModel().sortBooksByISBN10(10, req.query.pageToken, (err, entities, cursor) => {
-        if (err) {
-            next(err);
-            return;
-        }
-        res.render('users/books.pug', {
-            books: entities,
-            nextPageToken: cursor
-        });
-    });
-});
-
-// Create Page: Sort Books By ISBN-13
-router.get('/admin/sortBooksByISBN13', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-    getModel().sortBooksByISBN13(10, req.query.pageToken, (err, entities, cursor) => {
-        if (err) {
-            next(err);
-            return;
-        }
-        res.render('users/books.pug', {
-            books: entities,
-            nextPageToken: cursor
-        });
-    });
-});
-// Create Page: Sort Magazines By Title
-router.get('/admin/sortMagazinesByTitle', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-    getModel().sortMagazinesByTitle(10, req.query.pageToken, (err, entities, cursor) => {
+    const magazinesSearchBy = req.body;
+    if (magazinesSearchBy.searchBar.length == 0) {
+        magazinesSearchBy.searchBar = 1;
+        magazinesSearchBy.magazines = 1;
+    }
+    getModel().findByAttribute("Magazines", magazinesSearchBy.magazines, magazinesSearchBy.searchBar, magazinesSearchBy.sortBy, magazinesSearchBy.sortUpDown, 
+                               (err, entities) => {
         if (err) {
             next(err);
             return;
         }
         res.render('users/magazines.pug', {
             magazines: entities,
-            nextPageToken: cursor
         });
     });
 });
 
-// Create Page: Sort Magazines By Language
-router.get('/admin/sortMagazinesByLanguage', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-    getModel().sortMagazinesByLanguage(10, req.query.pageToken, (err, entities, cursor) => {
+
+//Search for specific movie attributes
+router.post('/admin/movies', (req, res, next) => {
+
+    const moviesSearchBy = req.body;
+    if (moviesSearchBy.searchBar.length == 0) {
+        moviesSearchBy.searchBar = 1;
+        moviesSearchBy.movies = 1;
+    }
+    getModel().findByAttribute("movies", moviesSearchBy.movies, moviesSearchBy.searchBar, moviesSearchBy.sortBy, moviesSearchBy.sortUpDown,  (err, entities) => {
         if (err) {
             next(err);
             return;
         }
-        res.render('users/magazines.pug', {
-            magazines: entities,
-            nextPageToken: cursor
+        res.render('users/movies.pug', {
+            movies: entities,
         });
     });
 });
 
-// Create Page: Sort Magazines By Publisher
-router.get('/admin/sortMagazinesByPublisher', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-    getModel().sortMagazinesByPublisher(10, req.query.pageToken, (err, entities, cursor) => {
+
+//Search for specific music attributes
+router.post('/admin/music', (req, res, next) => {
+
+    const musicSearchBy = req.body;
+    if (musicSearchBy.searchBar.length == 0) {
+        musicSearchBy.searchBar = 1;
+        musicSearchBy.music = 1;
+    }
+    getModel().findByAttribute("musics", musicSearchBy.music, musicSearchBy.searchBar, musicSearchBy.sortBy, musicSearchBy.sortUpDown, (err, entities) => {
         if (err) {
             next(err);
             return;
         }
-        res.render('users/magazines.pug', {
-            magazines: entities,
-            nextPageToken: cursor
+        res.render('users/music.pug', {
+            musics: entities,
         });
     });
 });
 
-// Create Page: Sort Magazines By ISBN-10
-router.get('/admin/sortMagazinesByISBN10', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-    getModel().sortMagazinesByISBN10(10, req.query.pageToken, (err, entities, cursor) => {
-        if (err) {
-            next(err);
-            return;
-        }
-        res.render('users/magazines.pug', {
-            magazines: entities,
-            nextPageToken: cursor
-        });
-    });
-});
 
-// Create Page: Sort Magazines By ISBN-13
-router.get('/admin/sortMagazinesByISBN13', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-    getModel().sortMagazinesByISBN13(10, req.query.pageToken, (err, entities, cursor) => {
-        if (err) {
-            next(err);
-            return;
-        }
-        res.render('users/magazines.pug', {
-            magazines: entities,
-            nextPageToken: cursor
-        });
-    });
-});
-
-//MOVIES
-// Create Page: Sort Movies By Title
-router.get('/admin/sortMoviesByTitle', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().sortMoviesByTitle(10, req.query.pageToken, (err, entities, cursor) => {
-      if (err) {
-          next(err);
-          return;
-      }
-      res.render('users/movies.pug', {
-          movies: entities,
-          nextPageToken: cursor
-      });
-  });
-});
-
-// Create Page: Sort Movies By Director
-router.get('/admin/sortMoviesByDirector', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().sortMoviesByDirector(10, req.query.pageToken, (err, entities, cursor) => {
-      if (err) {
-          next(err);
-          return;
-      }
-      res.render('users/movies.pug', {
-          movies: entities,
-          nextPageToken: cursor
-      });
-  });
-});
-
-// Create Page: Sort Movies By Producers
-router.get('/admin/sortMoviesByProducers', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().sortMoviesByProducers(10, req.query.pageToken, (err, entities, cursor) => {
-      if (err) {
-          next(err);
-          return;
-      }
-      res.render('users/movies.pug', {
-          movies: entities,
-          nextPageToken: cursor
-      });
-  });
-});
-
-// Create Page: Sort Movies By Actors
-router.get('/admin/sortMoviesByActors', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().sortMoviesByActors(10, req.query.pageToken, (err, entities, cursor) => {
-      if (err) {
-          next(err);
-          return;
-      }
-      res.render('users/movies.pug', {
-          movies: entities,
-          nextPageToken: cursor
-      });
-  });
-});
-
-// Create Page: Sort Movies By Language
-router.get('/admin/sortMoviesByLanguage', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().sortMoviesByLanguage(10, req.query.pageToken, (err, entities, cursor) => {
-      if (err) {
-          next(err);
-          return;
-      }
-      res.render('users/movies.pug', {
-          movies: entities,
-          nextPageToken: cursor
-      });
-  });
-});
-
-// Create Page: Sort Movies By Subtitles
-router.get('/admin/sortMoviesBySubtitles', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().sortMoviesBySubtitles(10, req.query.pageToken, (err, entities, cursor) => {
-      if (err) {
-          next(err);
-          return;
-      }
-      res.render('users/movies.pug', {
-          movies: entities,
-          nextPageToken: cursor
-      });
-  });
-});
-
-// Create Page: Sort Movies By Dubbed
-router.get('/admin/sortMoviesByDubbed', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().sortMoviesByDubbed(10, req.query.pageToken, (err, entities, cursor) => {
-      if (err) {
-          next(err);
-          return;
-      }
-      res.render('users/movies.pug', {
-          movies: entities,
-          nextPageToken: cursor
-      });
-  });
-});
-
-// Create Page: Sort Movies By Runtime
-router.get('/admin/sortMoviesByRuntime', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().sortMoviesByRuntime(10, req.query.pageToken, (err, entities, cursor) => {
-      if (err) {
-          next(err);
-          return;
-      }
-      res.render('users/movies.pug', {
-          movies: entities,
-          nextPageToken: cursor
-      });
-  });
-});
-
-//MUSIC
-// Create Page: Sort Music By Title
-router.get('/admin/sortMusicByTitle', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().sortMusicByTitle(10, req.query.pageToken, (err, entities, cursor) => {
-      if (err) {
-          next(err);
-          return;
-      }
-      res.render('users/music.pug', {
-          musics: entities,
-          nextPageToken: cursor
-      });
-  });
-});
-
-// Create Page: Sort Music By Type
-router.get('/admin/sortMusicByType', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().sortMusicByType(10, req.query.pageToken, (err, entities, cursor) => {
-      if (err) {
-          next(err);
-          return;
-      }
-      res.render('users/music.pug', {
-          musics: entities,
-          nextPageToken: cursor
-      });
-  });
-});
-
-// Create Page: Sort Music By Producers
-router.get('/admin/sortMusicByProducers', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().sortMusicByProducers(10, req.query.pageToken, (err, entities, cursor) => {
-      if (err) {
-          next(err);
-          return;
-      }
-      res.render('users/music.pug', {
-          musics: entities,
-          nextPageToken: cursor
-      });
-  });
-});
-
-// Create Page: Sort Music By Artist
-router.get('/admin/sortMusicByArtist', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().sortMusicByArtist(10, req.query.pageToken, (err, entities, cursor) => {
-      if (err) {
-          next(err);
-          return;
-      }
-      res.render('users/music.pug', {
-          musics: entities,
-          nextPageToken: cursor
-      });
-  });
-});
-
-// Create Page: Sort Music By Label
-router.get('/admin/sortMusicByLabel', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().sortMusicByLabel(10, req.query.pageToken, (err, entities, cursor) => {
-      if (err) {
-          next(err);
-          return;
-      }
-      res.render('users/music.pug', {
-          musics: entities,
-          nextPageToken: cursor
-      });
-  });
-});
-
-// Create Page: Sort Music By Release Date
-router.get('/admin/sortMusicByReleaseDate', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().sortMusicByReleaseDate(10, req.query.pageToken, (err, entities, cursor) => {
-      if (err) {
-          next(err);
-          return;
-      }
-      res.render('users/music.pug', {
-          musics: entities,
-          nextPageToken: cursor
-      });
-  });
-});
-
-// Create Page: Sort Music By ASIN
-router.get('/admin/sortMusicByASIN', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().sortMusicByASIN(10, req.query.pageToken, (err, entities, cursor) => {
-      if (err) {
-          next(err);
-          return;
-      }
-      res.render('users/music.pug', {
-          musics: entities,
-          nextPageToken: cursor
-      });
-  });
-});
-
-//*************************************************** END SORTING FUNCTIONS *******************************************************************/
+//*************************************************** END SEARCH AND SORT FUNCTIONS *******************************************************************/
 
 //*************************************************** ERROR HANDLING *******************************************************************/
 
@@ -1043,10 +754,10 @@ router.get('/admin/sortMusicByASIN', oauth2.required, oauth2.adminRequired, (req
  * Errors on "/users/*" routes.
  */
 router.use((err, req, res, next) => {
-  // Format error and forward to generic error handler for logging and
-  // responding to the request
-  err.response = err.message;
-  next(err);
+    // Format error and forward to generic error handler for logging and
+    // responding to the request
+    err.response = err.message;
+    next(err);
 });
 
 module.exports = router;

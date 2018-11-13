@@ -10,26 +10,34 @@ html(lang="en")
     .navbar.navbar-default
       .container
         .navbar-header
-          .navbar-brand FreeForFree
+          .navbar-brand
+            a(href="/users") FreeForFree
 
         ul.nav.navbar-nav
           li
             a(href="/users/admin/list") Active Users
           li
             a(href="/users/admin/catalog") Catalog
-            ul.nav.navbar-nav
-              li
-                a(href="/users/admin/books") Books
-              li 
-                a(href="/users/admin/magazines") Magazines
-              li 
-                a(href="/users/admin/movies") Movies
-              li 
-                a(href="/users/admin/music") Music
+          li
+            a(href="/users/admin/addUser") Create New User
+
         p.navbar-text.navbar-right
           if profile
             span #{profile.displayName} &nbsp;
               a(href=logout) (logout)
+
+    div(class="mediaType")
+      div(class="searchButton")
+        a(class="btn btn-primary" href="/users/admin/catalog")  <span class="glyphicon glyphicon-search"></span> Search
+      div(class="bookButton")
+        a(class="btn btn-primary" href="/users/admin/books") <span class="glyphicon glyphicon-book"></span> Books
+      div(class="magazineButton")
+        a(class="btn btn-primary" href="/users/admin/magazines") <span class="glyphicon glyphicon-book"></span> Magazines
+      div(class="movieButton")
+        a(class="btn btn-primary" href="/users/admin/movies") <span class="glyphicon glyphicon-film"></span> Movies
+      div(class="musicButton")
+        a(class="btn btn-primary" href="/users/admin/music") <span class="glyphicon glyphicon-music"></span> Music
+      br
 
     .container
       block content
