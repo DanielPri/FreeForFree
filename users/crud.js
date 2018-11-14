@@ -693,7 +693,7 @@ router.post('/admin/magazines', (req, res, next) => {
         magazinesSearchBy.searchBar = 1;
         magazinesSearchBy.magazines = 1;
     }
-    getModel().findByAttribute("Magazines", magazinesSearchBy.magazines, magazinesSearchBy.searchBar, magazinesSearchBy.sortBy, magazinesSearchBy.sortUpDown, 
+    getModel().findByAttribute("magazines", magazinesSearchBy.magazines, magazinesSearchBy.searchBar, magazinesSearchBy.sortBy, magazinesSearchBy.sortUpDown, 
                                (err, entities) => {
         if (err) {
             next(err);
