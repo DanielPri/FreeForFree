@@ -41,7 +41,7 @@ router.get('/', (req, res, next) => {
 
 //--------Catalog----------//
 router.get('/admin/catalog', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  res.render('users/catalog.pug')
+  res.render('users/admin/catalog.pug')
 });
 
 //--------Add User----------//
@@ -51,7 +51,7 @@ router.get('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, n
       next(err);
       return;
     }
-    res.render('users/addUser.pug', {
+    res.render('users/admin/addUser.pug', {
       users: entities
      });
   });
@@ -79,7 +79,7 @@ router.get('/admin/books', oauth2.required, oauth2.adminRequired, (req, res, nex
       next(err);
       return;
     }
-    res.render('users/books.pug', {
+    res.render('users/admin/books.pug', {
       books: entities,
       nextPageToken: cursor
     });
@@ -92,7 +92,7 @@ router.get('/admin/magazines', oauth2.required, oauth2.adminRequired, (req, res,
       next(err);
       return;
     }
-    res.render('users/magazines.pug', {
+    res.render('users/admin/magazines.pug', {
       magazines: entities,
       nextPageToken: cursor
     });
@@ -105,7 +105,7 @@ router.get('/admin/movies', oauth2.required, oauth2.adminRequired, (req, res, ne
       next(err);
       return;
     }
-    res.render('users/movies.pug', {
+    res.render('users/admin/movies.pug', {
       movies: entities,
       nextPageToken: cursor
     });
@@ -118,7 +118,7 @@ router.get('/admin/music', oauth2.required, oauth2.adminRequired, (req, res, nex
       next(err);
       return;
     }
-    res.render('users/music.pug', {
+    res.render('users/admin/music.pug', {
       musics: entities,
       nextPageToken: cursor
     });
@@ -132,7 +132,7 @@ router.get('/admin/music', oauth2.required, oauth2.adminRequired, (req, res, nex
  */
 // [START add_book]
 router.get('/admin/formBook', oauth2.required, oauth2.adminRequired, (req, res) => {
-  res.render('users/formBook.pug', {
+  res.render('users/admin/formBook.pug', {
     book: {},
     action: 'Add'
   });
@@ -199,7 +199,7 @@ router.post('/admin/formMagazine', images.multer.single('image'), images.sendUpl
  */
 // [START add_magazine]
 router.get('/admin/formMagazine', oauth2.required, oauth2.adminRequired, (req, res) => {
-  res.render('users/formMagazine.pug', {
+  res.render('users/admin/formMagazine.pug', {
     magazine: {},
     action: 'Add'
   });
@@ -237,7 +237,7 @@ router.post('/admin/formMovie', images.multer.single('image'), images.sendUpload
  */
 // [START add_movie]
 router.get('/admin/formMovie', oauth2.required, oauth2.adminRequired, (req, res) => {
-  res.render('users/formMovie.pug', {
+  res.render('users/admin/formMovie.pug', {
     movie: {},
     action: 'Add'
   });
@@ -276,7 +276,7 @@ router.post('/admin/formMusic', images.multer.single('image'), images.sendUpload
  */
 // [START add_music]
 router.get('/admin/formMusic', oauth2.required, oauth2.adminRequired, (req, res) => {
-  res.render('users/formMusic.pug', {
+  res.render('users/admin/formMusic.pug', {
     music: {},
     action: 'Add'
   });
@@ -294,7 +294,7 @@ router.get('/admin/formMusic', oauth2.required, oauth2.adminRequired, (req, res)
        next(err);
        return;
      }
-     res.render('users/list.pug', {
+     res.render('users/admin/list.pug', {
        users: entities,
        nextPageToken: cursor
      });
@@ -315,7 +315,7 @@ router.get('/admin/formMusic', oauth2.required, oauth2.adminRequired, (req, res)
        next(err);
        return;
      }
-     res.render('users/viewBook.pug', {
+     res.render('users/admin/viewBook.pug', {
        book: entity
      });
    });
@@ -332,7 +332,7 @@ router.get('/admin/books/:book/edit',  oauth2.required, oauth2.adminRequired, (r
       next(err);
       return;
     }
-    res.render('users/formBook.pug', {
+    res.render('users/admin/formBook.pug', {
       book: entity,
       action: 'Edit'
     });
@@ -379,10 +379,9 @@ router.get('/admin/books/:book/delete',   oauth2.required, oauth2.adminRequired,
       next(err);
       return;
     }
-    res.redirect(req.baseUrl);
+    res.redirect('users/admin/books');
   });
 });
-
  //************************************************* END BOOK *******************************************************************/
 
 
@@ -399,7 +398,7 @@ router.get('/admin/books/:book/delete',   oauth2.required, oauth2.adminRequired,
       next(err);
       return;
     }
-    res.render('users/viewMagazine.pug', {
+    res.render('users/admin/viewMagazine.pug', {
       magazine: entity
     });
   });
@@ -416,7 +415,7 @@ router.get('/admin/magazines/:magazine/edit', oauth2.required, oauth2.adminRequi
       next(err);
       return;
     }
-    res.render('users/formMagazine.pug', {
+    res.render('users/admin/formMagazine.pug', {
       magazine: entity,
       action: 'Edit'
     });
@@ -464,10 +463,9 @@ router.get('/admin/magazines/:magazine/delete', oauth2.required, oauth2.adminReq
       next(err);
       return;
     }
-    res.redirect(req.baseUrl);
+    res.redirect('users/admin/magazines');
   });
 });
-
 //*************************************************** END MAGAZINE ****************************************************************/
 
 
@@ -484,7 +482,7 @@ router.get('/admin/magazines/:magazine/delete', oauth2.required, oauth2.adminReq
       next(err);
       return;
     }
-    res.render('users/viewMusic.pug', {
+    res.render('users/admin/viewMusic.pug', {
       music: entity
     });
   });
@@ -501,7 +499,7 @@ router.get('/admin/music/:music/edit', oauth2.required, oauth2.adminRequired, (r
       next(err);
       return;
     }
-    res.render('users/formMusic.pug', {
+    res.render('users/admin/formMusic.pug', {
       music: entity,
       action: 'Edit'
     });
@@ -549,10 +547,9 @@ router.get('/admin/music/:music/delete',  oauth2.required, oauth2.adminRequired,
       next(err);
       return;
     }
-    res.redirect(req.baseUrl);
+    res.redirect('/users/admin/music');
   });
 });
-
 //*************************************************** END MUSIC *******************************************************************/
 
 
@@ -569,7 +566,7 @@ router.get('/admin/music/:music/delete',  oauth2.required, oauth2.adminRequired,
       next(err);
       return;
     }
-    res.render('users/viewMovie.pug', {
+    res.render('users/admin/viewMovie.pug', {
       movie: entity
     });
   });
@@ -586,7 +583,7 @@ router.get('/admin/movies/:movie/edit', oauth2.required, oauth2.adminRequired, (
       next(err);
       return;
     }
-    res.render('users/formMovie.pug', {
+    res.render('users/admin/formMovie.pug', {
       movie: entity,
       action: 'Edit'
     });
@@ -634,18 +631,15 @@ router.get('/admin/movies/:movie/delete', oauth2.required, oauth2.adminRequired,
       next(err);
       return;
     }
-    res.redirect(req.baseUrl);
+    res.redirect('/users/admin/movies');
   });
 });
-
  //*************************************************** END MOVIES *******************************************************************/
 
 
 
 
 //********************************************************SEARCH AND SORT*****************************************************//
-
-
 
 //For catalog.  Will eventually search the entire  database for any matches in search bar
 router.post('/admin/catalog', (req, res, next) => {
@@ -657,7 +651,7 @@ router.post('/admin/catalog', (req, res, next) => {
             next(err);
             return;
         }
-        res.render('users/catalog.pug', {
+        res.render('users/admin/catalog.pug', {
             items: entities,
             type: 'movies'
         });
@@ -678,7 +672,7 @@ router.post('/admin/books', (req, res, next) => {
             next(err);
             return;
         }
-        res.render('users/books.pug', {
+        res.render('users/admin/books.pug', {
             books: entities,
         });
     });
@@ -693,13 +687,13 @@ router.post('/admin/magazines', (req, res, next) => {
         magazinesSearchBy.searchBar = 1;
         magazinesSearchBy.magazines = 1;
     }
-    getModel().findByAttribute("magazines", magazinesSearchBy.magazines, magazinesSearchBy.searchBar, magazinesSearchBy.sortBy, magazinesSearchBy.sortUpDown, 
+    getModel().findByAttribute("magazines", magazinesSearchBy.magazines, magazinesSearchBy.searchBar, magazinesSearchBy.sortBy, magazinesSearchBy.sortUpDown,
                                (err, entities) => {
         if (err) {
             next(err);
             return;
         }
-        res.render('users/magazines.pug', {
+        res.render('users/admin/magazines.pug', {
             magazines: entities,
         });
     });
@@ -719,7 +713,7 @@ router.post('/admin/movies', (req, res, next) => {
             next(err);
             return;
         }
-        res.render('users/movies.pug', {
+        res.render('users/admin/movies.pug', {
             movies: entities,
         });
     });
@@ -739,16 +733,20 @@ router.post('/admin/music', (req, res, next) => {
             next(err);
             return;
         }
-        res.render('users/music.pug', {
+        res.render('users/admin/music.pug', {
             musics: entities,
         });
     });
 });
+//*************************************************** END SEARCH AND SORT FUNCTIONS *************************************************************/
 
+//************************************************* START CLIENT ROUTERS AND FUNCTIONS **********************************************************/
+router.get('/client/catalog', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+  res.render('users/user/catalog.pug')
+});
+//*************************************************** END CLIENT ROUTERS AND FUNCTIONS **********************************************************/
 
-//*************************************************** END SEARCH AND SORT FUNCTIONS *******************************************************************/
-
-//*************************************************** ERROR HANDLING *******************************************************************/
+//********************************************************** ERROR HANDLING *********************************************************************/
 
 /**
  * Errors on "/users/*" routes.
