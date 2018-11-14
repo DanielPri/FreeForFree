@@ -165,7 +165,7 @@ function listBooks (limit, token, cb) {
 function listMagazines (limit, token, cb) {
   token = token ? parseInt(token, 10) : 0;
   connection.query(
-    'SELECT * FROM `Magazines` LIMIT ? OFFSET ?', [limit, token],
+    'SELECT * FROM `magazines` LIMIT ? OFFSET ?', [limit, token],
     (err, results) => {
       if (err) {
         cb(err);
@@ -232,7 +232,7 @@ function createBook (data, cb) {
 // [START createMagazines]
 function createMagazine (data, cb) {
   connection.query(
-    'INSERT INTO `Magazines` SET ?', data,
+    'INSERT INTO `magazines` SET ?', data,
     (err, result) => {
       if (err) {
         cb(err);
@@ -300,7 +300,7 @@ function readBook (id, cb) {
 // [START read]
 function readMagazine (id, cb) {
   connection.query(
-    'SELECT * FROM `Magazines` WHERE `id` = ?', id, (err, results) => {
+    'SELECT * FROM `magazines` WHERE `id` = ?', id, (err, results) => {
       if (!err && !results.length) {
         err = {
           code: 404,
@@ -376,7 +376,7 @@ function updateBook (id, data, cb) {
 // [START update]
 function updateMagazine (id, data, cb) {
   connection.query(
-    'UPDATE `Magazines` SET ? WHERE `id` = ?', [data, id], (err) => {
+    'UPDATE `magazines` SET ? WHERE `id` = ?', [data, id], (err) => {
       if (err) {
         cb(err);
         return;
@@ -467,7 +467,7 @@ function _deleteBook (id, cb) {
 
 //[START delete]
 function _deleteMagazine (id, cb) {
-  connection.query('DELETE FROM `Magazines` WHERE `id` = ?', id, cb);
+  connection.query('DELETE FROM `magazines` WHERE `id` = ?', id, cb);
 }
 //[END delete]
 
