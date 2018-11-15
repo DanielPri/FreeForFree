@@ -374,7 +374,7 @@ router.post(
  * Delete a book.
  */
 router.get('/admin/books/:book/delete',   oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().deleteBook(req.params.book, (err) => {
+  getModel().delete(req.params.book, (err) => {
     if (err) {
       next(err);
       return;
@@ -458,7 +458,7 @@ router.post(
  * Delete a magazine
  */
 router.get('/admin/magazines/:magazine/delete', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().deleteMagazine(req.params.magazine, (err) => {
+  getModel().delete(req.params.magazine, (err) => {
     if (err) {
       next(err);
       return;
@@ -542,7 +542,7 @@ router.post(
  * Delete a music
  */
 router.get('/admin/music/:music/delete',  oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().deleteMusic(req.params.music, (err) => {
+  getModel().delete(req.params.music, (err) => {
     if (err) {
       next(err);
       return;
@@ -626,7 +626,7 @@ router.post(
  * Delete a movie
  */
 router.get('/admin/movies/:movie/delete', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().deleteMovie(req.params.movie, (err) => {
+  getModel().delete(req.params.movie, (err) => {
     if (err) {
       next(err);
       return;

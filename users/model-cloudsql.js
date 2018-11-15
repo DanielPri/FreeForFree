@@ -233,13 +233,13 @@ function createBook (data, cb) {
 // [START createMagazines]
 function createMagazine (data, cb) {
   connection.query(
-    'INSERT INTO `magazines` SET ?', data,
+    'INSERT INTO `inventory` SET type=?;INSERT INTO `magazines` SET ?, id=LAST_INSERT_ID()', ['magazine', data],
     (err, result) => {
       if (err) {
         cb(err);
         return;
       }
-      readMagazine(result.insertId, cb);
+      readMagazine(result[0].insertId, cb);
     });
 }
 
@@ -249,13 +249,13 @@ function createMagazine (data, cb) {
 // [START createMovies]
 function createMovie (data, cb) {
   connection.query(
-    'INSERT INTO `movies` SET ?', data,
+    'INSERT INTO `inventory` SET type=?;INSERT INTO `movies` SET ?, id=LAST_INSERT_ID()', ['movie', data],
     (err, result) => {
       if (err) {
         cb(err);
         return;
       }
-      readMovie(result.insertId, cb);
+      readMovie(result[0].insertId, cb);
     });
 }
 // [END createMovies]
@@ -263,13 +263,13 @@ function createMovie (data, cb) {
 // [START createMusic]
 function createMusic (data, cb) {
   connection.query(
-    'INSERT INTO `musics` SET ?', data,
+    'INSERT INTO `inventory` SET type=?;INSERT INTO `musics` SET ?, id=LAST_INSERT_ID()', ['music', data],
     (err, result) => {
       if (err) {
         cb(err);
         return;
       }
-      readMusic(result.insertId, cb);
+      readMusic(result[0].insertId, cb);
     });
 }
 // [END createMusic]
@@ -461,30 +461,12 @@ function findByAttribute(itemType, column, columnValue, orderBy, sortUpDown, cb)
 //-------------------------------------------- START  DELETE ------------------------------------------------------------------//
 
 //[START delete]
-function _deleteBook (id, cb) {
+function _delete (id, cb) {
   connection.query('DELETE FROM `inventory` WHERE `id` = ?', id, cb);
 }
 //[END delete]
 
-//[START delete]
-function _deleteMagazine (id, cb) {
-  connection.query('DELETE FROM `magazines` WHERE `id` = ?', id, cb);
-}
-//[END delete]
-
-//[START delete]
-function _deleteMusic (id, cb) {
-  connection.query('DELETE FROM `musics` WHERE `id` = ?', id, cb);
-}
-//[END delete]
-
-//[START delete]
-function _deleteMovie (id, cb) {
-  connection.query('DELETE FROM `movies` WHERE `id` = ?', id, cb);
-}
-//[END delete]
-
-//-----------------------------------------------------------------------------------------------------------------------------//
+//---------------------------------------------- END  DELETE -----------------------------------------------------------------//
 module.exports = {
   createSchema: createSchema,
   list: list,
@@ -505,10 +487,7 @@ module.exports = {
   readMagazine: readMagazine,
   readMusic: readMusic,
   readMovie: readMovie,
-  deleteBook: _deleteBook,
-  deleteMagazine: _deleteMagazine,
-  deleteMusic: _deleteMusic,
-  deleteMovie: _deleteMovie,
+  delete: _delete,
   updateBook: updateBook,
   updateMagazine: updateMagazine,
   updateMusic: updateMusic,
