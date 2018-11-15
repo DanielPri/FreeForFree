@@ -1,0 +1,17 @@
+extends ../../catalog-client.pug
+
+block content
+  div(class="container")
+    div(class="row justify-content-md-center")
+      h3 Movie
+       small
+      
+      .media
+          .media-left
+            img(Id="image" src=movie.imageUrl)
+          .media-body
+            h4= movie.title
+              | &nbsp;
+              small= movie.publishedDate
+            h5 By #{movie.director||'unknown'}
+            p= movie.description

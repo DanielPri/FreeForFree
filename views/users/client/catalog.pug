@@ -1,0 +1,14 @@
+extends ../../catalog-client.pug
+
+block content
+  .container
+        div(class="searchForm")
+                .form-group
+                    h1
+                      label(for="search") Search <span class="glyphicon glyphicon-search"></span>
+                      form(action = "search" method = "post")
+                          input.form-control(type="text", name="searchBar")
+
+                          br
+                          button(type = "submit" class="btn btn-primary")
+                            span Submit

@@ -1,0 +1,85 @@
+extends ../../catalog-client.pug
+
+
+
+block content
+  .container
+    div(class="searchForm")
+      .form-group
+        h1
+          label(for="search") Search <span class="glyphicon glyphicon-search"></span>
+        form(action = "books" method = "post" name = "books")
+          input.form-control(type="text", name="searchBar")
+          br
+          h3 Search By
+          div(class="searchDropDown")
+            select(name = "books")
+              option.form-control(value="title") Title
+              option.form-control(value="author") Author
+              option.form-control(value="publishedDate") Published Date
+              option.form-control(value="language") Language
+              option.form-control(value="format") Format
+              option.form-control(value="pages") Pages
+              option.form-control(value="ISBN10") ISBN-10
+              option.form-control(value="ISBN13") ISBN-13            
+            br
+            br
+            br
+            h3 Sort by
+            select(name = "sortBy")
+              option.form-control(value="title") Title
+              option.form-control(value="author") Author
+              option.form-control(value="publishedDate") Published Date
+              option.form-control(value="language") Language
+              option.form-control(value="format") Format
+              option.form-control(value="pages") Pages
+              option.form-control(value="ISBN10") ISBN-10
+              option.form-control(value="ISBN13") ISBN-13
+            select(name = "sortUpDown")
+              option.form-control(value="ASC") Ascending
+              option.form-control(value="DESC") Descending
+            br
+            br
+            div(class="submitSearch")
+            button(type = "submit" class="btn btn-primary")
+             span Submit
+
+
+
+    br        
+
+    header Books
+    table(class="table table-striped table-bordered")
+     thead
+      tr
+       td View
+       td Title
+       td Format
+       td Pages
+       td Language
+       td Author
+       td Published
+       td ISBN-10
+       td ISBN-13
+     tbody
+      each book in books
+       tr
+        td
+         .media-left
+          a(href=`/users/client/books/${book.id}`)
+           img(Id="image" src=book.imageUrl)
+        td= book.title
+        td= book.format
+        td= book.pages
+        td= book.language
+        td= book.author
+        td= book.publishedDate
+        td= book.ISBN10
+        td= book.ISBN13 
+  if !books.length
+    p No books found.
+  if nextPageToken
+    nav
+      ul.pager
+        li
+          a(href=`?pageToken=${encodeURIComponent(nextPageToken)}`) Next

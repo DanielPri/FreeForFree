@@ -1,0 +1,36 @@
+html(lang="en")
+  head
+    title FreeForFree - Library Management
+    meta(charset='utf-8')
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    link(rel="stylesheet", href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css")
+    link(rel='stylesheet' href='/css_styles/catalog_styles.css' type='text/css' media='screen' charset='utf-8')
+  body
+    .navbar.navbar-default
+      .container
+        .navbar-header
+          .navbar-brand
+            a(href="/users") FreeForFree
+        ul.nav.navbar-nav
+          li
+            a(href="/users/client/catalog") Catalog
+
+        p.navbar-text.navbar-right
+          if profile
+            span #{profile.displayName} &nbsp;
+              a(href=logout) (logout)
+
+    div(class="mediaType")
+        div(class="searchButton")
+          a(class="btn btn-primary" href="/users/client/catalog")  <span class="glyphicon glyphicon-search"></span> Search
+        div(class="bookButton")
+          a(class="btn btn-primary" href="/users/client/books") <span class="glyphicon glyphicon-book"></span> Books
+        div(class="magazineButton")
+          a(class="btn btn-primary" href="/users/client/magazines") <span class="glyphicon glyphicon-book"></span> Magazines
+        div(class="movieButton")
+          a(class="btn btn-primary" href="/users/client/movies") <span class="glyphicon glyphicon-film"></span> Movies
+        div(class="musicButton")
+          a(class="btn btn-primary" href="/users/client/music") <span class="glyphicon glyphicon-music"></span> Music
+    br
+
+    block content
