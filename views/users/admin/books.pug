@@ -16,7 +16,7 @@ block content
             select(name = "books")
               option.form-control(value="title") Title
               option.form-control(value="author") Author
-              option.form-control(value="publishedDate") Published Date
+              option.form-control(value="publisher") Publisher
               option.form-control(value="language") Language
               option.form-control(value="format") Format
               option.form-control(value="pages") Pages
@@ -29,7 +29,7 @@ block content
             select(name = "sortBy")
               option.form-control(value="title") Title
               option.form-control(value="author") Author
-              option.form-control(value="publishedDate") Published Date
+              option.form-control(value="publisher") Publisher
               option.form-control(value="language") Language
               option.form-control(value="format") Format
               option.form-control(value="pages") Pages
@@ -63,7 +63,7 @@ block content
        td Pages
        td Language
        td Author
-       td Published
+       td Publisher
        td ISBN-10
        td ISBN-13
      tbody
@@ -78,7 +78,7 @@ block content
         td= book.pages
         td= book.language
         td= book.author
-        td= book.publishedDate
+        td= book.publisher
         td= book.ISBN10
         td= book.ISBN13 
   if !books.length

@@ -20,7 +20,8 @@ const config = require('../config');
 const options = {
   user: config.get('MYSQL_USER'),
   password: config.get('MYSQL_PASSWORD'),
-  database: 'bookshelf'
+  database: 'bookshelf',
+  multipleStatements: true
 };
 
 if (config.get('INSTANCE_CONNECTION_NAME') && config.get('NODE_ENV') === 'production') {
@@ -217,13 +218,13 @@ function listMusics (limit, token, cb) {
 // [START createBook]
 function createBook (data, cb) {
   connection.query(
-    'INSERT INTO `books` SET ?', data,
+    'INSERT INTO `inventory` SET type=?;INSERT INTO `books` SET ?, id=LAST_INSERT_ID()', ['book', data],
     (err, result) => {
       if (err) {
         cb(err);
         return;
       }
-      readBook(result.insertId, cb);
+      readBook(result[0].insertId, cb);
     });
 }
 // [END createBook]
@@ -461,7 +462,7 @@ function findByAttribute(itemType, column, columnValue, orderBy, sortUpDown, cb)
 
 //[START delete]
 function _deleteBook (id, cb) {
-  connection.query('DELETE FROM `books` WHERE `id` = ?', id, cb);
+  connection.query('DELETE FROM `inventory` WHERE `id` = ?', id, cb);
 }
 //[END delete]
 

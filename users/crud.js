@@ -379,7 +379,7 @@ router.get('/admin/books/:book/delete',   oauth2.required, oauth2.adminRequired,
       next(err);
       return;
     }
-    res.redirect('users/admin/books');
+    res.redirect('..');
   });
 });
  //************************************************* END BOOK *******************************************************************/
@@ -463,7 +463,7 @@ router.get('/admin/magazines/:magazine/delete', oauth2.required, oauth2.adminReq
       next(err);
       return;
     }
-    res.redirect('users/admin/magazines');
+    res.redirect('..');
   });
 });
 //*************************************************** END MAGAZINE ****************************************************************/
@@ -547,7 +547,7 @@ router.get('/admin/music/:music/delete',  oauth2.required, oauth2.adminRequired,
       next(err);
       return;
     }
-    res.redirect('/users/admin/music');
+    res.redirect('..');
   });
 });
 //*************************************************** END MUSIC *******************************************************************/
@@ -631,7 +631,7 @@ router.get('/admin/movies/:movie/delete', oauth2.required, oauth2.adminRequired,
       next(err);
       return;
     }
-    res.redirect('/users/admin/movies');
+    res.redirect('..');
   });
 });
  //*************************************************** END MOVIES *******************************************************************/
