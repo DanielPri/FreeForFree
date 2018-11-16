@@ -63,10 +63,7 @@ function createUser (data, profileName, cb) {
 
 // [Find unregistered users]
 function findUnregisteredUser (userType, cb) {
-  // var i=0;
-  // for(i=0; i<userType.length; i++){
     connection.query(
-      // 'UPDATE `user` SET `userType`= ? where `profileID` = ?' , [3, userType[i]],
       'SELECT * FROM `user` WHERE `userType` = ?', [userType],
       (err, result) => {
         if (err) {
@@ -79,6 +76,21 @@ function findUnregisteredUser (userType, cb) {
 
 }
 // [End find unregistered users]
+
+// [Find Users Information]
+function findUserInfo (cb) {
+    connection.query(
+      'SELECT * FROM `user` ',
+      (err, result) => {
+        if (err) {
+          cb(err);
+          return;
+        }
+        cb(null, result);
+    });
+
+}
+// [End find Users Information]
 
 function chooseUserType (userType, cb) {
   var i=0;
@@ -513,7 +525,8 @@ module.exports = {
   updateMusic: updateMusic,
   updateMovie: updateMovie,
   findItem: findItem,
-  findByAttribute: findByAttribute
+  findByAttribute: findByAttribute,
+  findUserInfo: findUserInfo
 };
 
 if (module === require.main) {

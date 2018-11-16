@@ -1,0 +1,68 @@
+extends adminBase.pug
+
+block content
+    .container
+        h3 Unregistered Users
+        
+        table(class='table table-bordered', id='Unregistered_User_Table')
+            thead
+                tr
+                    th Name
+                    th ID
+                    th Address
+                    th Email
+                    th Phone
+                    th User Type
+
+            tbody(id='Unregistered_User_Table_body')
+                each user in users
+                    tr
+                        form(method="POST" action="addUser")
+                            td= user.profileName
+                            td(name="userID")= user.profileID
+                            td(class= "userAddress")= user.address
+                            td(class= "userEmail")= user.email
+                            td(class= "userPhone")= user.phone
+                            td(class= "usertype")= user.userType
+                            td(class = "EditUserType" ) Edit
+                            td(style = "display:none")
+                                input(class = "SaveUserType" type="submit" value="Save")
+                        
+                        
+        if !users.length
+            p No Unregistered users found.
+
+    script.
+
+            $( document ).ready(function() {
+
+                
+                
+            });
+
+            //- console.log($(".usertypeText").html($(this).value));
+
+            $(".EditUserType").click(function(){
+                $(this).parent().children(".usertypeText").css("display","none");
+                $(this).parent().children(".usertypeChoice").css("display","block");
+                $(this).next().css("display","block"); // display Save button
+
+            });
+
+            $(".SaveUserType").click(function(){
+                $(this).css("display","none");
+                $(".submit").click();
+                
+            });
+
+            $(".EditUserType").mouseover(function() {
+                $( this ).css("color", "blue");
+            }).mouseout(function() {
+                $( this ).css("color", "black");
+            });
+        
+            
+
+
+
+            

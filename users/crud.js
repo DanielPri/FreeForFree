@@ -72,6 +72,21 @@ router.post('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, 
 
 //----------------End choose User Type ------------//
 
+//=================== Get All User Info =========================/
+router.get('/admin/editUserInfo', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().findUserInfo((err, entities) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/editUserInfo.pug', {
+      users: entities
+     });
+  });
+});
+//=================== End Get All User Info =====================/
+
+
 
 router.get('/admin/books', oauth2.required, oauth2.adminRequired, (req, res, next) => {
   getModel().listBooks(10, req.query.pageToke, (err, entities, cursor) => {
@@ -85,6 +100,7 @@ router.get('/admin/books', oauth2.required, oauth2.adminRequired, (req, res, nex
     });
   });
 });
+
 
 router.get('/admin/magazines', oauth2.required, oauth2.adminRequired, (req, res, next) => {
   getModel().listMagazines(10, req.query.pageToken, (err, entities, cursor) => {
