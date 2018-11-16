@@ -92,6 +92,21 @@ function findUserInfo (cb) {
 }
 // [End find Users Information]
 
+// [Find Users Information]
+function editUserInfo (cb) {
+  connection.query(
+    'SELECT * FROM `user` ',
+    (err, result) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      cb(null, result);
+  });
+
+}
+// [End find Users Information]
+
 function chooseUserType (userType, cb) {
   var i=0;
   var userTypeValue= userType[0];
@@ -526,7 +541,8 @@ module.exports = {
   updateMovie: updateMovie,
   findItem: findItem,
   findByAttribute: findByAttribute,
-  findUserInfo: findUserInfo
+  findUserInfo: findUserInfo,
+  editUserInfo: editUserInfo
 };
 
 if (module === require.main) {
