@@ -332,7 +332,7 @@ router.get('/admin/books/:book/edit',  oauth2.required, oauth2.adminRequired, (r
       next(err);
       return;
     }
-    if (result.length == 1) {
+    if (result.length == 1 && req.user.id != result[0].id) {
       res.redirect(`/users/admin/books`);
     }
   });
