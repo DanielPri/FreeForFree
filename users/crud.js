@@ -431,6 +431,15 @@ router.get('/admin/books/:book/delete',   oauth2.required, oauth2.adminRequired,
  * Display a magazine for editing.
  */
 router.get('/admin/magazines/:magazine/edit', oauth2.required, oauth2.adminRequired,(req, res, next) => {
+  getModel().verifyEditing(req.params.magazine, (err, result) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    if (result.length == 1 && req.user.id != result[0].id) {
+      res.redirect(`/users/admin/magazines`);
+    }
+  });
   getModel().readMagazine(req.params.magazine, (err, entity) => {
     if (err) {
       next(err);
@@ -440,6 +449,12 @@ router.get('/admin/magazines/:magazine/edit', oauth2.required, oauth2.adminRequi
       magazine: entity,
       action: 'Edit'
     });
+  });
+  getModel().startEditing(req.user.id, req.params.magazine, (err, savedData) => {
+    if (err) {
+      next(err);
+      return;
+    }
   });
 });
 
@@ -468,6 +483,12 @@ router.post(
         return;
       }
       res.redirect(`/users/admin/magazines`);
+    });
+    getModel().stopEditing(req.user.id, req.params.magazine, (err) => {
+      if (err) {
+        next(err);
+        return;
+      }
     });
   }
 );
