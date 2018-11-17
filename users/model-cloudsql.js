@@ -93,9 +93,14 @@ function findUserInfo (cb) {
 // [End find Users Information]
 
 // [Find Users Information]
-function editUserInfo (cb) {
+function editUserInfo (userInfo, cb) {
+  console.log("===============================================");
+  console.log(userInfo.profileID);
+  console.log(userInfo[0]);
+  // console.log(userInfo[0][1]);
   connection.query(
-    'SELECT * FROM `user` ',
+    'UPDATE `user` Set ? where profileID= ?', [userInfo, userInfo.profileID],
+    // 'SELECT * FROM `user` ',
     (err, result) => {
       if (err) {
         cb(err);

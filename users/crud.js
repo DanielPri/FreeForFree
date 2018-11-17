@@ -88,16 +88,12 @@ router.get('/admin/editUserInfo', oauth2.required, oauth2.adminRequired, (req, r
 
 //=================== Get All User Info =========================/
 router.post('/admin/editUserInfo', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  console.log("===============================================");
-  console.log(req.body);
-  getModel().editUserInfo((err, entities) => {
+  getModel().editUserInfo(req.body, (err, entities) => {
     if (err) {
       next(err);
       return;
     }
-    res.render('users/editUserInfo.pug', {
-      users: entities
-     });
+    res.redirect('editUserInfo');
   });
 });
 //=================== End Get All User Info =====================/
