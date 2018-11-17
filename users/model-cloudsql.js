@@ -94,10 +94,6 @@ function findUserInfo (cb) {
 
 // [Find Users Information]
 function editUserInfo (userInfo, cb) {
-  console.log("===============================================");
-  console.log(userInfo.profileID);
-  console.log(userInfo[0]);
-  // console.log(userInfo[0][1]);
   connection.query(
     'UPDATE `user` Set ? where profileID= ?', [userInfo, userInfo.profileID],
     // 'SELECT * FROM `user` ',

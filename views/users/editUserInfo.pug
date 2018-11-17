@@ -2,7 +2,7 @@ extends adminBase.pug
 
 block content
     .container
-        h3 Unregistered Users
+        h3 List Of Users
         form(method="POST" action="editUserInfo")
             table(class='table table-bordered', id='Unregistered_User_Table')                
                 thead
@@ -24,6 +24,7 @@ block content
                             td(class= "userPhone" class = "text")= user.phone
                             td(class= "usertype" class = "text")= user.userType
                             td(class = "EditUserType" ) Edit
+                            td(class= "CancelChange" style= "display:none") Cancel
                             td(style = "display:none")
                                 input(class = "SaveUserType" type="submit" value="Save")
                             
@@ -32,13 +33,7 @@ block content
             p No Unregistered users found.
 
     script.
-
-            $( document ).ready(function() {
-
-                
-                
-            });
-
+    
             //- console.log($(".usertypeText").html($(this).value));
 
             $(".EditUserType").click(function(){
@@ -51,6 +46,7 @@ block content
                 $(this).parent().children(".usertypeText").css("display","none");
                 $(this).parent().children(".usertypeChoice").css("display","block");
                 $(this).next().css("display","block"); // display Save button
+                $(this).next().next().css("display","block"); // display Save button
 
                 $(this).parent().children().eq(0).replaceWith('<td> <textarea rows="2" class = "textArea" name= "profileName">'+ profileName +'</textarea> </td>');
                 $(this).parent().children().eq(1).replaceWith('<td><textarea rows="2" class = "textArea" name= "profileID">'+ profileID +'</textarea></td>');
@@ -58,6 +54,12 @@ block content
                 $(this).parent().children().eq(3).replaceWith('<td><textarea rows="2" class = "textArea" name= "email">'+ email +'</textarea></td>');
                 $(this).parent().children().eq(4).replaceWith('<td><textarea rows="2" class = "textArea" name="phone">'+ phone +'</textarea></td>');
                 $(this).parent().children().eq(5).replaceWith('<td><textarea rows="2" class = "textArea" name= "userType">'+ userType +'</textarea></td>');
+
+                $(".EditUserType").css("display", "none"); // hide all the edit buttons, we can only edit one user at a time
+                
+                
+                
+
 
             });
 
@@ -67,7 +69,36 @@ block content
                 
             });
 
+            $(".CancelChange").click(function(){
+                $(this).css("display","none");
+                $(".EditUserType").css("display","block");
+                $(".SaveUserType").parent().css("display","none");
+
+                var profileName = $(this).parent().children().eq(0).text();
+                var profileID = $(this).parent().children().eq(1).text();
+                var address = $(this).parent().children().eq(2).text();
+                var email = $(this).parent().children().eq(3).text();
+                var phone = $(this).parent().children().eq(4).text();
+                var userType = $(this).parent().children().eq(5).text();
+                
+                $(this).parent().children().eq(0).replaceWith('<td class = "text" > '+ profileName +'</td>');
+                $(this).parent().children().eq(1).replaceWith('<td name="userID" class = "text">'+ profileID +'</td>');
+                $(this).parent().children().eq(2).replaceWith('<td class= "userAddress" class = "text">'+ address +'</td>');
+                $(this).parent().children().eq(3).replaceWith('<td class= "userEmail" class = "text">'+ email +'</td>');
+                $(this).parent().children().eq(4).replaceWith('<td class= "userPhone" class = "text">'+ phone +'</td>');
+                $(this).parent().children().eq(5).replaceWith('<td class= "usertype" class = "text">'+ userType +'</td>');
+
+            });
+
+
+
             $(".EditUserType").mouseover(function() {
+                $( this ).css("color", "blue");
+            }).mouseout(function() {
+                $( this ).css("color", "black");
+            });
+
+            $(".CancelChange").mouseover(function() {
                 $( this ).css("color", "blue");
             }).mouseout(function() {
                 $( this ).css("color", "black");
