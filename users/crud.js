@@ -536,6 +536,15 @@ router.get('/admin/magazines/:magazine/delete', oauth2.required, oauth2.adminReq
  * Display a music for editing.
  */
 router.get('/admin/music/:music/edit', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().verifyEditing(req.params.music, (err, result) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    if (result.length == 1 && req.user.id != result[0].id) {
+      res.redirect(`/users/admin/music`);
+    }
+  });
   getModel().readMusic(req.params.music, (err, entity) => {
     if (err) {
       next(err);
@@ -545,6 +554,12 @@ router.get('/admin/music/:music/edit', oauth2.required, oauth2.adminRequired, (r
       music: entity,
       action: 'Edit'
     });
+  });
+  getModel().startEditing(req.user.id, req.params.music, (err, savedData) => {
+    if (err) {
+      next(err);
+      return;
+    }
   });
 });
 
@@ -573,6 +588,13 @@ router.post(
         return;
       }
       res.redirect(`/users/admin/music`);
+    });
+
+    getModel().stopEditing(req.user.id, req.params.music, (err) => {
+      if (err) {
+        next(err);
+        return;
+      }
     });
   }
 );
@@ -620,6 +642,15 @@ router.get('/admin/music/:music/delete',  oauth2.required, oauth2.adminRequired,
  * Display a movie for editing.
  */
 router.get('/admin/movies/:movie/edit', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().verifyEditing(req.params.movie, (err, result) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    if (result.length == 1 && req.user.id != result[0].id) {
+      res.redirect(`/users/admin/movies`);
+    }
+  });
   getModel().readMovie(req.params.movie, (err, entity) => {
     if (err) {
       next(err);
@@ -629,6 +660,12 @@ router.get('/admin/movies/:movie/edit', oauth2.required, oauth2.adminRequired, (
       movie: entity,
       action: 'Edit'
     });
+  });
+  getModel().startEditing(req.user.id, req.params.movie, (err, savedData) => {
+    if (err) {
+      next(err);
+      return;
+    }
   });
 });
 
@@ -657,6 +694,12 @@ router.post(
         return;
       }
       res.redirect(`/users/admin/movies`);
+    });
+    getModel().stopEditing(req.user.id, req.params.movie, (err) => {
+      if (err) {
+        next(err);
+        return;
+      }
     });
   }
 );
