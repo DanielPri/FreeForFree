@@ -459,14 +459,36 @@ function findByAttribute(itemType, column, columnValue, orderBy, sortUpDown, cb)
 }
 
 //-------------------------------------------- START  DELETE ------------------------------------------------------------------//
-
 //[START delete]
 function _delete (id, cb) {
   connection.query('DELETE FROM `inventory` WHERE `id` = ?', id, cb);
 }
 //[END delete]
+//---------------------------------------------- END  DELETE ------------------------------------------------------------------//
 
-//---------------------------------------------- END  DELETE -----------------------------------------------------------------//
+//-------------------------------------------- START  EDITING ------------------------------------------------------------------//
+//[START startEditing]
+function startEditing(id, itemID, cb) {
+  connection.query(
+    'INSERT INTO `editing` SET `id`=?, `itemID`=?', [id, itemID],
+    (err, result) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      cb(null, result);
+    });
+}
+//[END startEditing]
+
+//[START stopEditing]
+function stopEditing(id, itemID, cb) {
+  connection.query('DELETE FROM `editing` WHERE `id` = ? AND `itemID` = ?', [id, itemID], cb);
+}
+//[END stopEditing]
+
+//---------------------------------------------- END  EDITING ------------------------------------------------------------------//
+
 module.exports = {
   createSchema: createSchema,
   list: list,
@@ -493,7 +515,9 @@ module.exports = {
   updateMusic: updateMusic,
   updateMovie: updateMovie,
   findItem: findItem,
-  findByAttribute: findByAttribute
+  findByAttribute: findByAttribute,
+  startEditing: startEditing,
+  stopEditing: stopEditing
 };
 
 if (module === require.main) {

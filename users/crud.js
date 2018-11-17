@@ -145,7 +145,7 @@ router.get('/admin/formBook', oauth2.required, oauth2.adminRequired, (req, res) 
  * Create a book.
  */
 // [START add_post]
-router.post('/admin/formBook', images.multer.single('image'), images.sendUploadToGCS, (req, res, next) => {
+router.post('/admin/formBook', oauth2.required, oauth2.adminRequired, images.multer.single('image'), images.sendUploadToGCS, (req, res, next) => {
   const data = req.body;
   // Was an image uploaded? If so, we'll use its public URL
   // in cloud storage.
@@ -174,7 +174,7 @@ router.post('/admin/formBook', images.multer.single('image'), images.sendUploadT
  * Create a magazine.
  */
 // [START add_post]
-router.post('/admin/formMagazine', images.multer.single('image'), images.sendUploadToGCS, (req, res, next) => {
+router.post('/admin/formMagazine', oauth2.required, oauth2.adminRequired, images.multer.single('image'), images.sendUploadToGCS, (req, res, next) => {
   const data = req.body;
   // Was an image uploaded? If so, we'll use its public URL
   // in cloud storage.
@@ -212,7 +212,7 @@ router.get('/admin/formMagazine', oauth2.required, oauth2.adminRequired, (req, r
  * Create a movie.
  */
 // [START add_post]
-router.post('/admin/formMovie', images.multer.single('image'), images.sendUploadToGCS, (req, res, next) => {
+router.post('/admin/formMovie', oauth2.required, oauth2.adminRequired, images.multer.single('image'), images.sendUploadToGCS, (req, res, next) => {
   const data = req.body;
   // Was an image uploaded? If so, we'll use its public URL
   // in cloud storage.
@@ -251,7 +251,7 @@ router.get('/admin/formMovie', oauth2.required, oauth2.adminRequired, (req, res)
  */
 
 // [START add_post]
-router.post('/admin/formMusic', images.multer.single('image'), images.sendUploadToGCS, (req, res, next) => {
+router.post('/admin/formMusic', oauth2.required, oauth2.adminRequired, images.multer.single('image'), images.sendUploadToGCS, (req, res, next) => {
   const data = req.body;
   // Was an image uploaded? If so, we'll use its public URL
   // in cloud storage.
@@ -337,6 +337,12 @@ router.get('/admin/books/:book/edit',  oauth2.required, oauth2.adminRequired, (r
       action: 'Edit'
     });
   });
+  getModel().startEditing(req.user.id, req.params.book, (err, savedData) => {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
 });
 
 /**
@@ -345,7 +351,7 @@ router.get('/admin/books/:book/edit',  oauth2.required, oauth2.adminRequired, (r
  * Update a book.
  */
 router.post(
-  '/admin/books/:book/edit',
+  '/admin/books/:book/edit', oauth2.required, oauth2.adminRequired,
   images.multer.single('image'),
   images.sendUploadToGCS,
   (req, res, next) => {
@@ -363,6 +369,12 @@ router.post(
         return;
       }
       res.redirect(`/users/admin/books`);
+    });
+    getModel().stopEditing(req.user.id, req.params.book, (err) => {
+      if (err) {
+        next(err);
+        return;
+      }
     });
   }
 );
@@ -429,7 +441,7 @@ router.get('/admin/magazines/:magazine/edit', oauth2.required, oauth2.adminRequi
  * Update a magazine.
  */
 router.post(
-  '/admin/magazines/:magazine/edit',
+  '/admin/magazines/:magazine/edit', oauth2.required, oauth2.adminRequired,
   images.multer.single('image'),
   images.sendUploadToGCS,
   (req, res, next) => {
@@ -513,7 +525,7 @@ router.get('/admin/music/:music/edit', oauth2.required, oauth2.adminRequired, (r
  * Update a music.
  */
 router.post(
-  '/admin/music/:music/edit',
+  '/admin/music/:music/edit', oauth2.required, oauth2.adminRequired,
   images.multer.single('image'),
   images.sendUploadToGCS,
   (req, res, next) => {
@@ -597,7 +609,7 @@ router.get('/admin/movies/:movie/edit', oauth2.required, oauth2.adminRequired, (
  * Update a movie.
  */
 router.post(
-  '/admin/movies/:movie/edit',
+  '/admin/movies/:movie/edit', oauth2.required, oauth2.adminRequired,
   images.multer.single('image'),
   images.sendUploadToGCS,
   (req, res, next) => {
