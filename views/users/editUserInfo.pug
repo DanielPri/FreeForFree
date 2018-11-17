@@ -3,21 +3,20 @@ extends adminBase.pug
 block content
     .container
         h3 Unregistered Users
-        
-        table(class='table table-bordered', id='Unregistered_User_Table')
-            thead
-                tr
-                    th Name
-                    th ID
-                    th Address
-                    th Email
-                    th Phone
-                    th User Type
-
-            tbody(id='Unregistered_User_Table_body')
-                each user in users
+        form(method="POST" action="editUserInfo")
+            table(class='table table-bordered', id='Unregistered_User_Table')                
+                thead
                     tr
-                        form(method="POST" action="addUser")
+                        th Name
+                        th ID
+                        th Address
+                        th Email
+                        th Phone
+                        th User Type
+
+                tbody(id='Unregistered_User_Table_body')
+                    each user in users
+                        tr                        
                             td(class = "text")= user.profileName
                             td(name="userID" class = "text")= user.profileID
                             td(class= "userAddress" class = "text")= user.address
@@ -27,7 +26,7 @@ block content
                             td(class = "EditUserType" ) Edit
                             td(style = "display:none")
                                 input(class = "SaveUserType" type="submit" value="Save")
-                        
+                            
                         
         if !users.length
             p No Unregistered users found.
@@ -43,23 +42,22 @@ block content
             //- console.log($(".usertypeText").html($(this).value));
 
             $(".EditUserType").click(function(){
-                var profileName = $(this).parent().children().eq(1).text();
-                var profileID = $(this).parent().children().eq(2).text();
-                var address = $(this).parent().children().eq(3).text();
-                var email = $(this).parent().children().eq(4).text();
-                var phone = $(this).parent().children().eq(5).text();
-                //- var phone2 = $(this).parent().children().eq(6).text();z
-                var userType = $(this).parent().children().eq(6).text();
+                var profileName = $(this).parent().children().eq(0).text();
+                var profileID = $(this).parent().children().eq(1).text();
+                var address = $(this).parent().children().eq(2).text();
+                var email = $(this).parent().children().eq(3).text();
+                var phone = $(this).parent().children().eq(4).text();
+                var userType = $(this).parent().children().eq(5).text();
                 $(this).parent().children(".usertypeText").css("display","none");
                 $(this).parent().children(".usertypeChoice").css("display","block");
                 $(this).next().css("display","block"); // display Save button
 
-                $(this).parent().children().eq(1).replaceWith('<td> <textarea rows="2" class = "textArea" >'+ profileName +'</textarea> </td>');
-                $(this).parent().children().eq(2).replaceWith('<td><textarea rows="2" class = "textArea" >'+ profileID +'</textarea></td>');
-                $(this).parent().children().eq(3).replaceWith('<td><textarea rows="2" class = "textArea" >'+ address +'</textarea></td>');
-                $(this).parent().children().eq(4).replaceWith('<td><textarea rows="2" class = "textArea" >'+ email +'</textarea></td>');
-                $(this).parent().children().eq(5).replaceWith('<td><textarea rows="2" class = "textArea" >'+ phone +'</textarea></td>');
-                $(this).parent().children().eq(6).replaceWith('<td><textarea rows="2" class = "textArea" >'+ userType +'</textarea></td>');
+                $(this).parent().children().eq(0).replaceWith('<td> <textarea rows="2" class = "textArea" name= "profileName">'+ profileName +'</textarea> </td>');
+                $(this).parent().children().eq(1).replaceWith('<td><textarea rows="2" class = "textArea" name= "profileID">'+ profileID +'</textarea></td>');
+                $(this).parent().children().eq(2).replaceWith('<td><textarea rows="2" class = "textArea" name= "address">'+ address +'</textarea></td>');
+                $(this).parent().children().eq(3).replaceWith('<td><textarea rows="2" class = "textArea" name= "email">'+ email +'</textarea></td>');
+                $(this).parent().children().eq(4).replaceWith('<td><textarea rows="2" class = "textArea" name="phone">'+ phone +'</textarea></td>');
+                $(this).parent().children().eq(5).replaceWith('<td><textarea rows="2" class = "textArea" name= "userType">'+ userType +'</textarea></td>');
 
             });
 

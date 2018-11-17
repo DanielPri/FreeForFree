@@ -60,7 +60,7 @@ router.get('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, n
 
 //----------Choosing User Type-------------------//
 router.post('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-
+  console.log(req.body.userType)
   getModel().chooseUserType(req.body.userType, (err, entities) => {
     if (err) {
       next(err);
@@ -74,7 +74,6 @@ router.post('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, 
 
 //=================== Get All User Info =========================/
 router.get('/admin/editUserInfo', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  console.log(req.body);
   getModel().findUserInfo((err, entities) => {
     if (err) {
       next(err);
@@ -88,7 +87,9 @@ router.get('/admin/editUserInfo', oauth2.required, oauth2.adminRequired, (req, r
 //=================== End Get All User Info =====================/
 
 //=================== Get All User Info =========================/
-router.get('/admin/editUserInfo', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+router.post('/admin/editUserInfo', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  console.log("===============================================");
+  console.log(req.body);
   getModel().editUserInfo((err, entities) => {
     if (err) {
       next(err);
