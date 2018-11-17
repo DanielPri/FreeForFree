@@ -327,6 +327,15 @@ router.get('/admin/formMusic', oauth2.required, oauth2.adminRequired, (req, res)
  * Display a book for editing.
  */
 router.get('/admin/books/:book/edit',  oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().verifyEditing(req.params.book, (err, result) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    if (result.length == 1) {
+      res.redirect(`/users/admin/books`);
+    }
+  });
   getModel().readBook(req.params.book, (err, entity) => {
     if (err) {
       next(err);
