@@ -487,6 +487,19 @@ function stopEditing(id, itemID, cb) {
 }
 //[END stopEditing]
 
+//[START verifyEditing]
+function verifyEditing(itemID, cb) {
+  connection.query(
+    'SELECT * FROM `editing` WHERE `itemID` = ?', itemID,
+    (err, result) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      cb(null, result);
+    });
+}
+//[END verifyEditing]
 //---------------------------------------------- END  EDITING ------------------------------------------------------------------//
 
 module.exports = {
@@ -517,7 +530,8 @@ module.exports = {
   findItem: findItem,
   findByAttribute: findByAttribute,
   startEditing: startEditing,
-  stopEditing: stopEditing
+  stopEditing: stopEditing,
+  verifyEditing: verifyEditing
 };
 
 if (module === require.main) {
