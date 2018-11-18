@@ -8,7 +8,7 @@ block content
                 thead
                     tr
                         th Name
-                        th ID
+                        th(class="userIDEditUserPage") ID
                         th Address
                         th Email
                         th Phone
@@ -18,7 +18,7 @@ block content
                     each user in users
                         tr                        
                             td(class = "text")= user.profileName
-                            td(name="userID" class = "text")= user.profileID
+                            td(name="userID" class = "text" class="userIDEditUserPage")= user.profileID
                             td(class= "userAddress" class = "text")= user.address
                             td(class= "userEmail" class = "text")= user.email
                             td(class= "userPhone" class = "text")= user.phone
@@ -49,18 +49,14 @@ block content
                 $(this).next().next().css("display","block"); // display Save button
 
                 $(this).parent().children().eq(0).replaceWith('<td> <textarea rows="2" class = "textArea" name= "profileName">'+ profileName +'</textarea> </td>');
-                $(this).parent().children().eq(1).replaceWith('<td><textarea rows="2" class = "textArea" name= "profileID">'+ profileID +'</textarea></td>');
+                $(this).parent().children().eq(1).replaceWith('<td class = "userIDEditUserPage"><textarea rows="2" class = "textArea userIDEditUserPage" name= "profileID" >'+ profileID +'</textarea></td>');
                 $(this).parent().children().eq(2).replaceWith('<td><textarea rows="2" class = "textArea" name= "address">'+ address +'</textarea></td>');
                 $(this).parent().children().eq(3).replaceWith('<td><textarea rows="2" class = "textArea" name= "email">'+ email +'</textarea></td>');
                 $(this).parent().children().eq(4).replaceWith('<td><textarea rows="2" class = "textArea" name="phone">'+ phone +'</textarea></td>');
                 $(this).parent().children().eq(5).replaceWith('<td><textarea rows="2" class = "textArea" name= "userType">'+ userType +'</textarea></td>');
 
                 $(".EditUserType").css("display", "none"); // hide all the edit buttons, we can only edit one user at a time
-                
-                
-                
-
-
+                $(".userIDEditUserPage").css("display","none");
             });
 
             $(".SaveUserType").click(function(){
@@ -82,15 +78,14 @@ block content
                 var userType = $(this).parent().children().eq(5).text();
                 
                 $(this).parent().children().eq(0).replaceWith('<td class = "text" > '+ profileName +'</td>');
-                $(this).parent().children().eq(1).replaceWith('<td name="userID" class = "text">'+ profileID +'</td>');
+                $(this).parent().children().eq(1).replaceWith('<td name="userID" class = "text userIDEditUserPage" >'+ profileID +'</td>');
                 $(this).parent().children().eq(2).replaceWith('<td class= "userAddress" class = "text">'+ address +'</td>');
                 $(this).parent().children().eq(3).replaceWith('<td class= "userEmail" class = "text">'+ email +'</td>');
                 $(this).parent().children().eq(4).replaceWith('<td class= "userPhone" class = "text">'+ phone +'</td>');
                 $(this).parent().children().eq(5).replaceWith('<td class= "usertype" class = "text">'+ userType +'</td>');
+                $(".userIDEditUserPage").css("display","none");
 
             });
-
-
 
             $(".EditUserType").mouseover(function() {
                 $( this ).css("color", "blue");
@@ -103,6 +98,8 @@ block content
             }).mouseout(function() {
                 $( this ).css("color", "black");
             });
+
+            $(".userIDEditUserPage").css("display","none");
         
             
 
