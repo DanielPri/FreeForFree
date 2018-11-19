@@ -60,7 +60,7 @@ router.get('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, n
 
 //----------Choosing User Type-------------------//
 router.post('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-
+  console.log(req.body.userType)
   getModel().chooseUserType(req.body.userType, (err, entities) => {
     if (err) {
       next(err);
@@ -71,6 +71,33 @@ router.post('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, 
 });
 
 //----------------End choose User Type ------------//
+
+//=================== Get All User Info =========================/
+router.get('/admin/editUserInfo', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().findUserInfo((err, entities) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/editUserInfo.pug', {
+      users: entities
+     });
+  });
+});
+//=================== End Get All User Info =====================/
+
+//=================== Get All User Info =========================/
+router.post('/admin/editUserInfo', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().editUserInfo(req.body, (err, entities) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.redirect('editUserInfo');
+  });
+});
+//=================== End Get All User Info =====================/
+
 
 
 router.get('/admin/books', oauth2.required, oauth2.adminRequired, (req, res, next) => {
@@ -85,6 +112,7 @@ router.get('/admin/books', oauth2.required, oauth2.adminRequired, (req, res, nex
     });
   });
 });
+
 
 router.get('/admin/magazines', oauth2.required, oauth2.adminRequired, (req, res, next) => {
   getModel().listMagazines(10, req.query.pageToken, (err, entities, cursor) => {
