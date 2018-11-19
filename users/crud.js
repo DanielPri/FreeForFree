@@ -60,7 +60,7 @@ router.get('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, n
 
 //----------Choosing User Type-------------------//
 router.post('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-
+  console.log(req.body.userType)
   getModel().chooseUserType(req.body.userType, (err, entities) => {
     if (err) {
       next(err);
@@ -71,6 +71,33 @@ router.post('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, 
 });
 
 //----------------End choose User Type ------------//
+
+//=================== Get All User Info =========================/
+router.get('/admin/editUserInfo', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().findUserInfo((err, entities) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/admin/editUserInfo.pug', {
+      users: entities
+     });
+  });
+});
+//=================== End Get All User Info =====================/
+
+//=================== Get All User Info =========================/
+router.post('/admin/editUserInfo', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().editUserInfo(req.body, (err, entities) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.redirect('editUserInfo');
+  });
+});
+//=================== End Get All User Info =====================/
+
 
 
 router.get('/admin/books', oauth2.required, oauth2.adminRequired, (req, res, next) => {
@@ -85,6 +112,7 @@ router.get('/admin/books', oauth2.required, oauth2.adminRequired, (req, res, nex
     });
   });
 });
+
 
 router.get('/admin/magazines', oauth2.required, oauth2.adminRequired, (req, res, next) => {
   getModel().listMagazines(10, req.query.pageToken, (err, entities, cursor) => {
@@ -145,7 +173,7 @@ router.get('/admin/formBook', oauth2.required, oauth2.adminRequired, (req, res) 
  * Create a book.
  */
 // [START add_post]
-router.post('/admin/formBook', images.multer.single('image'), images.sendUploadToGCS, (req, res, next) => {
+router.post('/admin/formBook', oauth2.required, oauth2.adminRequired, images.multer.single('image'), images.sendUploadToGCS, (req, res, next) => {
   const data = req.body;
   // Was an image uploaded? If so, we'll use its public URL
   // in cloud storage.
@@ -174,7 +202,7 @@ router.post('/admin/formBook', images.multer.single('image'), images.sendUploadT
  * Create a magazine.
  */
 // [START add_post]
-router.post('/admin/formMagazine', images.multer.single('image'), images.sendUploadToGCS, (req, res, next) => {
+router.post('/admin/formMagazine', oauth2.required, oauth2.adminRequired, images.multer.single('image'), images.sendUploadToGCS, (req, res, next) => {
   const data = req.body;
   // Was an image uploaded? If so, we'll use its public URL
   // in cloud storage.
@@ -212,7 +240,7 @@ router.get('/admin/formMagazine', oauth2.required, oauth2.adminRequired, (req, r
  * Create a movie.
  */
 // [START add_post]
-router.post('/admin/formMovie', images.multer.single('image'), images.sendUploadToGCS, (req, res, next) => {
+router.post('/admin/formMovie', oauth2.required, oauth2.adminRequired, images.multer.single('image'), images.sendUploadToGCS, (req, res, next) => {
   const data = req.body;
   // Was an image uploaded? If so, we'll use its public URL
   // in cloud storage.
@@ -251,7 +279,7 @@ router.get('/admin/formMovie', oauth2.required, oauth2.adminRequired, (req, res)
  */
 
 // [START add_post]
-router.post('/admin/formMusic', images.multer.single('image'), images.sendUploadToGCS, (req, res, next) => {
+router.post('/admin/formMusic', oauth2.required, oauth2.adminRequired, images.multer.single('image'), images.sendUploadToGCS, (req, res, next) => {
   const data = req.body;
   // Was an image uploaded? If so, we'll use its public URL
   // in cloud storage.
@@ -327,6 +355,15 @@ router.get('/admin/formMusic', oauth2.required, oauth2.adminRequired, (req, res)
  * Display a book for editing.
  */
 router.get('/admin/books/:book/edit',  oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().verifyEditing(req.params.book, (err, result) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    if (result.length == 1 && req.user.id != result[0].id) {
+      res.redirect(`/users/admin/books`);
+    }
+  });
   getModel().readBook(req.params.book, (err, entity) => {
     if (err) {
       next(err);
@@ -337,6 +374,12 @@ router.get('/admin/books/:book/edit',  oauth2.required, oauth2.adminRequired, (r
       action: 'Edit'
     });
   });
+  getModel().startEditing(req.user.id, req.params.book, (err, savedData) => {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
 });
 
 /**
@@ -345,7 +388,7 @@ router.get('/admin/books/:book/edit',  oauth2.required, oauth2.adminRequired, (r
  * Update a book.
  */
 router.post(
-  '/admin/books/:book/edit',
+  '/admin/books/:book/edit', oauth2.required, oauth2.adminRequired,
   images.multer.single('image'),
   images.sendUploadToGCS,
   (req, res, next) => {
@@ -364,6 +407,12 @@ router.post(
       }
       res.redirect(`/users/admin/books`);
     });
+    getModel().stopEditing(req.user.id, req.params.book, (err) => {
+      if (err) {
+        next(err);
+        return;
+      }
+    });
   }
 );
 
@@ -374,12 +423,12 @@ router.post(
  * Delete a book.
  */
 router.get('/admin/books/:book/delete',   oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().deleteBook(req.params.book, (err) => {
+  getModel().delete(req.params.book, (err) => {
     if (err) {
       next(err);
       return;
     }
-    res.redirect('users/admin/books');
+    res.redirect('..');
   });
 });
  //************************************************* END BOOK *******************************************************************/
@@ -410,6 +459,15 @@ router.get('/admin/books/:book/delete',   oauth2.required, oauth2.adminRequired,
  * Display a magazine for editing.
  */
 router.get('/admin/magazines/:magazine/edit', oauth2.required, oauth2.adminRequired,(req, res, next) => {
+  getModel().verifyEditing(req.params.magazine, (err, result) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    if (result.length == 1 && req.user.id != result[0].id) {
+      res.redirect(`/users/admin/magazines`);
+    }
+  });
   getModel().readMagazine(req.params.magazine, (err, entity) => {
     if (err) {
       next(err);
@@ -420,6 +478,12 @@ router.get('/admin/magazines/:magazine/edit', oauth2.required, oauth2.adminRequi
       action: 'Edit'
     });
   });
+  getModel().startEditing(req.user.id, req.params.magazine, (err, savedData) => {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
 });
 
 
@@ -429,7 +493,7 @@ router.get('/admin/magazines/:magazine/edit', oauth2.required, oauth2.adminRequi
  * Update a magazine.
  */
 router.post(
-  '/admin/magazines/:magazine/edit',
+  '/admin/magazines/:magazine/edit', oauth2.required, oauth2.adminRequired,
   images.multer.single('image'),
   images.sendUploadToGCS,
   (req, res, next) => {
@@ -448,6 +512,12 @@ router.post(
       }
       res.redirect(`/users/admin/magazines`);
     });
+    getModel().stopEditing(req.user.id, req.params.magazine, (err) => {
+      if (err) {
+        next(err);
+        return;
+      }
+    });
   }
 );
 
@@ -458,12 +528,12 @@ router.post(
  * Delete a magazine
  */
 router.get('/admin/magazines/:magazine/delete', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().deleteMagazine(req.params.magazine, (err) => {
+  getModel().delete(req.params.magazine, (err) => {
     if (err) {
       next(err);
       return;
     }
-    res.redirect('users/admin/magazines');
+    res.redirect('..');
   });
 });
 //*************************************************** END MAGAZINE ****************************************************************/
@@ -494,6 +564,15 @@ router.get('/admin/magazines/:magazine/delete', oauth2.required, oauth2.adminReq
  * Display a music for editing.
  */
 router.get('/admin/music/:music/edit', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().verifyEditing(req.params.music, (err, result) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    if (result.length == 1 && req.user.id != result[0].id) {
+      res.redirect(`/users/admin/music`);
+    }
+  });
   getModel().readMusic(req.params.music, (err, entity) => {
     if (err) {
       next(err);
@@ -504,6 +583,12 @@ router.get('/admin/music/:music/edit', oauth2.required, oauth2.adminRequired, (r
       action: 'Edit'
     });
   });
+  getModel().startEditing(req.user.id, req.params.music, (err, savedData) => {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
 });
 
 
@@ -513,7 +598,7 @@ router.get('/admin/music/:music/edit', oauth2.required, oauth2.adminRequired, (r
  * Update a music.
  */
 router.post(
-  '/admin/music/:music/edit',
+  '/admin/music/:music/edit', oauth2.required, oauth2.adminRequired,
   images.multer.single('image'),
   images.sendUploadToGCS,
   (req, res, next) => {
@@ -532,6 +617,13 @@ router.post(
       }
       res.redirect(`/users/admin/music`);
     });
+
+    getModel().stopEditing(req.user.id, req.params.music, (err) => {
+      if (err) {
+        next(err);
+        return;
+      }
+    });
   }
 );
 
@@ -542,12 +634,12 @@ router.post(
  * Delete a music
  */
 router.get('/admin/music/:music/delete',  oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().deleteMusic(req.params.music, (err) => {
+  getModel().delete(req.params.music, (err) => {
     if (err) {
       next(err);
       return;
     }
-    res.redirect('/users/admin/music');
+    res.redirect('..');
   });
 });
 //*************************************************** END MUSIC *******************************************************************/
@@ -578,6 +670,15 @@ router.get('/admin/music/:music/delete',  oauth2.required, oauth2.adminRequired,
  * Display a movie for editing.
  */
 router.get('/admin/movies/:movie/edit', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().verifyEditing(req.params.movie, (err, result) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    if (result.length == 1 && req.user.id != result[0].id) {
+      res.redirect(`/users/admin/movies`);
+    }
+  });
   getModel().readMovie(req.params.movie, (err, entity) => {
     if (err) {
       next(err);
@@ -588,6 +689,12 @@ router.get('/admin/movies/:movie/edit', oauth2.required, oauth2.adminRequired, (
       action: 'Edit'
     });
   });
+  getModel().startEditing(req.user.id, req.params.movie, (err, savedData) => {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
 });
 
 
@@ -597,7 +704,7 @@ router.get('/admin/movies/:movie/edit', oauth2.required, oauth2.adminRequired, (
  * Update a movie.
  */
 router.post(
-  '/admin/movies/:movie/edit',
+  '/admin/movies/:movie/edit', oauth2.required, oauth2.adminRequired,
   images.multer.single('image'),
   images.sendUploadToGCS,
   (req, res, next) => {
@@ -616,6 +723,12 @@ router.post(
       }
       res.redirect(`/users/admin/movies`);
     });
+    getModel().stopEditing(req.user.id, req.params.movie, (err) => {
+      if (err) {
+        next(err);
+        return;
+      }
+    });
   }
 );
 
@@ -626,12 +739,12 @@ router.post(
  * Delete a movie
  */
 router.get('/admin/movies/:movie/delete', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().deleteMovie(req.params.movie, (err) => {
+  getModel().delete(req.params.movie, (err) => {
     if (err) {
       next(err);
       return;
     }
-    res.redirect('/users/admin/movies');
+    res.redirect('..');
   });
 });
  //*************************************************** END MOVIES *******************************************************************/
@@ -771,6 +884,11 @@ router.get('/client/magazines', oauth2.required, oauth2.clientRequired, (req, re
       nextPageToken: cursor
     });
   });
+    res.render('users/user/catalog.pug')
+});
+
+router.get('/admin/cartPage', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+    res.render('users/admin/cartPage.pug')
 });
 
 router.get('/client/movies', oauth2.required, oauth2.clientRequired, (req, res, next) => {

@@ -1,21 +1,16 @@
-doctype html
 html(lang="en")
   head
     title FreeForFree - Library Management
     meta(charset='utf-8')
     meta(name="viewport", content="width=device-width, initial-scale=1")
     link(rel="stylesheet", href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css")
-    link(rel="stylesheet", href="/css_styles/editUser_styles.css")
-    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
-
-
+    link(rel='stylesheet' href='/css_styles/catalog_styles.css' type='text/css' media='screen' charset='utf-8')
   body
     .navbar.navbar-default
       .container
         .navbar-header
           .navbar-brand
             a(href="/users") FreeForFree
-
         ul.nav.navbar-nav
           li
             a(href="/users/admin/list") Active Users
@@ -25,11 +20,26 @@ html(lang="en")
             a(href="/users/admin/addUser") Create New User
           li
             a(href="/users/admin/editUserInfo") Edit User Info
-       
 
         p.navbar-text.navbar-right
+          a(class="btn btn-primary" href="/users/admin/cartPage")  <span class="glyphicon glyphicon-shopping-cart"></span>
           if profile
             span #{profile.displayName} &nbsp;
               a(href=logout) (logout)
 
-    block content
+
+block content
+  .container
+    div(class="cartTitle")
+      h1 Your Cart
+
+    div(class="cartTable")
+       table(class="table table-striped table-bordered")
+           thead
+            tr
+             td View
+             td Title
+             td Media Type
+    br
+    div(class="checkoutButton")
+        button Checkout

@@ -21,6 +21,8 @@ html(lang="en")
             a(href="/users/admin/catalog") Catalog
           li
             a(href="/users/admin/addUser") Create New User
+          li
+            a(href="/users/admin/editUserInfo") Edit User Info
 
         p.navbar-text.navbar-right
           if profile
@@ -36,11 +38,13 @@ html(lang="en")
             tr
               th Name
               th ID
+              th Timestamp
           tbody
             each user in users
               tr
                 td= user.profileName
                 td= user.profileID
+                td= user.ts
 
         if !users.length
           p No users found.

@@ -20,10 +20,15 @@ app.set('trust proxy', true);
 // [START session] -> found from google cloud tutorials
 // Configure the session and session storage.
 const sessionConfig = {
-  resave: false,
+  resave: true,
+  rolling: true,
   saveUninitialized: false,
   secret: config.get('SECRET'),
-  signed: true
+  signed: true,
+  cookie: {
+            // Session expires after 30 minutes of inactivity
+            expires: 30 * 1000 * 60
+        }
 };
 
 // In production use the Memcache instance to store session data,

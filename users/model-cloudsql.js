@@ -20,7 +20,8 @@ const config = require('../config');
 const options = {
   user: config.get('MYSQL_USER'),
   password: config.get('MYSQL_PASSWORD'),
-  database: 'bookshelf'
+  database: 'bookshelf',
+  multipleStatements: true
 };
 
 if (config.get('INSTANCE_CONNECTION_NAME') && config.get('NODE_ENV') === 'production') {
@@ -63,10 +64,7 @@ function createUser (data, profileName, cb) {
 
 // [Find unregistered users]
 function findUnregisteredUser (userType, cb) {
-  // var i=0;
-  // for(i=0; i<userType.length; i++){
     connection.query(
-      // 'UPDATE `user` SET `userType`= ? where `profileID` = ?' , [3, userType[i]],
       'SELECT * FROM `user` WHERE `userType` = ?', [userType],
       (err, result) => {
         if (err) {
@@ -79,6 +77,37 @@ function findUnregisteredUser (userType, cb) {
 
 }
 // [End find unregistered users]
+
+// [Find Users Information]
+function findUserInfo (cb) {
+    connection.query(
+      'SELECT * FROM `user` ',
+      (err, result) => {
+        if (err) {
+          cb(err);
+          return;
+        }
+        cb(null, result);
+    });
+
+}
+// [End find Users Information]
+
+// [Find Users Information]
+function editUserInfo (userInfo, cb) {
+  connection.query(
+    'UPDATE `user` Set ? where profileID= ?', [userInfo, userInfo.profileID],
+    // 'SELECT * FROM `user` ',
+    (err, result) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      cb(null, result);
+  });
+
+}
+// [End find Users Information]
 
 function chooseUserType (userType, cb) {
   var i=0;
@@ -217,13 +246,13 @@ function listMusics (limit, token, cb) {
 // [START createBook]
 function createBook (data, cb) {
   connection.query(
-    'INSERT INTO `books` SET ?', data,
+    'INSERT INTO `inventory` SET type=?;INSERT INTO `books` SET ?, id=LAST_INSERT_ID()', ['book', data],
     (err, result) => {
       if (err) {
         cb(err);
         return;
       }
-      readBook(result.insertId, cb);
+      readBook(result[0].insertId, cb);
     });
 }
 // [END createBook]
@@ -232,13 +261,13 @@ function createBook (data, cb) {
 // [START createMagazines]
 function createMagazine (data, cb) {
   connection.query(
-    'INSERT INTO `magazines` SET ?', data,
+    'INSERT INTO `inventory` SET type=?;INSERT INTO `magazines` SET ?, id=LAST_INSERT_ID()', ['magazine', data],
     (err, result) => {
       if (err) {
         cb(err);
         return;
       }
-      readMagazine(result.insertId, cb);
+      readMagazine(result[0].insertId, cb);
     });
 }
 
@@ -248,13 +277,13 @@ function createMagazine (data, cb) {
 // [START createMovies]
 function createMovie (data, cb) {
   connection.query(
-    'INSERT INTO `movies` SET ?', data,
+    'INSERT INTO `inventory` SET type=?;INSERT INTO `movies` SET ?, id=LAST_INSERT_ID()', ['movie', data],
     (err, result) => {
       if (err) {
         cb(err);
         return;
       }
-      readMovie(result.insertId, cb);
+      readMovie(result[0].insertId, cb);
     });
 }
 // [END createMovies]
@@ -262,13 +291,13 @@ function createMovie (data, cb) {
 // [START createMusic]
 function createMusic (data, cb) {
   connection.query(
-    'INSERT INTO `musics` SET ?', data,
+    'INSERT INTO `inventory` SET type=?;INSERT INTO `musics` SET ?, id=LAST_INSERT_ID()', ['music', data],
     (err, result) => {
       if (err) {
         cb(err);
         return;
       }
-      readMusic(result.insertId, cb);
+      readMusic(result[0].insertId, cb);
     });
 }
 // [END createMusic]
@@ -458,32 +487,49 @@ function findByAttribute(itemType, column, columnValue, orderBy, sortUpDown, cb)
 }
 
 //-------------------------------------------- START  DELETE ------------------------------------------------------------------//
-
 //[START delete]
-function _deleteBook (id, cb) {
-  connection.query('DELETE FROM `books` WHERE `id` = ?', id, cb);
+function _delete (id, cb) {
+  connection.query('DELETE FROM `inventory` WHERE `id` = ?', id, cb);
 }
 //[END delete]
+//---------------------------------------------- END  DELETE ------------------------------------------------------------------//
 
-//[START delete]
-function _deleteMagazine (id, cb) {
-  connection.query('DELETE FROM `magazines` WHERE `id` = ?', id, cb);
+//-------------------------------------------- START  EDITING ------------------------------------------------------------------//
+//[START startEditing]
+function startEditing(id, itemID, cb) {
+  connection.query(
+    'INSERT INTO `editing` SET `id`=?, `itemID`=?', [id, itemID],
+    (err, result) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      cb(null, result);
+    });
 }
-//[END delete]
+//[END startEditing]
 
-//[START delete]
-function _deleteMusic (id, cb) {
-  connection.query('DELETE FROM `musics` WHERE `id` = ?', id, cb);
+//[START stopEditing]
+function stopEditing(id, itemID, cb) {
+  connection.query('DELETE FROM `editing` WHERE `id` = ? AND `itemID` = ?', [id, itemID], cb);
 }
-//[END delete]
+//[END stopEditing]
 
-//[START delete]
-function _deleteMovie (id, cb) {
-  connection.query('DELETE FROM `movies` WHERE `id` = ?', id, cb);
+//[START verifyEditing]
+function verifyEditing(itemID, cb) {
+  connection.query(
+    'SELECT * FROM `editing` WHERE `itemID` = ?', itemID,
+    (err, result) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      cb(null, result);
+    });
 }
-//[END delete]
+//[END verifyEditing]
+//---------------------------------------------- END  EDITING ------------------------------------------------------------------//
 
-//-----------------------------------------------------------------------------------------------------------------------------//
 module.exports = {
   createSchema: createSchema,
   list: list,
@@ -504,16 +550,18 @@ module.exports = {
   readMagazine: readMagazine,
   readMusic: readMusic,
   readMovie: readMovie,
-  deleteBook: _deleteBook,
-  deleteMagazine: _deleteMagazine,
-  deleteMusic: _deleteMusic,
-  deleteMovie: _deleteMovie,
+  delete: _delete,
   updateBook: updateBook,
   updateMagazine: updateMagazine,
   updateMusic: updateMusic,
   updateMovie: updateMovie,
   findItem: findItem,
-  findByAttribute: findByAttribute
+  findByAttribute: findByAttribute,
+  startEditing: startEditing,
+  stopEditing: stopEditing,
+  verifyEditing: verifyEditing,
+  findUserInfo: findUserInfo,
+  editUserInfo: editUserInfo
 };
 
 if (module === require.main) {
