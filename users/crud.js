@@ -884,7 +884,6 @@ router.get('/client/magazines', oauth2.required, oauth2.clientRequired, (req, re
       nextPageToken: cursor
     });
   });
-    res.render('users/user/catalog.pug')
 });
 
 router.get('/admin/cartPage', oauth2.required, oauth2.adminRequired, (req, res, next) => {
@@ -978,6 +977,107 @@ router.get('/client/music', oauth2.required, oauth2.clientRequired, (req, res, n
     });
   });
 });
+
+//********************************************************SEARCH AND SORT*****************************************************//
+
+//For catalog.  Will eventually search the entire  database for any matches in search bar
+router.post('/client/catalog', (req, res, next) => {
+
+  const anyPossibility = req.body.searchBar;
+  console.log(anyPossibility);
+  getModel().findByAttribute(anyPossibility, (err, entities) => {
+      if (err) {
+          next(err);
+          return;
+      }
+      res.render('users/client/catalog.pug', {
+          items: entities,
+          type: 'movies'
+      });
+  });
+});
+
+
+//Search for specific book attributes
+router.post('/client/books', (req, res, next) => {
+
+  const bookSearchBy = req.body;
+  if (bookSearchBy.searchBar.length == 0) {
+      bookSearchBy.searchBar = 1;
+      bookSearchBy.books = 1;
+  }
+  getModel().findByAttribute("books", bookSearchBy.books, bookSearchBy.searchBar, bookSearchBy.sortBy, bookSearchBy.sortUpDown, (err, entities) => {
+      if (err) {
+          next(err);
+          return;
+      }
+      res.render('users/client/books.pug', {
+          books: entities,
+      });
+  });
+});
+
+
+//Search for specific magazine attributes
+router.post('/client/magazines', (req, res, next) => {
+
+  const magazinesSearchBy = req.body;
+  if (magazinesSearchBy.searchBar.length == 0) {
+      magazinesSearchBy.searchBar = 1;
+      magazinesSearchBy.magazines = 1;
+  }
+  getModel().findByAttribute("magazines", magazinesSearchBy.magazines, magazinesSearchBy.searchBar, magazinesSearchBy.sortBy, magazinesSearchBy.sortUpDown,
+                             (err, entities) => {
+      if (err) {
+          next(err);
+          return;
+      }
+      res.render('users/client/magazines.pug', {
+          magazines: entities,
+      });
+  });
+});
+
+
+//Search for specific movie attributes
+router.post('/client/movies', (req, res, next) => {
+
+  const moviesSearchBy = req.body;
+  if (moviesSearchBy.searchBar.length == 0) {
+      moviesSearchBy.searchBar = 1;
+      moviesSearchBy.movies = 1;
+  }
+  getModel().findByAttribute("movies", moviesSearchBy.movies, moviesSearchBy.searchBar, moviesSearchBy.sortBy, moviesSearchBy.sortUpDown,  (err, entities) => {
+      if (err) {
+          next(err);
+          return;
+      }
+      res.render('users/client/movies.pug', {
+          movies: entities,
+      });
+  });
+});
+
+
+//Search for specific music attributes
+router.post('/client/music', (req, res, next) => {
+
+  const musicSearchBy = req.body;
+  if (musicSearchBy.searchBar.length == 0) {
+      musicSearchBy.searchBar = 1;
+      musicSearchBy.music = 1;
+  }
+  getModel().findByAttribute("musics", musicSearchBy.music, musicSearchBy.searchBar, musicSearchBy.sortBy, musicSearchBy.sortUpDown, (err, entities) => {
+      if (err) {
+          next(err);
+          return;
+      }
+      res.render('users/client/music.pug', {
+          musics: entities,
+      });
+  });
+});
+//*************************************************** END SEARCH AND SORT FUNCTIONS *************************************************************/
 
 //*************************************************** END CLIENT ROUTERS AND FUNCTIONS **********************************************************/
 
