@@ -22,6 +22,7 @@ html(lang="en")
             a(href="/users/admin/editUserInfo") Edit User Info
 
         p.navbar-text.navbar-right
+          a(class="btn btn-primary" href="/users/admin/cartPage")  <span class="glyphicon glyphicon-shopping-cart"></span>
           if profile
             span #{profile.displayName} &nbsp;
               a(href=logout) (logout)

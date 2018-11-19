@@ -855,7 +855,11 @@ router.post('/admin/music', (req, res, next) => {
 
 //************************************************* START CLIENT ROUTERS AND FUNCTIONS **********************************************************/
 router.get('/client/catalog', oauth2.required, oauth2.clientRequired, (req, res, next) => {
-  res.render('users/user/catalog.pug')
+    res.render('users/user/catalog.pug')
+});
+
+router.get('/admin/cartPage', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+    res.render('users/admin/cartPage.pug')
 });
 //*************************************************** END CLIENT ROUTERS AND FUNCTIONS **********************************************************/
 
