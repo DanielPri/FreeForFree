@@ -741,9 +741,126 @@ router.post('/admin/music', (req, res, next) => {
 //*************************************************** END SEARCH AND SORT FUNCTIONS *************************************************************/
 
 //************************************************* START CLIENT ROUTERS AND FUNCTIONS **********************************************************/
+
+//--------Catalog----------//
 router.get('/client/catalog', oauth2.required, oauth2.clientRequired, (req, res, next) => {
-  res.render('users/user/catalog.pug')
+  res.render('users/client/catalog.pug')
 });
+
+router.get('/client/books', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+  getModel().listBooks(10, req.query.pageToke, (err, entities, cursor) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/client/books.pug', {
+      books: entities,
+      nextPageToken: cursor
+    });
+  });
+});
+
+router.get('/client/magazines', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+  getModel().listMagazines(10, req.query.pageToken, (err, entities, cursor) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/client/magazines.pug', {
+      magazines: entities,
+      nextPageToken: cursor
+    });
+  });
+});
+
+router.get('/client/movies', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+  getModel().listMovies(10, req.query.pageToken, (err, entities, cursor) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/client/movies.pug', {
+      movies: entities,
+      nextPageToken: cursor
+    });
+  });
+});
+
+router.get('/client/music', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+  getModel().listMusics(10, req.query.pageToken, (err, entities, cursor) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/client/music.pug', {
+      musics: entities,
+      nextPageToken: cursor
+    });
+  });
+});
+
+//************************************************* BOOK *******************************************************************/
+
+  //* Display a book.
+ router.get('/client/books/:book', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+  getModel().readBook(req.params.book, (err, entity) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/client/viewBook.pug', {
+      book: entity
+    });
+  });
+});
+
+//*************************************************** MAGAZINE ****************************************************************/
+
+  //* Display a Magazine.
+ router.get('/client/magazines/:magazine', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+  getModel().readMagazine(req.params.magazine, (err, entity) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/client/viewMagazine.pug', {
+      magazine: entity
+    });
+  });
+});
+
+//*************************************************** MUSIC *******************************************************************/
+
+ 
+  //* Display a Music.
+ router.get('/client/music/:music', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+  getModel().readMusic(req.params.music, (err, entity) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/client/viewMusic.pug', {
+      music: entity
+    });
+  });
+});
+
+//*************************************************** MOVIES *******************************************************************/
+
+ 
+  //* Display a Movie.
+ router.get('/client/movies/:movie', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+  getModel().readMovie(req.params.movie, (err, entity) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/client/viewMovie.pug', {
+      movie: entity
+    });
+  });
+});
+
 //*************************************************** END CLIENT ROUTERS AND FUNCTIONS **********************************************************/
 
 //********************************************************** ERROR HANDLING *********************************************************************/
