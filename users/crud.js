@@ -79,7 +79,7 @@ router.get('/admin/editUserInfo', oauth2.required, oauth2.adminRequired, (req, r
       next(err);
       return;
     }
-    res.render('users/editUserInfo.pug', {
+    res.render('users/admin/editUserInfo.pug', {
       users: entities
      });
   });
