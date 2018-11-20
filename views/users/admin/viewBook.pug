@@ -6,10 +6,10 @@ block content
       h3 Book
        small
       .btn-group
-       a(href=`/users/admin/books/${book.id}/edit`, class='btn btn-primary btn-sm')
+       a(href=`/users/admin/books/${book.id}/edit`, class='btn btn-primary btn-sm' disabled=check)
          i.glyphicon.glyphicon-edit
          span  Edit book
-       a(href=`/users/admin/books/${book.id}/delete`, class='btn btn-danger btn-sm')
+       a(href=`/users/admin/books/${book.id}/delete`, class='btn btn-danger btn-sm' disabled=check)
          i.glyphicon.glyphicon-trash
          span  Delete book
 

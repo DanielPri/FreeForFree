@@ -6,10 +6,10 @@ block content
       h3 Movie
        small
       .btn-group
-       a(href=`/users/admin/movies/${movie.id}/edit`, class='btn btn-primary btn-sm')
+       a(href=`/users/admin/movies/${movie.id}/edit`, class='btn btn-primary btn-sm' disabled=check)
          i.glyphicon.glyphicon-edit
          span  Edit Movie
-       a(href=`/users/admin/movies/${movie.id}/delete`, class='btn btn-danger btn-sm')
+       a(href=`/users/admin/movies/${movie.id}/delete`, class='btn btn-danger btn-sm' disabled=check)
          i.glyphicon.glyphicon-trash
          span  Delete Movie
 

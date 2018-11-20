@@ -338,13 +338,24 @@ router.get('/admin/formMusic', oauth2.required, oauth2.adminRequired, (req, res)
   * Display a book.
   */
  router.get('/admin/books/:book', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+   var editing = false;
+   getModel().verifyEditing(req.params.book, (err, result) => {
+     if (err) {
+       next(err);
+       return;
+     }
+     if (result.length == 1 && req.user.id != result[0].id) {
+       editing = true;
+     }
+   });
    getModel().readBook(req.params.book, (err, entity) => {
      if (err) {
        next(err);
        return;
      }
      res.render('users/admin/viewBook.pug', {
-       book: entity
+       book: entity,
+       check: editing
      });
    });
  });
@@ -442,13 +453,24 @@ router.get('/admin/books/:book/delete',   oauth2.required, oauth2.adminRequired,
   * Display a Magazine.
   */
  router.get('/admin/magazines/:magazine', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+   var editing = false;
+   getModel().verifyEditing(req.params.book, (err, result) => {
+     if (err) {
+       next(err);
+       return;
+     }
+     if (result.length == 1 && req.user.id != result[0].id) {
+       editing = true;
+     }
+   });
   getModel().readMagazine(req.params.magazine, (err, entity) => {
     if (err) {
       next(err);
       return;
     }
     res.render('users/admin/viewMagazine.pug', {
-      magazine: entity
+      magazine: entity,
+      check: editing
     });
   });
 });
@@ -653,13 +675,24 @@ router.get('/admin/music/:music/delete',  oauth2.required, oauth2.adminRequired,
   * Display a Movie.
   */
  router.get('/admin/movies/:movie', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+   var editing = false;
+   getModel().verifyEditing(req.params.book, (err, result) => {
+     if (err) {
+       next(err);
+       return;
+     }
+     if (result.length == 1 && req.user.id != result[0].id) {
+       editing = true;
+     }
+   });
   getModel().readMovie(req.params.movie, (err, entity) => {
     if (err) {
       next(err);
       return;
     }
     res.render('users/admin/viewMovie.pug', {
-      movie: entity
+      movie: entity,
+      check: editing
     });
   });
 });
@@ -948,23 +981,34 @@ router.get('/client/music', oauth2.required, oauth2.clientRequired, (req, res, n
 
 //*************************************************** MUSIC *******************************************************************/
 
- 
+
   //* Display a Music.
  router.get('/client/music/:music', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+   var editing = false;
+   getModel().verifyEditing(req.params.book, (err, result) => {
+     if (err) {
+       next(err);
+       return;
+     }
+     if (result.length == 1 && req.user.id != result[0].id) {
+       editing = true;
+     }
+   });
   getModel().readMusic(req.params.music, (err, entity) => {
     if (err) {
       next(err);
       return;
     }
     res.render('users/client/viewMusic.pug', {
-      music: entity
+      music: entity,
+      check: editing
     });
   });
 });
 
 //*************************************************** MOVIES *******************************************************************/
 
- 
+
   //* Display a Movie.
  router.get('/client/movies/:movie', oauth2.required, oauth2.clientRequired, (req, res, next) => {
   getModel().readMovie(req.params.movie, (err, entity) => {
