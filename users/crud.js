@@ -454,7 +454,7 @@ router.get('/admin/books/:book/delete',   oauth2.required, oauth2.adminRequired,
   */
  router.get('/admin/magazines/:magazine', oauth2.required, oauth2.adminRequired, (req, res, next) => {
    var editing = false;
-   getModel().verifyEditing(req.params.book, (err, result) => {
+   getModel().verifyEditing(req.params.magazine, (err, result) => {
      if (err) {
        next(err);
        return;
@@ -676,7 +676,7 @@ router.get('/admin/music/:music/delete',  oauth2.required, oauth2.adminRequired,
   */
  router.get('/admin/movies/:movie', oauth2.required, oauth2.adminRequired, (req, res, next) => {
    var editing = false;
-   getModel().verifyEditing(req.params.book, (err, result) => {
+   getModel().verifyEditing(req.params.movie, (err, result) => {
      if (err) {
        next(err);
        return;
@@ -973,7 +973,7 @@ router.get('/client/music', oauth2.required, oauth2.clientRequired, (req, res, n
   //* Display a Music.
  router.get('/client/music/:music', oauth2.required, oauth2.clientRequired, (req, res, next) => {
    var editing = false;
-   getModel().verifyEditing(req.params.book, (err, result) => {
+   getModel().verifyEditing(req.params.music, (err, result) => {
      if (err) {
        next(err);
        return;
