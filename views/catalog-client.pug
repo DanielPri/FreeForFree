@@ -16,12 +16,12 @@ html(lang="en")
             a(href="/users/client/catalog") Catalog
 
         p.navbar-text.navbar-right
-          a(class="btn btn-primary" href="/users/client/cart")  <span class="glyphicon glyphicon-shopping-cart"></span>
+          a(class="btn btn-success" href="/users/client/cart")  <span class="glyphicon glyphicon-shopping-cart"></span>
           if profile
             if profile.image
               img.img-circle(src=profile.image, width=24)
             span #{profile.displayName} &nbsp;
-              a(href=logout) (logout)
+              a(class="btn btn-danger" href=logout) <span class="glyphicon glyphicon-log-out"></span> Logout
 
     div(class="mediaType")
         div(class="searchButton")
