@@ -702,33 +702,33 @@ router.get('/admin/music/:music/delete',  oauth2.required, oauth2.adminRequired,
  *
  * Display a movie for editing.
  */
-router.get('/admin/movies/:movie/edit', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().verifyEditing(req.params.movie, (err, result) => {
-    if (err) {
-      next(err);
-      return;
-    }
-    if (result.length == 1 && req.user.id != result[0].id) {
-      res.redirect(`/users/admin/movies`);
-    }
-  });
-  getModel().readMovie(req.params.movie, (err, entity) => {
-    if (err) {
-      next(err);
-      return;
-    }
-    res.render('users/admin/formMovie.pug', {
-      movie: entity,
-      action: 'Edit'
-    });
-  });
-  getModel().startEditing(req.user.id, req.params.movie, (err, savedData) => {
-    if (err) {
-      next(err);
-      return;
-    }
-  });
-});
+ router.get('/admin/movies/:movie/edit', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+   getModel().verifyEditing(req.params.movie, (err, result) => {
+     if (err) {
+       next(err);
+       return;
+     }
+     if (result.length == 1 && req.user.id != result[0].id) {
+       res.redirect(`/users/admin/movies`);
+     }
+   });
+   getModel().readMovie(req.params.movie, (err, entity) => {
+     if (err) {
+       next(err);
+       return;
+     }
+     res.render('users/admin/formMovie.pug', {
+       movie: entity,
+       action: 'Edit'
+     });
+   });
+   getModel().startEditing(req.user.id, req.params.movie, (err, savedData) => {
+     if (err) {
+       next(err);
+       return;
+     }
+   });
+ });
 
 
 /**
@@ -737,114 +737,104 @@ router.get('/admin/movies/:movie/edit', oauth2.required, oauth2.adminRequired, (
  * Update a movie.
  */
 router.post(
-  '/admin/movies/:movie/edit', oauth2.required, oauth2.adminRequired,
-  images.multer.single('image'),
-  images.sendUploadToGCS,
-  (req, res, next) => {
-    let data = req.body;
+'/admin/movies/:movie/edit', oauth2.required, oauth2.adminRequired,
+images.multer.single('image'),
+images.sendUploadToGCS,
+(req, res, next) => {
+  let data = req.body;
 
-    // Was an image uploaded? If so, we'll use its public URL
-    // in cloud storage.
-    if (req.file && req.file.cloudStoragePublicUrl) {
-      req.body.imageUrl = req.file.cloudStoragePublicUrl;
-    }
-
-    getModel().updateMovie(req.params.movie, data, (err, savedData) => {
-      if (err) {
-        next(err);
-        return;
-      }
-      res.redirect(`/users/admin/movies`);
-    });
-    getModel().stopEditing(req.user.id, req.params.movie, (err) => {
-      if (err) {
-        next(err);
-        return;
-      }
-    });
+  // Was an image uploaded? If so, we'll use its public URL
+  // in cloud storage.
+  if (req.file && req.file.cloudStoragePublicUrl) {
+    req.body.imageUrl = req.file.cloudStoragePublicUrl;
   }
-);
 
+  getModel().updateMovie(req.params.movie, data, (err, savedData) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.redirect(`/users/admin/movies`);
+  });
+  getModel().stopEditing(req.user.id, req.params.movie, (err) => {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
+}
+);
 
 /**
  * GET /movie/:id/delete
  *
  * Delete a movie
  */
-router.get('/admin/movies/:movie/delete', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().delete(req.params.movie, (err) => {
-    if (err) {
-      next(err);
-      return;
-    }
-    res.redirect('..');
-  });
-});
+ router.get('/admin/movies/:movie/delete', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+   getModel().delete(req.params.movie, (err) => {
+     if (err) {
+       next(err);
+       return;
+     }
+     res.redirect('..');
+   });
+ });
  //*************************************************** END MOVIES *******************************************************************/
-
-
-
 
 //********************************************************SEARCH AND SORT*****************************************************//
 
 //For catalog.  Will eventually search the entire  database for any matches in search bar
 router.post('/admin/catalog', (req, res, next) => {
-
-    const anyPossibility = req.body.searchBar;
-    console.log(anyPossibility);
-    getModel().findByAttribute(anyPossibility, (err, entities) => {
-        if (err) {
-            next(err);
-            return;
-        }
-        res.render('users/admin/catalog.pug', {
-            items: entities,
-            type: 'movies'
-        });
+  const anyPossibility = req.body.searchBar;
+  console.log(anyPossibility);
+  getModel().findByAttribute(anyPossibility, (err, entities) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/admin/catalog.pug', {
+      items: entities,
+      type: 'movies'
     });
+  });
 });
-
 
 //Search for specific book attributes
 router.post('/admin/books', (req, res, next) => {
-
-    const bookSearchBy = req.body;
-    if (bookSearchBy.searchBar.length == 0) {
-        bookSearchBy.searchBar = 1;
-        bookSearchBy.books = 1;
+  const bookSearchBy = req.body;
+  if (bookSearchBy.searchBar.length == 0) {
+    bookSearchBy.searchBar = 1;
+    bookSearchBy.books = 1;
+  }
+  getModel().findByAttribute("books", bookSearchBy.books, bookSearchBy.searchBar, bookSearchBy.sortBy, bookSearchBy.sortUpDown, (err, entities) => {
+    if (err) {
+      next(err);
+      return;
     }
-    getModel().findByAttribute("books", bookSearchBy.books, bookSearchBy.searchBar, bookSearchBy.sortBy, bookSearchBy.sortUpDown, (err, entities) => {
-        if (err) {
-            next(err);
-            return;
-        }
-        res.render('users/admin/books.pug', {
-            books: entities,
-        });
+    res.render('users/admin/books.pug', {
+      books: entities,
     });
+  });
 });
-
 
 //Search for specific magazine attributes
 router.post('/admin/magazines', (req, res, next) => {
-
-    const magazinesSearchBy = req.body;
-    if (magazinesSearchBy.searchBar.length == 0) {
-        magazinesSearchBy.searchBar = 1;
-        magazinesSearchBy.magazines = 1;
+  const magazinesSearchBy = req.body;
+  if (magazinesSearchBy.searchBar.length == 0) {
+    magazinesSearchBy.searchBar = 1;
+    magazinesSearchBy.magazines = 1;
+  }
+  getModel().findByAttribute("magazines", magazinesSearchBy.magazines, magazinesSearchBy.searchBar, magazinesSearchBy.sortBy, magazinesSearchBy.sortUpDown,
+  (err, entities) => {
+    if (err) {
+      next(err);
+      return;
     }
-    getModel().findByAttribute("magazines", magazinesSearchBy.magazines, magazinesSearchBy.searchBar, magazinesSearchBy.sortBy, magazinesSearchBy.sortUpDown,
-                               (err, entities) => {
-        if (err) {
-            next(err);
-            return;
-        }
-        res.render('users/admin/magazines.pug', {
-            magazines: entities,
-        });
+    res.render('users/admin/magazines.pug', {
+      magazines: entities,
     });
+  });
 });
-
 
 //Search for specific movie attributes
 router.post('/admin/movies', (req, res, next) => {
@@ -864,7 +854,6 @@ router.post('/admin/movies', (req, res, next) => {
         });
     });
 });
-
 
 //Search for specific music attributes
 router.post('/admin/music', (req, res, next) => {
@@ -919,8 +908,8 @@ router.get('/client/magazines', oauth2.required, oauth2.clientRequired, (req, re
   });
 });
 
-router.get('/admin/cartPage', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-    res.render('users/admin/cartPage.pug')
+router.get('/client/cart', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+    res.render('users/client/cartPage.pug')
 });
 
 router.get('/client/movies', oauth2.required, oauth2.clientRequired, (req, res, next) => {
@@ -981,7 +970,6 @@ router.get('/client/music', oauth2.required, oauth2.clientRequired, (req, res, n
 
 //*************************************************** MUSIC *******************************************************************/
 
-
   //* Display a Music.
  router.get('/client/music/:music', oauth2.required, oauth2.clientRequired, (req, res, next) => {
    var editing = false;
@@ -1008,9 +996,8 @@ router.get('/client/music', oauth2.required, oauth2.clientRequired, (req, res, n
 
 //*************************************************** MOVIES *******************************************************************/
 
-
-  //* Display a Movie.
- router.get('/client/movies/:movie', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+//* Display a Movie.
+router.get('/client/movies/:movie', oauth2.required, oauth2.clientRequired, (req, res, next) => {
   getModel().readMovie(req.params.movie, (err, entity) => {
     if (err) {
       next(err);
@@ -1026,99 +1013,90 @@ router.get('/client/music', oauth2.required, oauth2.clientRequired, (req, res, n
 
 //For catalog.  Will eventually search the entire  database for any matches in search bar
 router.post('/client/catalog', (req, res, next) => {
-
   const anyPossibility = req.body.searchBar;
   console.log(anyPossibility);
   getModel().findByAttribute(anyPossibility, (err, entities) => {
-      if (err) {
-          next(err);
-          return;
-      }
-      res.render('users/client/catalog.pug', {
-          items: entities,
-          type: 'movies'
-      });
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/client/catalog.pug', {
+      items: entities,
+      type: 'movies'
+    });
   });
 });
-
 
 //Search for specific book attributes
 router.post('/client/books', (req, res, next) => {
-
   const bookSearchBy = req.body;
   if (bookSearchBy.searchBar.length == 0) {
-      bookSearchBy.searchBar = 1;
-      bookSearchBy.books = 1;
+    bookSearchBy.searchBar = 1;
+    bookSearchBy.books = 1;
   }
   getModel().findByAttribute("books", bookSearchBy.books, bookSearchBy.searchBar, bookSearchBy.sortBy, bookSearchBy.sortUpDown, (err, entities) => {
-      if (err) {
-          next(err);
-          return;
-      }
-      res.render('users/client/books.pug', {
-          books: entities,
-      });
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/client/books.pug', {
+      books: entities,
+    });
   });
 });
-
 
 //Search for specific magazine attributes
 router.post('/client/magazines', (req, res, next) => {
-
   const magazinesSearchBy = req.body;
   if (magazinesSearchBy.searchBar.length == 0) {
-      magazinesSearchBy.searchBar = 1;
-      magazinesSearchBy.magazines = 1;
+    magazinesSearchBy.searchBar = 1;
+    magazinesSearchBy.magazines = 1;
   }
   getModel().findByAttribute("magazines", magazinesSearchBy.magazines, magazinesSearchBy.searchBar, magazinesSearchBy.sortBy, magazinesSearchBy.sortUpDown,
-                             (err, entities) => {
-      if (err) {
-          next(err);
-          return;
-      }
-      res.render('users/client/magazines.pug', {
-          magazines: entities,
-      });
+  (err, entities) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/client/magazines.pug', {
+      magazines: entities,
+    });
   });
 });
-
 
 //Search for specific movie attributes
 router.post('/client/movies', (req, res, next) => {
-
   const moviesSearchBy = req.body;
   if (moviesSearchBy.searchBar.length == 0) {
-      moviesSearchBy.searchBar = 1;
-      moviesSearchBy.movies = 1;
+    moviesSearchBy.searchBar = 1;
+    moviesSearchBy.movies = 1;
   }
   getModel().findByAttribute("movies", moviesSearchBy.movies, moviesSearchBy.searchBar, moviesSearchBy.sortBy, moviesSearchBy.sortUpDown,  (err, entities) => {
-      if (err) {
-          next(err);
-          return;
-      }
-      res.render('users/client/movies.pug', {
-          movies: entities,
-      });
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/client/movies.pug', {
+      movies: entities,
+    });
   });
 });
 
-
 //Search for specific music attributes
 router.post('/client/music', (req, res, next) => {
-
   const musicSearchBy = req.body;
   if (musicSearchBy.searchBar.length == 0) {
-      musicSearchBy.searchBar = 1;
-      musicSearchBy.music = 1;
+    musicSearchBy.searchBar = 1;
+    musicSearchBy.music = 1;
   }
   getModel().findByAttribute("musics", musicSearchBy.music, musicSearchBy.searchBar, musicSearchBy.sortBy, musicSearchBy.sortUpDown, (err, entities) => {
-      if (err) {
-          next(err);
-          return;
-      }
-      res.render('users/client/music.pug', {
-          musics: entities,
-      });
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/client/music.pug', {
+      musics: entities,
+    });
   });
 });
 //*************************************************** END SEARCH AND SORT FUNCTIONS *************************************************************/

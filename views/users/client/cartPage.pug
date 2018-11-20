@@ -16,7 +16,7 @@ html(lang="en")
             a(href="/users/client/catalog") Catalog
 
         p.navbar-text.navbar-right
-          a(class="btn btn-primary" href="/users/client/cartPage")  <span class="glyphicon glyphicon-shopping-cart"></span>
+          a(class="btn btn-primary" href="/users/admin/cartPage")  <span class="glyphicon glyphicon-shopping-cart"></span>
           if profile
             span #{profile.displayName} &nbsp;
               a(href=logout) (logout)
@@ -25,15 +25,15 @@ html(lang="en")
 block content
   .container
     div(class="cartTitle")
-          h1 Your Cart
+      h1 Your Cart
 
-        div(class="cartTable")
-           table(class="table table-striped table-bordered")
-               thead
-                tr
-                 td View
-                 td Title
-                 td Media Type
-        br
-        div(class="checkoutButton")
-            button Checkout
+    div(class="cartTable")
+       table(class="table table-striped table-bordered")
+           thead
+            tr
+             td View
+             td Title
+             td Media Type
+    br
+    div(class="checkoutButton")
+        button Checkout
