@@ -18,6 +18,8 @@ html(lang="en")
         p.navbar-text.navbar-right
           a(class="btn btn-primary" href="/users/client/cart")  <span class="glyphicon glyphicon-shopping-cart"></span>
           if profile
+            if profile.image
+              img.img-circle(src=profile.image, width=24)
             span #{profile.displayName} &nbsp;
               a(href=logout) (logout)
 
