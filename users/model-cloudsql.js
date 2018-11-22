@@ -20,7 +20,8 @@ const config = require('../config');
 const options = {
   user: config.get('MYSQL_USER'),
   password: config.get('MYSQL_PASSWORD'),
-  database: 'bookshelf'
+  database: 'bookshelf',
+  multipleStatements: true
 };
 
 if (config.get('INSTANCE_CONNECTION_NAME') && config.get('NODE_ENV') === 'production') {
@@ -245,13 +246,13 @@ function listMusics (limit, token, cb) {
 // [START createBook]
 function createBook (data, cb) {
   connection.query(
-    'INSERT INTO `books` SET ?', data,
+    'INSERT INTO `inventory` SET type=?;INSERT INTO `books` SET ?, id=LAST_INSERT_ID()', ['book', data],
     (err, result) => {
       if (err) {
         cb(err);
         return;
       }
-      readBook(result.insertId, cb);
+      readBook(result[0].insertId, cb);
     });
 }
 // [END createBook]
@@ -260,13 +261,13 @@ function createBook (data, cb) {
 // [START createMagazines]
 function createMagazine (data, cb) {
   connection.query(
-    'INSERT INTO `magazines` SET ?', data,
+    'INSERT INTO `inventory` SET type=?;INSERT INTO `magazines` SET ?, id=LAST_INSERT_ID()', ['magazine', data],
     (err, result) => {
       if (err) {
         cb(err);
         return;
       }
-      readMagazine(result.insertId, cb);
+      readMagazine(result[0].insertId, cb);
     });
 }
 
@@ -276,13 +277,13 @@ function createMagazine (data, cb) {
 // [START createMovies]
 function createMovie (data, cb) {
   connection.query(
-    'INSERT INTO `movies` SET ?', data,
+    'INSERT INTO `inventory` SET type=?;INSERT INTO `movies` SET ?, id=LAST_INSERT_ID()', ['movie', data],
     (err, result) => {
       if (err) {
         cb(err);
         return;
       }
-      readMovie(result.insertId, cb);
+      readMovie(result[0].insertId, cb);
     });
 }
 // [END createMovies]
@@ -290,13 +291,13 @@ function createMovie (data, cb) {
 // [START createMusic]
 function createMusic (data, cb) {
   connection.query(
-    'INSERT INTO `musics` SET ?', data,
+    'INSERT INTO `inventory` SET type=?;INSERT INTO `musics` SET ?, id=LAST_INSERT_ID()', ['music', data],
     (err, result) => {
       if (err) {
         cb(err);
         return;
       }
-      readMusic(result.insertId, cb);
+      readMusic(result[0].insertId, cb);
     });
 }
 // [END createMusic]
@@ -486,32 +487,151 @@ function findByAttribute(itemType, column, columnValue, orderBy, sortUpDown, cb)
 }
 
 //-------------------------------------------- START  DELETE ------------------------------------------------------------------//
-
 //[START delete]
-function _deleteBook (id, cb) {
-  connection.query('DELETE FROM `books` WHERE `id` = ?', id, cb);
+function _delete (id, cb) {
+  connection.query('DELETE FROM `inventory` WHERE `id` = ?', id, cb);
 }
 //[END delete]
+//---------------------------------------------- END  DELETE ------------------------------------------------------------------//
 
-//[START delete]
-function _deleteMagazine (id, cb) {
-  connection.query('DELETE FROM `magazines` WHERE `id` = ?', id, cb);
+//-------------------------------------------- START  EDITING ------------------------------------------------------------------//
+//[START startEditing]
+function startEditing(id, itemID, cb) {
+  connection.query(
+    'INSERT INTO `editing` SET `id`=?, `itemID`=?', [id, itemID],
+    (err, result) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      cb(null, result);
+    });
 }
-//[END delete]
+//[END startEditing]
 
-//[START delete]
-function _deleteMusic (id, cb) {
-  connection.query('DELETE FROM `musics` WHERE `id` = ?', id, cb);
+//[START stopEditing]
+function stopEditing(id, itemID, cb) {
+  connection.query('DELETE FROM `editing` WHERE `id` = ? AND `itemID` = ?', [id, itemID], cb);
 }
-//[END delete]
+//[END stopEditing]
 
-//[START delete]
-function _deleteMovie (id, cb) {
-  connection.query('DELETE FROM `movies` WHERE `id` = ?', id, cb);
+//[START verifyEditing]
+function verifyEditing(itemID, cb) {
+  connection.query(
+    'SELECT * FROM `editing` WHERE `itemID` = ?', itemID,
+    (err, result) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      cb(null, result);
+    });
 }
-//[END delete]
+//[END verifyEditing]
+//---------------------------------------------- END  EDITING ------------------------------------------------------------------//
 
-//-----------------------------------------------------------------------------------------------------------------------------//
+//----------------------------------------------- START  CART ------------------------------------------------------------------//
+// [Start listCartItems]
+function listCartItems (id, cb) {
+    connection.query(
+        'SELECT * FROM ((SELECT `title`, `id`, `imageURL` FROM books UNION SELECT `title`, `id`, `imageURL` FROM `musics` UNION SELECT `title`, `id`, `imageURL` FROM `movies`) AS q JOIN cart AS c) JOIN inventory AS i WHERE c.id = ? AND c.itemID = q.id AND i.id = q.id', id,
+        (err, results) => {
+            if (err) {
+                cb(err);
+                return;
+            }
+            cb(null, results);
+        }
+    );
+}
+//[End listCartItems]
+
+//[START addCart]
+function addCart(id, itemID, cb) {
+  connection.query(
+    'INSERT INTO `cart` SET `id`=?, `itemID`=?', [id, itemID],
+    (err, result) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      cb(null, result);
+    });
+}
+//[END addCart]
+
+//[START removeCart]
+function removeCart(itemID, cb) {
+  connection.query('DELETE FROM `cart` WHERE `itemID` = ?', itemID, cb);
+}
+//[END removeCart]
+
+//[START removeAllCart]
+function removeAllCart(userID, cb) {
+  connection.query('DELETE FROM `cart` WHERE `id` = ?', userID, cb);
+}
+//[END removeAllCart]
+//------------------------------------------------- END  CART ------------------------------------------------------------------//
+
+//-------------------------------------------------- START  LOAN ---------------------------------------------------------------//
+//[START loan]
+function loan(id, itemID, cb) {
+  connection.query(
+    'INSERT INTO `loans` SET `userID`=?, `itemID`=?', [id, itemID],
+    (err, result) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      cb(null, result);
+    });
+}
+//[END loan]
+
+//[START listLoans]
+function listLoans (id, cb) {
+    connection.query(
+        'SELECT * FROM ((SELECT `title`, `id`, `imageURL` FROM books UNION SELECT `title`, `id`, `imageURL` FROM `musics` UNION SELECT `title`, `id`, `imageURL` FROM `movies`) AS q JOIN loans AS l) JOIN inventory AS i WHERE l.userID = ? AND l.itemID = q.id AND i.id = q.id', id,
+        (err, results) => {
+            if (err) {
+                cb(err);
+                return;
+            }
+            cb(null, results);
+        }
+    );
+}
+//[END listLoans]
+
+//[START listReturns]
+function listReturns (id, cb) {
+    connection.query(
+        'SELECT * FROM ((SELECT `title`, `id`, `imageURL` FROM books UNION SELECT `title`, `id`, `imageURL` FROM `musics` UNION SELECT `title`, `id`, `imageURL` FROM `movies`) AS q JOIN returns AS r) JOIN inventory AS i WHERE r.userID = ? AND r.itemID = q.id AND i.id = q.id', id,
+        (err, results) => {
+            if (err) {
+                cb(err);
+                return;
+            }
+            cb(null, results);
+        }
+    );
+}
+//[END listReturns]
+
+//[START returnLoan]
+function returnLoan (userID, itemID, cb) {
+  connection.query('INSERT INTO `returns` SET `userID` = ?, `itemID` = ?;DELETE FROM `loans` WHERE `userID` = ? AND `itemID` = ?', [userID, itemID, userID, itemID],
+  (err, result) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      cb(null, result);
+    });
+}
+//[END returnLoan]
+//--------------------------------------------------- END  LOAN ----------------------------------------------------------------//
+
 module.exports = {
   createSchema: createSchema,
   list: list,
@@ -532,18 +652,26 @@ module.exports = {
   readMagazine: readMagazine,
   readMusic: readMusic,
   readMovie: readMovie,
-  deleteBook: _deleteBook,
-  deleteMagazine: _deleteMagazine,
-  deleteMusic: _deleteMusic,
-  deleteMovie: _deleteMovie,
+  delete: _delete,
   updateBook: updateBook,
   updateMagazine: updateMagazine,
   updateMusic: updateMusic,
   updateMovie: updateMovie,
   findItem: findItem,
   findByAttribute: findByAttribute,
+  startEditing: startEditing,
+  stopEditing: stopEditing,
+  verifyEditing: verifyEditing,
   findUserInfo: findUserInfo,
-  editUserInfo: editUserInfo
+  editUserInfo: editUserInfo,
+  addCart: addCart,
+  removeCart: removeCart,
+  removeAllCart: removeAllCart,
+  listCartItems: listCartItems,
+  listLoans: listLoans,
+  listReturns: listReturns,
+  loan: loan,
+  returnLoan: returnLoan
 };
 
 if (module === require.main) {

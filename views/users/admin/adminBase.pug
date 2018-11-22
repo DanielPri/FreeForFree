@@ -1,16 +1,21 @@
+doctype html
 html(lang="en")
   head
     title FreeForFree - Library Management
     meta(charset='utf-8')
     meta(name="viewport", content="width=device-width, initial-scale=1")
     link(rel="stylesheet", href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css")
-    link(rel='stylesheet' href='/css_styles/catalog_styles.css' type='text/css' media='screen' charset='utf-8')
+    link(rel="stylesheet", href="/css_styles/editUser_styles.css")
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+
+
   body
     .navbar.navbar-default
       .container
         .navbar-header
           .navbar-brand
             a(href="/users") FreeForFree
+
         ul.nav.navbar-nav
           li
             a(href="/users/admin/list") Active Users
@@ -20,6 +25,7 @@ html(lang="en")
             a(href="/users/admin/addUser") Create New User
           li
             a(href="/users/admin/editUserInfo") Edit User Info
+       
 
         p.navbar-text.navbar-right
           if profile
@@ -27,18 +33,5 @@ html(lang="en")
               img.img-circle(src=profile.image, width=24)
             span #{profile.displayName} &nbsp;
               a(class="btn btn-danger" href=logout) <span class="glyphicon glyphicon-log-out"></span> Logout
-
-    div(class="mediaType")
-        div(class="searchButton")
-          a(class="btn btn-primary" href="/users/admin/catalog")  <span class="glyphicon glyphicon-search"></span> Search
-        div(class="bookButton")
-          a(class="btn btn-primary" href="/users/admin/books") <span class="glyphicon glyphicon-book"></span> Books
-        div(class="magazineButton")
-          a(class="btn btn-primary" href="/users/admin/magazines") <span class="glyphicon glyphicon-book"></span> Magazines
-        div(class="movieButton")
-          a(class="btn btn-primary" href="/users/admin/movies") <span class="glyphicon glyphicon-film"></span> Movies
-        div(class="musicButton")
-          a(class="btn btn-primary" href="/users/admin/music") <span class="glyphicon glyphicon-music"></span> Music
-    br
 
     block content

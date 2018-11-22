@@ -1,0 +1,20 @@
+extends ../../catalog-client.pug
+
+block content
+  div(class="container")
+    div(class="row justify-content-md-center")
+      h3 Movie
+      .media
+          .media-left
+            img(Id="image" src=movie.imageUrl)
+          .media-body
+            h4= movie.title
+              | &nbsp;
+              small= movie.publishedDate
+            h5 Direced by #{movie.director||'unknown'}
+            p= movie.description
+      br
+      .btn-group
+       a(href=`/users/client/movies/${movie.id}/addToCart`, class='btn btn-success btn-sm' disabled=check)
+         i.glyphicon.glyphicon-shopping-cart
+         span  Add to Cart

@@ -41,7 +41,7 @@ router.get('/', (req, res, next) => {
 
 //--------Catalog----------//
 router.get('/admin/catalog', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  res.render('users/catalog.pug')
+  res.render('users/admin/catalog.pug')
 });
 
 //--------Add User----------//
@@ -51,7 +51,7 @@ router.get('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, n
       next(err);
       return;
     }
-    res.render('users/addUser.pug', {
+    res.render('users/admin/addUser.pug', {
       users: entities
      });
   });
@@ -79,7 +79,7 @@ router.get('/admin/editUserInfo', oauth2.required, oauth2.adminRequired, (req, r
       next(err);
       return;
     }
-    res.render('users/editUserInfo.pug', {
+    res.render('users/admin/editUserInfo.pug', {
       users: entities
      });
   });
@@ -106,7 +106,7 @@ router.get('/admin/books', oauth2.required, oauth2.adminRequired, (req, res, nex
       next(err);
       return;
     }
-    res.render('users/books.pug', {
+    res.render('users/admin/books.pug', {
       books: entities,
       nextPageToken: cursor
     });
@@ -120,7 +120,7 @@ router.get('/admin/magazines', oauth2.required, oauth2.adminRequired, (req, res,
       next(err);
       return;
     }
-    res.render('users/magazines.pug', {
+    res.render('users/admin/magazines.pug', {
       magazines: entities,
       nextPageToken: cursor
     });
@@ -133,7 +133,7 @@ router.get('/admin/movies', oauth2.required, oauth2.adminRequired, (req, res, ne
       next(err);
       return;
     }
-    res.render('users/movies.pug', {
+    res.render('users/admin/movies.pug', {
       movies: entities,
       nextPageToken: cursor
     });
@@ -146,7 +146,7 @@ router.get('/admin/music', oauth2.required, oauth2.adminRequired, (req, res, nex
       next(err);
       return;
     }
-    res.render('users/music.pug', {
+    res.render('users/admin/music.pug', {
       musics: entities,
       nextPageToken: cursor
     });
@@ -160,7 +160,7 @@ router.get('/admin/music', oauth2.required, oauth2.adminRequired, (req, res, nex
  */
 // [START add_book]
 router.get('/admin/formBook', oauth2.required, oauth2.adminRequired, (req, res) => {
-  res.render('users/formBook.pug', {
+  res.render('users/admin/formBook.pug', {
     book: {},
     action: 'Add'
   });
@@ -173,7 +173,7 @@ router.get('/admin/formBook', oauth2.required, oauth2.adminRequired, (req, res) 
  * Create a book.
  */
 // [START add_post]
-router.post('/admin/formBook', images.multer.single('image'), images.sendUploadToGCS, (req, res, next) => {
+router.post('/admin/formBook', oauth2.required, oauth2.adminRequired, images.multer.single('image'), images.sendUploadToGCS, (req, res, next) => {
   const data = req.body;
   // Was an image uploaded? If so, we'll use its public URL
   // in cloud storage.
@@ -202,7 +202,7 @@ router.post('/admin/formBook', images.multer.single('image'), images.sendUploadT
  * Create a magazine.
  */
 // [START add_post]
-router.post('/admin/formMagazine', images.multer.single('image'), images.sendUploadToGCS, (req, res, next) => {
+router.post('/admin/formMagazine', oauth2.required, oauth2.adminRequired, images.multer.single('image'), images.sendUploadToGCS, (req, res, next) => {
   const data = req.body;
   // Was an image uploaded? If so, we'll use its public URL
   // in cloud storage.
@@ -227,7 +227,7 @@ router.post('/admin/formMagazine', images.multer.single('image'), images.sendUpl
  */
 // [START add_magazine]
 router.get('/admin/formMagazine', oauth2.required, oauth2.adminRequired, (req, res) => {
-  res.render('users/formMagazine.pug', {
+  res.render('users/admin/formMagazine.pug', {
     magazine: {},
     action: 'Add'
   });
@@ -240,7 +240,7 @@ router.get('/admin/formMagazine', oauth2.required, oauth2.adminRequired, (req, r
  * Create a movie.
  */
 // [START add_post]
-router.post('/admin/formMovie', images.multer.single('image'), images.sendUploadToGCS, (req, res, next) => {
+router.post('/admin/formMovie', oauth2.required, oauth2.adminRequired, images.multer.single('image'), images.sendUploadToGCS, (req, res, next) => {
   const data = req.body;
   // Was an image uploaded? If so, we'll use its public URL
   // in cloud storage.
@@ -265,7 +265,7 @@ router.post('/admin/formMovie', images.multer.single('image'), images.sendUpload
  */
 // [START add_movie]
 router.get('/admin/formMovie', oauth2.required, oauth2.adminRequired, (req, res) => {
-  res.render('users/formMovie.pug', {
+  res.render('users/admin/formMovie.pug', {
     movie: {},
     action: 'Add'
   });
@@ -279,7 +279,7 @@ router.get('/admin/formMovie', oauth2.required, oauth2.adminRequired, (req, res)
  */
 
 // [START add_post]
-router.post('/admin/formMusic', images.multer.single('image'), images.sendUploadToGCS, (req, res, next) => {
+router.post('/admin/formMusic', oauth2.required, oauth2.adminRequired, images.multer.single('image'), images.sendUploadToGCS, (req, res, next) => {
   const data = req.body;
   // Was an image uploaded? If so, we'll use its public URL
   // in cloud storage.
@@ -304,7 +304,7 @@ router.post('/admin/formMusic', images.multer.single('image'), images.sendUpload
  */
 // [START add_music]
 router.get('/admin/formMusic', oauth2.required, oauth2.adminRequired, (req, res) => {
-  res.render('users/formMusic.pug', {
+  res.render('users/admin/formMusic.pug', {
     music: {},
     action: 'Add'
   });
@@ -322,7 +322,7 @@ router.get('/admin/formMusic', oauth2.required, oauth2.adminRequired, (req, res)
        next(err);
        return;
      }
-     res.render('users/list.pug', {
+     res.render('users/admin/list.pug', {
        users: entities,
        nextPageToken: cursor
      });
@@ -338,13 +338,24 @@ router.get('/admin/formMusic', oauth2.required, oauth2.adminRequired, (req, res)
   * Display a book.
   */
  router.get('/admin/books/:book', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+   var editing = false;
+   getModel().verifyEditing(req.params.book, (err, result) => {
+     if (err) {
+       next(err);
+       return;
+     }
+     if (result.length == 1 && req.user.id != result[0].id) {
+       editing = true;
+     }
+   });
    getModel().readBook(req.params.book, (err, entity) => {
      if (err) {
        next(err);
        return;
      }
-     res.render('users/viewBook.pug', {
-       book: entity
+     res.render('users/admin/viewBook.pug', {
+       book: entity,
+       check: editing
      });
    });
  });
@@ -355,15 +366,30 @@ router.get('/admin/formMusic', oauth2.required, oauth2.adminRequired, (req, res)
  * Display a book for editing.
  */
 router.get('/admin/books/:book/edit',  oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().verifyEditing(req.params.book, (err, result) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    if (result.length == 1 && req.user.id != result[0].id) {
+      res.redirect(`/users/admin/books`);
+    }
+  });
   getModel().readBook(req.params.book, (err, entity) => {
     if (err) {
       next(err);
       return;
     }
-    res.render('users/formBook.pug', {
+    res.render('users/admin/formBook.pug', {
       book: entity,
       action: 'Edit'
     });
+  });
+  getModel().startEditing(req.user.id, req.params.book, (err, savedData) => {
+    if (err) {
+      next(err);
+      return;
+    }
   });
 });
 
@@ -373,7 +399,7 @@ router.get('/admin/books/:book/edit',  oauth2.required, oauth2.adminRequired, (r
  * Update a book.
  */
 router.post(
-  '/admin/books/:book/edit',
+  '/admin/books/:book/edit', oauth2.required, oauth2.adminRequired,
   images.multer.single('image'),
   images.sendUploadToGCS,
   (req, res, next) => {
@@ -392,6 +418,12 @@ router.post(
       }
       res.redirect(`/users/admin/books`);
     });
+    getModel().stopEditing(req.user.id, req.params.book, (err) => {
+      if (err) {
+        next(err);
+        return;
+      }
+    });
   }
 );
 
@@ -402,15 +434,14 @@ router.post(
  * Delete a book.
  */
 router.get('/admin/books/:book/delete',   oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().deleteBook(req.params.book, (err) => {
+  getModel().delete(req.params.book, (err) => {
     if (err) {
       next(err);
       return;
     }
-    res.redirect(req.baseUrl);
+    res.redirect('..');
   });
 });
-
  //************************************************* END BOOK *******************************************************************/
 
 
@@ -422,13 +453,24 @@ router.get('/admin/books/:book/delete',   oauth2.required, oauth2.adminRequired,
   * Display a Magazine.
   */
  router.get('/admin/magazines/:magazine', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+   var editing = false;
+   getModel().verifyEditing(req.params.magazine, (err, result) => {
+     if (err) {
+       next(err);
+       return;
+     }
+     if (result.length == 1 && req.user.id != result[0].id) {
+       editing = true;
+     }
+   });
   getModel().readMagazine(req.params.magazine, (err, entity) => {
     if (err) {
       next(err);
       return;
     }
-    res.render('users/viewMagazine.pug', {
-      magazine: entity
+    res.render('users/admin/viewMagazine.pug', {
+      magazine: entity,
+      check: editing
     });
   });
 });
@@ -439,15 +481,30 @@ router.get('/admin/books/:book/delete',   oauth2.required, oauth2.adminRequired,
  * Display a magazine for editing.
  */
 router.get('/admin/magazines/:magazine/edit', oauth2.required, oauth2.adminRequired,(req, res, next) => {
+  getModel().verifyEditing(req.params.magazine, (err, result) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    if (result.length == 1 && req.user.id != result[0].id) {
+      res.redirect(`/users/admin/magazines`);
+    }
+  });
   getModel().readMagazine(req.params.magazine, (err, entity) => {
     if (err) {
       next(err);
       return;
     }
-    res.render('users/formMagazine.pug', {
+    res.render('users/admin/formMagazine.pug', {
       magazine: entity,
       action: 'Edit'
     });
+  });
+  getModel().startEditing(req.user.id, req.params.magazine, (err, savedData) => {
+    if (err) {
+      next(err);
+      return;
+    }
   });
 });
 
@@ -458,7 +515,7 @@ router.get('/admin/magazines/:magazine/edit', oauth2.required, oauth2.adminRequi
  * Update a magazine.
  */
 router.post(
-  '/admin/magazines/:magazine/edit',
+  '/admin/magazines/:magazine/edit', oauth2.required, oauth2.adminRequired,
   images.multer.single('image'),
   images.sendUploadToGCS,
   (req, res, next) => {
@@ -477,6 +534,12 @@ router.post(
       }
       res.redirect(`/users/admin/magazines`);
     });
+    getModel().stopEditing(req.user.id, req.params.magazine, (err) => {
+      if (err) {
+        next(err);
+        return;
+      }
+    });
   }
 );
 
@@ -487,15 +550,14 @@ router.post(
  * Delete a magazine
  */
 router.get('/admin/magazines/:magazine/delete', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().deleteMagazine(req.params.magazine, (err) => {
+  getModel().delete(req.params.magazine, (err) => {
     if (err) {
       next(err);
       return;
     }
-    res.redirect(req.baseUrl);
+    res.redirect('..');
   });
 });
-
 //*************************************************** END MAGAZINE ****************************************************************/
 
 
@@ -507,13 +569,24 @@ router.get('/admin/magazines/:magazine/delete', oauth2.required, oauth2.adminReq
   * Display a Music.
   */
  router.get('/admin/music/:music', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+   var editing = false;
+   getModel().verifyEditing(req.params.music, (err, result) => {
+     if (err) {
+       next(err);
+       return;
+     }
+     if (result.length == 1) {
+       editing = true;
+     }
+   });
   getModel().readMusic(req.params.music, (err, entity) => {
     if (err) {
       next(err);
       return;
     }
-    res.render('users/viewMusic.pug', {
-      music: entity
+    res.render('users/admin/viewMusic.pug', {
+      music: entity,
+      check: editing
     });
   });
 });
@@ -524,15 +597,30 @@ router.get('/admin/magazines/:magazine/delete', oauth2.required, oauth2.adminReq
  * Display a music for editing.
  */
 router.get('/admin/music/:music/edit', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+  getModel().verifyEditing(req.params.music, (err, result) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    if (result.length == 1 && req.user.id != result[0].id) {
+      res.redirect(`/users/admin/music`);
+    }
+  });
   getModel().readMusic(req.params.music, (err, entity) => {
     if (err) {
       next(err);
       return;
     }
-    res.render('users/formMusic.pug', {
+    res.render('users/admin/formMusic.pug', {
       music: entity,
       action: 'Edit'
     });
+  });
+  getModel().startEditing(req.user.id, req.params.music, (err, savedData) => {
+    if (err) {
+      next(err);
+      return;
+    }
   });
 });
 
@@ -543,7 +631,7 @@ router.get('/admin/music/:music/edit', oauth2.required, oauth2.adminRequired, (r
  * Update a music.
  */
 router.post(
-  '/admin/music/:music/edit',
+  '/admin/music/:music/edit', oauth2.required, oauth2.adminRequired,
   images.multer.single('image'),
   images.sendUploadToGCS,
   (req, res, next) => {
@@ -562,6 +650,13 @@ router.post(
       }
       res.redirect(`/users/admin/music`);
     });
+
+    getModel().stopEditing(req.user.id, req.params.music, (err) => {
+      if (err) {
+        next(err);
+        return;
+      }
+    });
   }
 );
 
@@ -572,15 +667,14 @@ router.post(
  * Delete a music
  */
 router.get('/admin/music/:music/delete',  oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().deleteMusic(req.params.music, (err) => {
+  getModel().delete(req.params.music, (err) => {
     if (err) {
       next(err);
       return;
     }
-    res.redirect(req.baseUrl);
+    res.redirect('..');
   });
 });
-
 //*************************************************** END MUSIC *******************************************************************/
 
 
@@ -592,13 +686,24 @@ router.get('/admin/music/:music/delete',  oauth2.required, oauth2.adminRequired,
   * Display a Movie.
   */
  router.get('/admin/movies/:movie', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+   var editing = false;
+   getModel().verifyEditing(req.params.movie, (err, result) => {
+     if (err) {
+       next(err);
+       return;
+     }
+     if (result.length == 1 && req.user.id != result[0].id) {
+       editing = true;
+     }
+   });
   getModel().readMovie(req.params.movie, (err, entity) => {
     if (err) {
       next(err);
       return;
     }
-    res.render('users/viewMovie.pug', {
-      movie: entity
+    res.render('users/admin/viewMovie.pug', {
+      movie: entity,
+      check: editing
     });
   });
 });
@@ -608,18 +713,33 @@ router.get('/admin/music/:music/delete',  oauth2.required, oauth2.adminRequired,
  *
  * Display a movie for editing.
  */
-router.get('/admin/movies/:movie/edit', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().readMovie(req.params.movie, (err, entity) => {
-    if (err) {
-      next(err);
-      return;
-    }
-    res.render('users/formMovie.pug', {
-      movie: entity,
-      action: 'Edit'
-    });
-  });
-});
+ router.get('/admin/movies/:movie/edit', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+   getModel().verifyEditing(req.params.movie, (err, result) => {
+     if (err) {
+       next(err);
+       return;
+     }
+     if (result.length == 1 && req.user.id != result[0].id) {
+       res.redirect(`/users/admin/movies`);
+     }
+   });
+   getModel().readMovie(req.params.movie, (err, entity) => {
+     if (err) {
+       next(err);
+       return;
+     }
+     res.render('users/admin/formMovie.pug', {
+       movie: entity,
+       action: 'Edit'
+     });
+   });
+   getModel().startEditing(req.user.id, req.params.movie, (err, savedData) => {
+     if (err) {
+       next(err);
+       return;
+     }
+   });
+ });
 
 
 /**
@@ -628,111 +748,104 @@ router.get('/admin/movies/:movie/edit', oauth2.required, oauth2.adminRequired, (
  * Update a movie.
  */
 router.post(
-  '/admin/movies/:movie/edit',
-  images.multer.single('image'),
-  images.sendUploadToGCS,
-  (req, res, next) => {
-    let data = req.body;
+'/admin/movies/:movie/edit', oauth2.required, oauth2.adminRequired,
+images.multer.single('image'),
+images.sendUploadToGCS,
+(req, res, next) => {
+  let data = req.body;
 
-    // Was an image uploaded? If so, we'll use its public URL
-    // in cloud storage.
-    if (req.file && req.file.cloudStoragePublicUrl) {
-      req.body.imageUrl = req.file.cloudStoragePublicUrl;
-    }
-
-    getModel().updateMovie(req.params.movie, data, (err, savedData) => {
-      if (err) {
-        next(err);
-        return;
-      }
-      res.redirect(`/users/admin/movies`);
-    });
+  // Was an image uploaded? If so, we'll use its public URL
+  // in cloud storage.
+  if (req.file && req.file.cloudStoragePublicUrl) {
+    req.body.imageUrl = req.file.cloudStoragePublicUrl;
   }
-);
 
+  getModel().updateMovie(req.params.movie, data, (err, savedData) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.redirect(`/users/admin/movies`);
+  });
+  getModel().stopEditing(req.user.id, req.params.movie, (err) => {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
+}
+);
 
 /**
  * GET /movie/:id/delete
  *
  * Delete a movie
  */
-router.get('/admin/movies/:movie/delete', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().deleteMovie(req.params.movie, (err) => {
+ router.get('/admin/movies/:movie/delete', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+   getModel().delete(req.params.movie, (err) => {
+     if (err) {
+       next(err);
+       return;
+     }
+     res.redirect('..');
+   });
+ });
+ //*************************************************** END MOVIES *******************************************************************/
+
+//********************************************************SEARCH AND SORT*****************************************************//
+
+//For catalog.  Will eventually search the entire  database for any matches in search bar
+router.post('/admin/catalog', (req, res, next) => {
+  const anyPossibility = req.body.searchBar;
+  console.log(anyPossibility);
+  getModel().findByAttribute(anyPossibility, (err, entities) => {
     if (err) {
       next(err);
       return;
     }
-    res.redirect(req.baseUrl);
+    res.render('users/admin/catalog.pug', {
+      items: entities,
+      type: 'movies'
+    });
   });
 });
 
- //*************************************************** END MOVIES *******************************************************************/
-
-
-
-
-//********************************************************SEARCH AND SORT*****************************************************//
-
-
-
-//For catalog.  Will eventually search the entire  database for any matches in search bar
-router.post('/admin/catalog', (req, res, next) => {
-
-    const anyPossibility = req.body.searchBar;
-    console.log(anyPossibility);
-    getModel().findByAttribute(anyPossibility, (err, entities) => {
-        if (err) {
-            next(err);
-            return;
-        }
-        res.render('users/catalog.pug', {
-            items: entities,
-            type: 'movies'
-        });
-    });
-});
-
-
 //Search for specific book attributes
 router.post('/admin/books', (req, res, next) => {
-
-    const bookSearchBy = req.body;
-    if (bookSearchBy.searchBar.length == 0) {
-        bookSearchBy.searchBar = 1;
-        bookSearchBy.books = 1;
+  const bookSearchBy = req.body;
+  if (bookSearchBy.searchBar.length == 0) {
+    bookSearchBy.searchBar = 1;
+    bookSearchBy.books = 1;
+  }
+  getModel().findByAttribute("books", bookSearchBy.books, bookSearchBy.searchBar, bookSearchBy.sortBy, bookSearchBy.sortUpDown, (err, entities) => {
+    if (err) {
+      next(err);
+      return;
     }
-    getModel().findByAttribute("books", bookSearchBy.books, bookSearchBy.searchBar, bookSearchBy.sortBy, bookSearchBy.sortUpDown, (err, entities) => {
-        if (err) {
-            next(err);
-            return;
-        }
-        res.render('users/books.pug', {
-            books: entities,
-        });
+    res.render('users/admin/books.pug', {
+      books: entities,
     });
+  });
 });
-
 
 //Search for specific magazine attributes
 router.post('/admin/magazines', (req, res, next) => {
-
-    const magazinesSearchBy = req.body;
-    if (magazinesSearchBy.searchBar.length == 0) {
-        magazinesSearchBy.searchBar = 1;
-        magazinesSearchBy.magazines = 1;
+  const magazinesSearchBy = req.body;
+  if (magazinesSearchBy.searchBar.length == 0) {
+    magazinesSearchBy.searchBar = 1;
+    magazinesSearchBy.magazines = 1;
+  }
+  getModel().findByAttribute("magazines", magazinesSearchBy.magazines, magazinesSearchBy.searchBar, magazinesSearchBy.sortBy, magazinesSearchBy.sortUpDown,
+  (err, entities) => {
+    if (err) {
+      next(err);
+      return;
     }
-    getModel().findByAttribute("magazines", magazinesSearchBy.magazines, magazinesSearchBy.searchBar, magazinesSearchBy.sortBy, magazinesSearchBy.sortUpDown, 
-                               (err, entities) => {
-        if (err) {
-            next(err);
-            return;
-        }
-        res.render('users/magazines.pug', {
-            magazines: entities,
-        });
+    res.render('users/admin/magazines.pug', {
+      magazines: entities,
     });
+  });
 });
-
 
 //Search for specific movie attributes
 router.post('/admin/movies', (req, res, next) => {
@@ -747,12 +860,11 @@ router.post('/admin/movies', (req, res, next) => {
             next(err);
             return;
         }
-        res.render('users/movies.pug', {
+        res.render('users/admin/movies.pug', {
             movies: entities,
         });
     });
 });
-
 
 //Search for specific music attributes
 router.post('/admin/music', (req, res, next) => {
@@ -767,16 +879,439 @@ router.post('/admin/music', (req, res, next) => {
             next(err);
             return;
         }
-        res.render('users/music.pug', {
+        res.render('users/admin/music.pug', {
             musics: entities,
         });
     });
 });
+//*************************************************** END SEARCH AND SORT FUNCTIONS *************************************************************/
 
+//************************************************* START CLIENT ROUTERS AND FUNCTIONS **********************************************************/
 
-//*************************************************** END SEARCH AND SORT FUNCTIONS *******************************************************************/
+//--------Catalog----------//
+router.get('/client/catalog', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+  res.render('users/client/catalog.pug')
+});
 
-//*************************************************** ERROR HANDLING *******************************************************************/
+router.get('/client/books', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+  getModel().listBooks(10, req.query.pageToke, (err, entities, cursor) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/client/books.pug', {
+      books: entities,
+      nextPageToken: cursor
+    });
+  });
+});
+
+router.get('/client/magazines', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+  getModel().listMagazines(10, req.query.pageToken, (err, entities, cursor) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/client/magazines.pug', {
+      magazines: entities,
+      nextPageToken: cursor
+    });
+  });
+});
+
+router.get('/client/movies', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+  getModel().listMovies(10, req.query.pageToken, (err, entities, cursor) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/client/movies.pug', {
+      movies: entities,
+      nextPageToken: cursor
+    });
+  });
+});
+
+router.get('/client/music', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+  getModel().listMusics(10, req.query.pageToken, (err, entities, cursor) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/client/music.pug', {
+      musics: entities,
+      nextPageToken: cursor
+    });
+  });
+});
+
+//************************************************* BOOK *******************************************************************/
+
+  //* Display a book.
+ router.get('/client/books/:book', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+   var editing = false;
+   getModel().verifyEditing(req.params.book, (err, result) => {
+     if (err) {
+       next(err);
+       return;
+     }
+     if (result.length == 1) {
+       editing = true;
+     }
+   });
+  getModel().readBook(req.params.book, (err, entity) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/client/viewBook.pug', {
+      book: entity,
+      check: editing
+    });
+  });
+});
+
+//*************************************************** MAGAZINE ****************************************************************/
+
+  //* Display a Magazine.
+ router.get('/client/magazines/:magazine', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+  getModel().readMagazine(req.params.magazine, (err, entity) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/client/viewMagazine.pug', {
+      magazine: entity
+    });
+  });
+});
+
+//*************************************************** MUSIC *******************************************************************/
+
+  //* Display a Music.
+ router.get('/client/music/:music', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+   var editing = false;
+   getModel().verifyEditing(req.params.music, (err, result) => {
+     if (err) {
+       next(err);
+       return;
+     }
+     if (result.length == 1 && req.user.id != result[0].id) {
+       editing = true;
+     }
+   });
+  getModel().readMusic(req.params.music, (err, entity) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/client/viewMusic.pug', {
+      music: entity,
+      check: editing
+    });
+  });
+});
+
+//*************************************************** MOVIES *******************************************************************/
+
+//* Display a Movie.
+router.get('/client/movies/:movie', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+  var editing = false;
+  getModel().verifyEditing(req.params.movie, (err, result) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    if (result.length == 1) {
+      editing = true;
+    }
+  });
+  getModel().readMovie(req.params.movie, (err, entity) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/client/viewMovie.pug', {
+      movie: entity,
+      check: editing
+    });
+  });
+});
+
+//********************************************************SEARCH AND SORT*****************************************************//
+
+//For catalog.  Will eventually search the entire  database for any matches in search bar
+router.post('/client/catalog', (req, res, next) => {
+  const anyPossibility = req.body.searchBar;
+  console.log(anyPossibility);
+  getModel().findByAttribute(anyPossibility, (err, entities) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/client/catalog.pug', {
+      items: entities,
+      type: 'movies'
+    });
+  });
+});
+
+//Search for specific book attributes
+router.post('/client/books', (req, res, next) => {
+  const bookSearchBy = req.body;
+  if (bookSearchBy.searchBar.length == 0) {
+    bookSearchBy.searchBar = 1;
+    bookSearchBy.books = 1;
+  }
+  getModel().findByAttribute("books", bookSearchBy.books, bookSearchBy.searchBar, bookSearchBy.sortBy, bookSearchBy.sortUpDown, (err, entities) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/client/books.pug', {
+      books: entities,
+    });
+  });
+});
+
+//Search for specific magazine attributes
+router.post('/client/magazines', (req, res, next) => {
+  const magazinesSearchBy = req.body;
+  if (magazinesSearchBy.searchBar.length == 0) {
+    magazinesSearchBy.searchBar = 1;
+    magazinesSearchBy.magazines = 1;
+  }
+  getModel().findByAttribute("magazines", magazinesSearchBy.magazines, magazinesSearchBy.searchBar, magazinesSearchBy.sortBy, magazinesSearchBy.sortUpDown,
+  (err, entities) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/client/magazines.pug', {
+      magazines: entities,
+    });
+  });
+});
+
+//Search for specific movie attributes
+router.post('/client/movies', (req, res, next) => {
+  const moviesSearchBy = req.body;
+  if (moviesSearchBy.searchBar.length == 0) {
+    moviesSearchBy.searchBar = 1;
+    moviesSearchBy.movies = 1;
+  }
+  getModel().findByAttribute("movies", moviesSearchBy.movies, moviesSearchBy.searchBar, moviesSearchBy.sortBy, moviesSearchBy.sortUpDown,  (err, entities) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/client/movies.pug', {
+      movies: entities,
+    });
+  });
+});
+
+//Search for specific music attributes
+router.post('/client/music', (req, res, next) => {
+  const musicSearchBy = req.body;
+  if (musicSearchBy.searchBar.length == 0) {
+    musicSearchBy.searchBar = 1;
+    musicSearchBy.music = 1;
+  }
+  getModel().findByAttribute("musics", musicSearchBy.music, musicSearchBy.searchBar, musicSearchBy.sortBy, musicSearchBy.sortUpDown, (err, entities) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/client/music.pug', {
+      musics: entities,
+    });
+  });
+});
+//*************************************************** END SEARCH AND SORT FUNCTIONS *************************************************************/
+
+//******************************************************** START CART FUNCTIONS *****************************************************************/
+/**
+ * GET /client/cart
+ *
+ * Display shopping cart
+ */
+router.get('/client/cart', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+  getModel().listCartItems(req.user.id, (err, entities) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/client/cartPage.pug', {
+      cart: entities
+    });
+  });
+});
+
+/**
+ * GET /books/:id/addtocart
+ *
+ * Add to cart a book.
+ */
+router.get('/client/books/:book/addToCart', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+  getModel().addCart(req.user.id, req.params.book, (err) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.redirect('/users/client/cart');
+  });
+});
+
+/**
+ * GET /movie/:id/addtocart
+ *
+ * Add to cart a movie.
+ */
+router.get('/client/movies/:movie/addToCart', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+  getModel().addCart(req.user.id, req.params.movie, (err) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.redirect('/users/client/cart');
+  });
+});
+
+/**
+ * GET /music/:id/addtocart
+ *
+ * Add to cart a music.
+ */
+router.get('/client/musics/:music/addToCart', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+  getModel().addCart(req.user.id, req.params.music, (err) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.redirect('/users/client/cart');
+  });
+});
+
+/**
+ * GET /client/cart/:id/delete
+ *
+ * Remove book from cart.
+ */
+router.get('/client/cart/:book/delete', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+  getModel().removeCart(req.params.book, (err) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.redirect('..');
+  });
+});
+
+/**
+ * GET /client/cart/:id/delete
+ *
+ * Remove movie from cart.
+ */
+router.get('/client/cart/:movie/delete', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+  getModel().removeCart(req.params.movie, (err) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.redirect('..');
+  });
+});
+
+/**
+ * GET /client/cart/:id/delete
+ *
+ * Remove music from cart.
+ */
+router.get('/client/cart/:music/delete', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+  getModel().removeCart(req.params.music, (err) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.redirect('..');
+  });
+});
+//********************************************************* END CART FUNCTIONS ******************************************************************/
+
+//********************************************************* START LOAN FUNCTIONS ******************************************************************/
+/**
+ * GET /client/myLoans
+ *
+ * Display loans
+ */
+router.get('/client/myLoans', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+  getModel().listLoans(req.user.id, (err, entities) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    getModel().listReturns(req.user.id, (err, results) => {
+      if (err) {
+        next(err);
+        return;
+      }
+      res.render('users/client/loaned.pug', {
+        loans: entities,
+        returns: results
+      });
+    });
+  });
+});
+
+/**
+ * GET /client/myLoans/:id/return
+ *
+ * Return loaned items
+ */
+router.get('/client/myLoans/:item/delete', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+  getModel().returnLoan(req.user.id, req.params.item, (err) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.redirect('..');
+  });
+});
+
+/**
+ * GET /client/cart/checkout
+ *
+ * Checkout items (loan)
+ */
+router.get('/client/cart/checkout', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+  getModel().listCartItems(req.user.id, (err, entities) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    var i;
+    for (i = 0; i < entities.length; i++) {
+      getModel().loan(req.user.id, entities[i].id, (err) => {
+        if (err)
+          next(err);
+          return;
+      });
+    }
+    getModel().removeAllCart(req.user.id, (err) => {
+      if (err) {
+        next(err);
+        return;
+      }
+    });
+  });
+  res.redirect('/users/client/myLoans');
+});
+//********************************************************* END LOAN FUNCTIONS ******************************************************************/
+
+//*************************************************** END CLIENT ROUTERS AND FUNCTIONS **********************************************************/
+
+//********************************************************** ERROR HANDLING *********************************************************************/
 
 /**
  * Errors on "/users/*" routes.

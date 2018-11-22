@@ -1,36 +1,44 @@
 header {
-  font-size: 20pt;
-  text-align: center;
+    font-size: 20pt;
+    text-align: center;
 }
+
 body {
     background: #fff;
     color: #333;
     font-family: Lato, sans-serif;
-  }
-  #catalogContent {
+}
+
+#catalogContent {
     display: block;
     width: 400px;
     margin: 100px auto 0;
-  }
-  #catalogContent ul {
+}
+
+#catalogContent ul {
     margin: 0;
     padding: 0;
-  }
-  #catalogContent li * {
+}
+
+#catalogContent li * {
     float: left;
-  }
-  #catalogContent li, h3 {
-    clear:both;
-    list-style:none;
-  }
-  #catalogContent input, button {
+}
+
+#catalogContent li, h3 {
+    clear: both;
+    list-style: none;
+}
+
+#catalogContent input, button {
     outline: none;
-  }
-  #image {
-    height:150px;
-    width:100px;
-  }
-  #catalogContent button {
+}
+
+#image {
+    height: 150px;
+    width: 100px;
+}
+
+#catalogContent button {
     background: none;
     border: 0px;
     color: #888;
@@ -39,13 +47,15 @@ body {
     margin: 10px 0 0;
     font-family: Lato, sans-serif;
     cursor: pointer;
-  }
-  #catalogContent button:hover {
+}
+
+#catalogContent button:hover {
     color: #333;
-  }
-  /* Heading */
-  #catalogContent h3,
-  #catalogContent label[for='new-book'] {
+}
+
+/* Heading */
+#catalogContent h3,
+#catalogContent label[for='new-book'] {
     color: #333;
     font-weight: 700;
     font-size: 15px;
@@ -53,8 +63,9 @@ body {
     padding: 30px 0 10px;
     margin: 0;
     text-transform: uppercase;
-  }
-  #catalogContent input[type="text"] {
+}
+
+#catalogContent input[type="text"] {
     margin: 0;
     font-size: 18px;
     line-height: 18px;
@@ -65,92 +76,90 @@ body {
     border-radius: 6px;
     font-family: Lato, sans-serif;
     color: #888;
-  }
-  #catalogContent input[type="text"]:focus {
-    color: #333;
-  }
+}
 
-  /* New Book */
-  #catalogContent label[for='new-book'] {
+#catalogContent input[type="text"]:focus {
+    color: #333;
+}
+
+/* New Book */
+#catalogContent label[for='new-book'] {
     display: block;
     margin: 0 0 20px;
-  }
-  #catalogContent input#new-book {
+}
+
+#catalogContent input#new-book {
     float: left;
     width: 318px;
-  }
-  #catalogContent p > button:hover {
+}
+
+#catalogContent p > button:hover {
     color: #0FC57C;
-  }
+}
 
-
-  #catalogContent li {
+#catalogContent li {
     overflow: hidden;
     padding: 20px 0;
     border-bottom: 1px solid #eee;
-  }
-  #catalogContent li > input[type="checkbox"] {
+}
+
+#catalogContent li > input[type="checkbox"] {
     margin: 0 10px;
     position: relative;
     top: 15px;
-  }
-  #catalogContent li > label {
+}
+
+#catalogContent li > label {
     font-size: 18px;
     line-height: 40px;
     width: 237px;
     padding: 0 0 0 11px;
-  }
-  #catalogContent li >  input[type="text"] {
-    width: 226px;
-  }
-  #catalogContent li > .delete:hover {
-    color: #CF2323;
-  }
+}
 
-  /* Completed */
-  #catalogContent #completed-books label {
+#catalogContent li > input[type="text"] {
+    width: 226px;
+}
+
+#catalogContent li > .delete:hover {
+    color: #CF2323;
+}
+
+/* Completed */
+#catalogContent #completed-books label {
     text-decoration: line-through;
     color: #888;
-  }
+}
 
-  /* Edit Task */
-  #catalogContent ul li input[type=text] {
-    display:none;
-  }
+/* Edit Task */
+#catalogContent ul li input[type=text] {
+    display: none;
+}
 
-  #catalogContent ul li.editMode input[type=text] {
-    display:block;
-  }
+#catalogContent ul li.editMode input[type=text] {
+    display: block;
+}
 
-  #catalogContent ul li.editMode label {
-    display:none;
-  }
+#catalogContent ul li.editMode label {
+    display: none;
+}
 
-.searchForm{
-  padding-left: 10%;
-  padding-right: 10%;
-  border-style: solid;
-  border-radius: 25px;
-  text-align: center;
+.searchForm {
+    padding-left: 10%;
+    padding-right: 10%;
+    border-style: solid;
+    border-radius: 25px;
+    text-align: center;
 
 }
 
-.searchBarSection{
-  /*border-style: solid;*/
-  /*border-color: #333333;*/
-  /*border-width: 1px;*/
-  text-align: center;
+.searchBarSection {
+    /*border-style: solid;*/
+    /*border-color: #333333;*/
+    /*border-width: 1px;*/
+    text-align: center;
 }
 
-.searchDropDown{
-  /*border-style: solid;*/
-  /*border-color: #333333;*/
-  /*border-width: 1px;*/
-  overflow: hidden;
-    display: inline-block;
-}
-
-.submitSearch{
+.searchDropDown {
     /*border-style: solid;*/
     /*border-color: #333333;*/
     /*border-width: 1px;*/
@@ -158,23 +167,31 @@ body {
     display: inline-block;
 }
 
-#books{
-  display: inline-block;
+.submitSearch {
+    /*border-style: solid;*/
+    /*border-color: #333333;*/
+    /*border-width: 1px;*/
+    overflow: hidden;
+    display: inline-block;
 }
 
-.mediaType{
+#books {
+    display: inline-block;
+}
+
+.mediaType {
     text-align: center;
 }
 
-.searchButton{
+.searchButton {
     display: inline-block;
     overflow: hidden;
     padding: 0.5%;
     border-radius: 25px;
-    padding:0.5%;
+    padding: 0.5%;
 }
 
-.bookButton{
+.bookButton {
     /*border-style: solid;*/
     /*border-color: #333333;*/
     /*border-width: 2px;*/
@@ -185,7 +202,7 @@ body {
     margin-left: 1%;
 }
 
-.magazineButton{
+.magazineButton {
     /*border-style: solid;*/
     /*border-color: #333333;*/
     /*border-width: 2px;*/
@@ -196,7 +213,7 @@ body {
     margin-left: 1%;
 }
 
-.movieButton{
+.movieButton {
     /*border-style: solid;*/
     /*border-color: #333333;*/
     /*border-width: 2px;*/
@@ -207,7 +224,7 @@ body {
     margin-left: 1%;
 }
 
-.musicButton{
+.musicButton {
     /*border-style: solid;*/
     /*border-color: #333333;*/
     /*border-width: 2px;*/
@@ -216,4 +233,24 @@ body {
     padding: 0.5%;
     border-radius: 25px;
     margin-left: 1%;
+}
+
+.cartTitle {
+    /*border-style: solid;*/
+    /*border-color: #333333;*/
+    /*border-width: 2px;*/
+    text-align: center;
+}
+.cartTable {
+    /*border-style: solid;*/
+    /*border-color: #333333;*/
+    /*border-width: 2px;*/
+    text-align: center;
+}
+
+.checkoutButton{
+    /*border-style: solid;*/
+    /*border-color: #333333;*/
+    /*border-width: 2px;*/
+    text-align: center;
 }

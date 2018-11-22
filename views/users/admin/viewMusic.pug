@@ -1,0 +1,24 @@
+extends ../../catalog.pug
+
+block content
+  div(class="container")
+    div(class="row justify-content-md-center")
+      h3 Music
+       small
+      .btn-group
+       a(href=`/users/admin/music/${music.id}/edit`, class='btn btn-primary btn-sm' disabled=check)
+         i.glyphicon.glyphicon-edit
+         span  Edit music
+       a(href=`/users/admin/music/${music.id}/delete`, class='btn btn-danger btn-sm' disabled=check)
+         i.glyphicon.glyphicon-trash
+         span  Delete music
+
+      .media
+          .media-left
+            img(Id="image" src=music.imageUrl)
+          .media-body
+            h4= music.title
+              | &nbsp;
+              small= music.publisher
+            h5 By #{music.artist||'unknown'}
+            p= music.description

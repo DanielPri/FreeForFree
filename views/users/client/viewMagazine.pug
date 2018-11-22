@@ -1,0 +1,15 @@
+extends ../../catalog-client.pug
+
+block content
+  div(class="container")
+    div(class="row justify-content-md-center")
+      h3 Magazine
+      .media
+          .media-left
+            img(Id="image" src=magazine.imageUrl)
+          .media-body
+            h4= magazine.title
+              | &nbsp;
+              small= magazine.publishedDate
+            h5 By #{magazine.publisher||'unknown'}
+            p= magazine.description

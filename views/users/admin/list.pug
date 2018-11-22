@@ -1,16 +1,19 @@
+doctype html
 html(lang="en")
   head
     title FreeForFree - Library Management
     meta(charset='utf-8')
     meta(name="viewport", content="width=device-width, initial-scale=1")
     link(rel="stylesheet", href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css")
-    link(rel='stylesheet' href='/css_styles/catalog_styles.css' type='text/css' media='screen' charset='utf-8')
+    meta(http-equiv="refresh" content="5")
+
   body
     .navbar.navbar-default
       .container
         .navbar-header
           .navbar-brand
             a(href="/users") FreeForFree
+
         ul.nav.navbar-nav
           li
             a(href="/users/admin/list") Active Users
@@ -28,17 +31,22 @@ html(lang="en")
             span #{profile.displayName} &nbsp;
               a(class="btn btn-danger" href=logout) <span class="glyphicon glyphicon-log-out"></span> Logout
 
-    div(class="mediaType")
-        div(class="searchButton")
-          a(class="btn btn-primary" href="/users/admin/catalog")  <span class="glyphicon glyphicon-search"></span> Search
-        div(class="bookButton")
-          a(class="btn btn-primary" href="/users/admin/books") <span class="glyphicon glyphicon-book"></span> Books
-        div(class="magazineButton")
-          a(class="btn btn-primary" href="/users/admin/magazines") <span class="glyphicon glyphicon-book"></span> Magazines
-        div(class="movieButton")
-          a(class="btn btn-primary" href="/users/admin/movies") <span class="glyphicon glyphicon-film"></span> Movies
-        div(class="musicButton")
-          a(class="btn btn-primary" href="/users/admin/music") <span class="glyphicon glyphicon-music"></span> Music
-    br
-
     block content
+      .container
+        h3 Active Users
+
+        table(class='table table-striped table-bordered')
+          thead
+            tr
+              th Name
+              th ID
+              th Timestamp
+          tbody
+            each user in users
+              tr
+                td= user.profileName
+                td= user.profileID
+                td= user.ts
+
+        if !users.length
+          p No users found.

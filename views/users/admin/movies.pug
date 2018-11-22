@@ -1,0 +1,90 @@
+extends ../../catalog.pug
+
+
+block content
+  .container
+    div(class="searchForm")
+      .form-group
+        h1
+          label(for="search") Search <span class="glyphicon glyphicon-search"></span>
+        form(action = "movies" method = "post" name = "movies")
+          input.form-control(type="text", name="searchBar")
+          br
+          h3 Search by
+          div(class="searchDropDown")
+            select(name = "movies")
+               option.form-control(value="title") Title
+               option.form-control(value="director") Director
+               option.form-control(value="producers") Producer
+               option.form-control(value="actors") Actor
+               option.form-control(value="language") Language
+               option.form-control(value="subtitles") Subtitles
+               option.form-control(value="dubbed") Dubbed
+               option.form-control(value="releaseDate") Release Date
+               option.form-control(value="runTime") Length
+            br
+            br
+            br
+            h3 Sort by
+            select(name = "sortBy")
+               option.form-control(value="title") Title
+               option.form-control(value="director") Director
+               option.form-control(value="producers") Producer
+               option.form-control(value="actors") Actor
+               option.form-control(value="language") Language
+               option.form-control(value="subtitles") Subtitles
+               option.form-control(value="dubbed") Dubbed
+               option.form-control(value="releaseDate") Release Date
+               option.form-control(value="runTime") Length
+            select(name = "sortUpDown")
+              option.form-control(value="ASC") Ascending
+              option.form-control(value="DESC") Descending
+            br
+            br
+            div(class="submitSearch")
+            button(type = "submit" class="btn btn-success")
+             span Submit
+     
+
+    br
+    br
+    br
+    div(align="center")
+      a(class="btn btn-primary" href="/users/admin/formMovie") Add Movie
+    br
+    br
+    header Movies
+    table(class="table table-striped table-bordered")
+     thead
+      tr
+       td View
+       td Title
+       td Director
+       td Producers
+       td Actors
+       td Language
+       td Subtitles
+       td Dubbed
+       td Run Time
+     tbody
+      each movie in movies
+       tr
+        td
+         .media-left
+          a(href=`/users/admin/movies/${movie.id}`)
+           img(Id="image" src=movie.imageUrl)
+        td= movie.title
+        td= movie.director
+        td= movie.producers
+        td= movie.actors
+        td= movie.language
+        td= movie.subtitles
+        td= movie.dubbed
+        td= movie.runTime
+  if !movies.length
+    p No movies found.
+  if nextPageToken
+    nav
+      ul.pager
+        li
+          a(href=`?pageToken=${encodeURIComponent(nextPageToken)}`) Next

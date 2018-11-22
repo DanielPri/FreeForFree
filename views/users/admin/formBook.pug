@@ -1,0 +1,76 @@
+doctype html
+html(lang="en")
+  head
+    title FreeForFree - Library Management
+    meta(charset='utf-8')
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    link(rel="stylesheet", href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css")
+    link(rel='stylesheet' href='/css_styles/catalog_styles.css' type='text/css' media='screen' charset='utf-8')
+  body
+    .navbar.navbar-default
+      .container
+        .navbar-header
+          .navbar-brand
+            a(href="/users") FreeForFree
+
+        ul.nav.navbar-nav
+          li
+            a(href="/users/admin/list") Active Users
+          li
+            a(href="/users/admin/catalog") Catalog
+          li
+            a(href="/users/admin/addUser") Create New User
+
+        p.navbar-text.navbar-right
+          if profile
+            if profile.image
+              img.img-circle(src=profile.image, width=24)
+            span #{profile.displayName} &nbsp;
+              a(href=logout) (logout)
+
+    div(class="mediaType")
+      div(class="searchButton")
+        a(class="btn btn-primary" href="/users/admin/catalog")  <span class="glyphicon glyphicon-search"></span> Search
+      div(class="bookButton")
+        a(class="btn btn-primary" href="/users/admin/books") <span class="glyphicon glyphicon-book"></span> Books
+      div(class="magazineButton")
+        a(class="btn btn-primary" href="/users/admin/magazines") <span class="glyphicon glyphicon-book"></span> Magazines
+      div(class="movieButton")
+        a(class="btn btn-primary" href="/users/admin/movies") <span class="glyphicon glyphicon-film"></span> Movies
+      div(class="musicButton")
+        a(class="btn btn-primary" href="/users/admin/music") <span class="glyphicon glyphicon-music"></span> Music
+      br
+
+    .container
+      block content
+        h3 #{action} Book
+        form(method="POST", enctype="multipart/form-data")
+          .form-group
+            label(for="title") Title
+            input.form-control(type="text", name="Title", id="title", value=book.title)
+          .form-group
+            label(for="author") Author
+            input.form-control(type="text", name="Author", id="author", value=book.author)
+          .form-group
+            label(for="publisher") Publisher
+            input.form-control(type="text", name="Publisher", id="publisher", value=book.publisher)
+          .form-group
+            label(for="language") Language
+            input.form-control(type="text", name="Language", id="language", value=book.language)
+          .form-group
+            select(class="selectType", name="Format", id=book.format)
+              option(value="Paperback") Paperback
+              option(value="Hardcover") Hardcover
+          .form-group
+            label(for="pages") Pages
+            input.form-control(type="INT", name="Pages", id="pages", value=book.pages)
+          .form-group
+            label(for="ISBN10") ISBN-10
+            input.form-control(type="text", name="ISBN10", id="ISBN10", value=book.ISBN10)
+          .form-group
+            label(for="ISBN13") ISBN-13
+            input.form-control(type="text", name="ISBN13", id="ISBN13", value=book.ISBN13)
+          .form-group
+            label(for="image") Cover Image
+            input.form-control(type="file", name="image", id="image")
+          button.btn.btn-success(type="submit") Save
