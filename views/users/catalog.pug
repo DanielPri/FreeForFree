@@ -12,48 +12,48 @@ block content
                           br
                           button(type = "submit" class="btn btn-primary")
                             span Submit
+  br                            
+  .container
+    if items.length
+      table(class="table table-striped table-bordered")
+        thead
+          tr
+          td Type
+          td View
+          td Title
+        tbody
+            each item in items[0]
+              tr
+                td Book
+                td
+                  .media-left
+                    a(href=`/users/admin/books/${item.id}`)
+                      img(Id="image" src=item.imageUrl)
+                td= item.title
+            
+            each item in items[1]
+              tr
+                td Movies
+                td
+                  .media-left
+                    a(href=`/users/admin/movies/${item.id}`)
+                      img(Id="image" src=item.imageUrl)
+                td= item.title
 
-  if items.length
-    table(class="table table-striped table-bordered")
-     thead
-      tr
-       td Type
-       td View
-       td Title
-     tbody
-        each item in items[0]
-         tr
-          td Book
-          td
-           .media-left
-            a(href=`/users/admin/books/${item.id}`)
-             img(Id="image" src=item.imageUrl)
-          td= item.title
-        
-        each item in items[1]
-         tr
-          td Movies
-          td
-           .media-left
-            a(href=`/users/admin/movies/${item.id}`)
-             img(Id="image" src=item.imageUrl)
-          td= item.title
+            each item in items[2]
+              tr
+                td Magazines
+                td
+                  .media-left
+                    a(href=`/users/admin/magazines/${item.id}`)
+                     img(Id="image" src=item.imageUrl)
+                td= item.title
 
-        each item in items[2]
-         tr
-          td Magazines
-          td
-           .media-left
-            a(href=`/users/admin/magazines/${item.id}`)
-             img(Id="image" src=item.imageUrl)
-          td= item.title
-
-         
-        each item in items[3]
-         tr
-          td Music
-          td
-           .media-left
-            a(href=`/users/admin/music/${item.id}`)
-             img(Id="image" src=item.imageUrl)
-          td= item.title
+            each item in items[3]
+              tr
+                td Music
+                td
+                  .media-left
+                    a(href=`/users/admin/music/${item.id}`)
+                     img(Id="image" src=item.imageUrl)
+                td= item.title
