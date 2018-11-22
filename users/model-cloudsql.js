@@ -565,10 +565,28 @@ function removeCart(itemID, cb) {
   connection.query('DELETE FROM `cart` WHERE `itemID` = ?', itemID, cb);
 }
 //[END removeCart]
+
+//[START removeAllCart]
+function removeAllCart(userID, cb) {
+  connection.query('DELETE FROM `cart` WHERE `id` = ?', userID, cb);
+}
+//[END removeAllCart]
 //------------------------------------------------- END  CART ------------------------------------------------------------------//
 
 //-------------------------------------------------- START  LOAN ---------------------------------------------------------------//
-
+//[START loan]
+function loan(id, itemID, cb) {
+  connection.query(
+    'INSERT INTO `loans` SET `userID`=?, `itemID`=?', [id, itemID],
+    (err, result) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      cb(null, result);
+    });
+}
+//[END loan]
 //--------------------------------------------------- END  LOAN ----------------------------------------------------------------//
 
 module.exports = {
@@ -605,7 +623,9 @@ module.exports = {
   editUserInfo: editUserInfo,
   addCart: addCart,
   removeCart: removeCart,
-  listCartItems: listCartItems
+  removeAllCart: removeAllCart,
+  listCartItems: listCartItems,
+  loan: loan
 };
 
 if (module === require.main) {

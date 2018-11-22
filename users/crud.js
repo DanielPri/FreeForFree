@@ -1219,6 +1219,36 @@ router.get('/client/musics/:music/addToCart', oauth2.required, oauth2.clientRequ
 });
 //********************************************************* END CART FUNCTIONS ******************************************************************/
 
+//********************************************************* START LOAN FUNCTIONS ******************************************************************/
+router.get('/client/myLoans', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+  res.render('users/client/loaned.pug');
+});
+
+router.get('/client/cart/checkout', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+  getModel().listCartItems(req.user.id, (err, entities) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    var i;
+    for (i = 0; i < entities.length; i++) {
+      getModel().loan(req.user.id, entities[i].id, (err) => {
+        if (err)
+          next(err);
+          return;
+      });
+    }
+    getModel().removeAllCart(req.user.id, (err) => {
+      if (err) {
+        next(err);
+        return;
+      }
+    });
+  });
+  res.redirect('/users/client/myLoans');
+});
+//********************************************************* END LOAN FUNCTIONS ******************************************************************/
+
 //*************************************************** END CLIENT ROUTERS AND FUNCTIONS **********************************************************/
 
 //********************************************************** ERROR HANDLING *********************************************************************/

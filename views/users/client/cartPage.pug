@@ -14,12 +14,16 @@ html(lang="en")
         ul.nav.navbar-nav
           li
             a(href="/users/client/catalog") Catalog
+          li
+            a(href="/users/client/myLoans") My Loans
 
         p.navbar-text.navbar-right
-          a(class="btn btn-primary" href="/users/admin/cartPage")  <span class="glyphicon glyphicon-shopping-cart"></span>
+          a(class="btn btn-success" href="/users/client/cart")  <span class="glyphicon glyphicon-shopping-cart"></span>
           if profile
+            if profile.image
+              img.img-circle(src=profile.image, width=24)
             span #{profile.displayName} &nbsp;
-              a(href=logout) (logout)
+              a(class="btn btn-danger" href=logout) <span class="glyphicon glyphicon-log-out"></span> Logout
 
 
 block content
@@ -45,6 +49,8 @@ block content
                 a(href=`/users/client/cart/${item.itemID}/delete`, class='btn btn-danger btn-sm')
                   i.glyphicon.glyphicon-trash
                   span  Delete book
-    br
-    div(class="checkoutButton")
-        button Checkout
+  if !cart.length
+      p No items found.            
+  br
+  div(class="checkoutButton")
+      a(href="/users/client/cart/checkout" class="btn btn-warning btn-lg active" role="button") Checkout
