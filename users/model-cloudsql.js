@@ -587,6 +587,21 @@ function loan(id, itemID, cb) {
     });
 }
 //[END loan]
+
+//[START listLoans]
+function listLoans (id, cb) {
+    connection.query(
+        'SELECT * FROM ((SELECT `title`, `id`, `imageURL` FROM books UNION SELECT `title`, `id`, `imageURL` FROM `musics` UNION SELECT `title`, `id`, `imageURL` FROM `movies`) AS q JOIN loans AS l) JOIN inventory AS i WHERE l.userID = ? AND l.itemID = q.id AND i.id = q.id', id,
+        (err, results) => {
+            if (err) {
+                cb(err);
+                return;
+            }
+            cb(null, results);
+        }
+    );
+}
+//[END listLoans]
 //--------------------------------------------------- END  LOAN ----------------------------------------------------------------//
 
 module.exports = {
@@ -625,6 +640,7 @@ module.exports = {
   removeCart: removeCart,
   removeAllCart: removeAllCart,
   listCartItems: listCartItems,
+  listLoans: listLoans,
   loan: loan
 };
 

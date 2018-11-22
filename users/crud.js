@@ -919,48 +919,6 @@ router.get('/client/magazines', oauth2.required, oauth2.clientRequired, (req, re
   });
 });
 
-router.get('/client/cart', oauth2.required, oauth2.clientRequired, (req, res, next) => {
-  getModel().listCartItems(req.user.id, (err, entities) => {
-    if (err) {
-      next(err);
-      return;
-    }
-    res.render('users/client/cartPage.pug', {
-      cart: entities
-    });
-  });
-});
-
-router.get('/client/cart/:book/delete', oauth2.required, oauth2.clientRequired, (req, res, next) => {
-  getModel().removeCart(req.params.book, (err) => {
-    if (err) {
-      next(err);
-      return;
-    }
-    res.redirect('..');
-  });
-});
-
-router.get('/client/cart/:movie/delete', oauth2.required, oauth2.clientRequired, (req, res, next) => {
-  getModel().removeCart(req.params.movie, (err) => {
-    if (err) {
-      next(err);
-      return;
-    }
-    res.redirect('..');
-  });
-});
-
-router.get('/client/cart/:music/delete', oauth2.required, oauth2.clientRequired, (req, res, next) => {
-  getModel().removeCart(req.params.music, (err) => {
-    if (err) {
-      next(err);
-      return;
-    }
-    res.redirect('..');
-  });
-});
-
 router.get('/client/movies', oauth2.required, oauth2.clientRequired, (req, res, next) => {
   getModel().listMovies(10, req.query.pageToken, (err, entities, cursor) => {
     if (err) {
@@ -1174,6 +1132,23 @@ router.post('/client/music', (req, res, next) => {
 
 //******************************************************** START CART FUNCTIONS *****************************************************************/
 /**
+ * GET /client/cart
+ *
+ * Display shopping cart
+ */
+router.get('/client/cart', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+  getModel().listCartItems(req.user.id, (err, entities) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/client/cartPage.pug', {
+      cart: entities
+    });
+  });
+});
+
+/**
  * GET /books/:id/addtocart
  *
  * Add to cart a book.
@@ -1217,11 +1192,69 @@ router.get('/client/musics/:music/addToCart', oauth2.required, oauth2.clientRequ
     res.redirect('/users/client/cart');
   });
 });
+
+/**
+ * GET /client/cart/:id/delete
+ *
+ * Remove book from cart.
+ */
+router.get('/client/cart/:book/delete', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+  getModel().removeCart(req.params.book, (err) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.redirect('..');
+  });
+});
+
+/**
+ * GET /client/cart/:id/delete
+ *
+ * Remove movie from cart.
+ */
+router.get('/client/cart/:movie/delete', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+  getModel().removeCart(req.params.movie, (err) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.redirect('..');
+  });
+});
+
+/**
+ * GET /client/cart/:id/delete
+ *
+ * Remove music from cart.
+ */
+router.get('/client/cart/:music/delete', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+  getModel().removeCart(req.params.music, (err) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.redirect('..');
+  });
+});
 //********************************************************* END CART FUNCTIONS ******************************************************************/
 
 //********************************************************* START LOAN FUNCTIONS ******************************************************************/
+/**
+ * GET /client/myLoans
+ *
+ * Display loans
+ */
 router.get('/client/myLoans', oauth2.required, oauth2.clientRequired, (req, res, next) => {
-  res.render('users/client/loaned.pug');
+  getModel().listLoans(req.user.id, (err, entities) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/client/loaned.pug', {
+      loans: entities
+    });
+  });
 });
 
 router.get('/client/cart/checkout', oauth2.required, oauth2.clientRequired, (req, res, next) => {

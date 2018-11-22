@@ -32,11 +32,37 @@ block content
       h1 Your Loaned Items
 
     div(class="cartTable")
-       table(class="table table-striped table-bordered")
-           thead
+      table(class="table table-striped table-bordered")
+        thead
+          tr
+            td View
+            td Title
+            td Media Type
+            td Time Left
+            td Return
+        tbody
+          each loan in loans
             tr
-             td View
-             td Title
-             td Media Type
-             td Time Left
-             td Return
+              td
+                img(Id="image" src=loan.imageURL)
+              td= loan.title
+              td= loan.type
+              td= loan.ts
+              td
+                a(href=``, class='btn btn-danger btn-sm')
+                  i.glyphicon.glyphicon-trash
+                  span  Return
+  if !loans.length
+      p No items found.
+  
+  div(class="cartTitle")
+    h1 Your Returned Items
+
+  div(class="cartTable")
+    table(class="table table-striped table-bordered")
+      thead
+        tr
+          td View
+          td Title
+          td Media Type
+          td Returned On
