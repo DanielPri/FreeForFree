@@ -49,8 +49,8 @@ block content
                 a(href=`/users/client/cart/${item.itemID}/delete`, class='btn btn-danger btn-sm')
                   i.glyphicon.glyphicon-trash
                   span  Delete item
-  if !cart.length
-      p No items found.            
+    if !cart.length
+        p No items found.
   br
   div(class="checkoutButton")
       a(href="/users/client/cart/checkout" class="btn btn-warning btn-lg active" role="button") Checkout
