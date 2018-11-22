@@ -41,7 +41,7 @@ router.get('/', (req, res, next) => {
 
 //--------Catalog----------//
 router.get('/admin/catalog', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  res.render('users/catalog.pug')
+    res.render('users/catalog.pug', { items: {} })
 });
 
 //--------Add User----------//
@@ -679,15 +679,13 @@ router.get('/admin/movies/:movie/delete', oauth2.required, oauth2.adminRequired,
 router.post('/admin/catalog', (req, res, next) => {
 
     const anyPossibility = req.body.searchBar;
-    console.log(anyPossibility);
-    getModel().findByAttribute(anyPossibility, (err, entities) => {
+    getModel().findItem(anyPossibility, (err, entities) => {
         if (err) {
             next(err);
             return;
         }
         res.render('users/catalog.pug', {
-            items: entities,
-            type: 'movies'
+            items: entities
         });
     });
 });
