@@ -530,6 +530,43 @@ function verifyEditing(itemID, cb) {
 //[END verifyEditing]
 //---------------------------------------------- END  EDITING ------------------------------------------------------------------//
 
+//----------------------------------------------- START  CART ------------------------------------------------------------------//
+// [Start listCartItems]
+function listCartItems (id, cb) {
+  connection.query(
+    'SELECT * FROM `cart` WHERE `id` = ?', id,
+    (err, results) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      cb(null, results);
+    }
+  );
+}
+//[End listCartItems]
+
+//[START addCart]
+function addCart(id, itemID, cb) {
+  connection.query(
+    'INSERT INTO `cart` SET `id`=?, `itemID`=?', [id, itemID],
+    (err, result) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      cb(null, result);
+    });
+}
+//[END addCart]
+
+//[START removeCart]
+function removeCart(id, itemID, cb) {
+  connection.query('DELETE FROM `cart` WHERE `id` = ? AND `itemID` = ?', [id, itemID], cb);
+}
+//[END removeCart]
+//------------------------------------------------- END  CART ------------------------------------------------------------------//
+
 module.exports = {
   createSchema: createSchema,
   list: list,
@@ -561,7 +598,10 @@ module.exports = {
   stopEditing: stopEditing,
   verifyEditing: verifyEditing,
   findUserInfo: findUserInfo,
-  editUserInfo: editUserInfo
+  editUserInfo: editUserInfo,
+  addCart: addCart,
+  removeCart: removeCart,
+  listCartItems: listCartItems
 };
 
 if (module === require.main) {

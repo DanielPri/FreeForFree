@@ -34,6 +34,12 @@ block content
              td View
              td Title
              td Media Type
+           tbody
+            each item in cart
+             tr
+              td= item.id
+              td hello
+              td hello
     br
     div(class="checkoutButton")
         button Checkout

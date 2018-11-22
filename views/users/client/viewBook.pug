@@ -3,15 +3,18 @@ extends ../../catalog-client.pug
 block content
   div(class="container")
     div(class="row justify-content-md-center")
-      h3 Book
-       small
-
-      .media
-          .media-left
-            img(Id="image" src=book.imageUrl)
-          .media-body
-            h4= book.title
-              | &nbsp;
-              small= book.publishedDate
-            h5 By #{book.author||'unknown'}
-            p= book.description
+        h3 Book
+        .media
+            .media-left
+              img(Id="image" src=book.imageUrl)
+            .media-body
+              h4= book.title
+                | &nbsp;
+                small= book.publishedDate
+              h5 By #{book.author||'unknown'}
+              p= book.description
+        br
+        .btn-group
+         a(href=`/users/client/books/${book.id}/addToCart`, class='btn btn-success btn-sm' disabled=check)
+           i.glyphicon.glyphicon-shopping-cart
+           span  Add to Cart

@@ -5,7 +5,11 @@ block content
     div(class="row justify-content-md-center")
       h3 Music
        small
-
+      .btn-group
+       a(href=`/users/admin/books/${music.id}/edit`, class='btn btn-success btn-sm' disabled=check)
+         i.glyphicon.glyphicon-edit
+         span  Add to cart
+            
       .media
           .media-left
             img(Id="image" src=music.imageUrl)

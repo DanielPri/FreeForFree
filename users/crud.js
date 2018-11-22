@@ -909,7 +909,15 @@ router.get('/client/magazines', oauth2.required, oauth2.clientRequired, (req, re
 });
 
 router.get('/client/cart', oauth2.required, oauth2.clientRequired, (req, res, next) => {
-    res.render('users/client/cartPage.pug')
+  getModel().listCartItems(req.user.id, (err, entities) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('users/client/cartPage.pug', {
+      cart: entities
+    });
+  });
 });
 
 router.get('/client/movies', oauth2.required, oauth2.clientRequired, (req, res, next) => {
@@ -1100,6 +1108,23 @@ router.post('/client/music', (req, res, next) => {
   });
 });
 //*************************************************** END SEARCH AND SORT FUNCTIONS *************************************************************/
+
+//******************************************************** START CART FUNCTIONS *****************************************************************/
+/**
+ * GET /books/:id/addtocart
+ *
+ * Add to cart a book.
+ */
+router.get('/client/books/:book/addToCart',   oauth2.required, oauth2.clientRequired, (req, res, next) => {
+  getModel().addCart(req.user.id, req.params.book, (err) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.redirect('/users/client/cart');
+  });
+});
+//********************************************************* END CART FUNCTIONS ******************************************************************/
 
 //*************************************************** END CLIENT ROUTERS AND FUNCTIONS **********************************************************/
 
