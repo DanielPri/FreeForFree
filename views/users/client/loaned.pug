@@ -49,7 +49,7 @@ block content
               td= loan.type
               td= loan.ts
               td
-                a(href=``, class='btn btn-danger btn-sm')
+                a(href=`/users/client/myLoans/${loan.itemID}/delete`, class='btn btn-danger btn-sm')
                   i.glyphicon.glyphicon-trash
                   span  Return
   if !loans.length
@@ -66,3 +66,13 @@ block content
           td Title
           td Media Type
           td Returned On
+      tbody
+        each item in returns
+          tr
+            td
+              img(Id="image" src=item.imageURL)
+            td= item.title
+            td= item.type
+            td= item.ts
+  if !returns.length
+      p No items found.

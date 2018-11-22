@@ -1251,12 +1251,39 @@ router.get('/client/myLoans', oauth2.required, oauth2.clientRequired, (req, res,
       next(err);
       return;
     }
-    res.render('users/client/loaned.pug', {
-      loans: entities
+    getModel().listReturns(req.user.id, (err, results) => {
+      if (err) {
+        next(err);
+        return;
+      }
+      res.render('users/client/loaned.pug', {
+        loans: entities,
+        returns: results
+      });
     });
   });
 });
 
+/**
+ * GET /client/myLoans/:id/return
+ *
+ * Return loaned items
+ */
+router.get('/client/myLoans/:item/delete', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+  getModel().returnLoan(req.user.id, req.params.item, (err) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.redirect('..');
+  });
+});
+
+/**
+ * GET /client/cart/checkout
+ *
+ * Checkout items (loan)
+ */
 router.get('/client/cart/checkout', oauth2.required, oauth2.clientRequired, (req, res, next) => {
   getModel().listCartItems(req.user.id, (err, entities) => {
     if (err) {

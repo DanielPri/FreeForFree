@@ -602,6 +602,34 @@ function listLoans (id, cb) {
     );
 }
 //[END listLoans]
+
+//[START listReturns]
+function listReturns (id, cb) {
+    connection.query(
+        'SELECT * FROM ((SELECT `title`, `id`, `imageURL` FROM books UNION SELECT `title`, `id`, `imageURL` FROM `musics` UNION SELECT `title`, `id`, `imageURL` FROM `movies`) AS q JOIN returns AS r) JOIN inventory AS i WHERE r.userID = ? AND r.itemID = q.id AND i.id = q.id', id,
+        (err, results) => {
+            if (err) {
+                cb(err);
+                return;
+            }
+            cb(null, results);
+        }
+    );
+}
+//[END listReturns]
+
+//[START returnLoan]
+function returnLoan (userID, itemID, cb) {
+  connection.query('INSERT INTO `returns` SET `userID` = ?, `itemID` = ?;DELETE FROM `loans` WHERE `userID` = ? AND `itemID` = ?', [userID, itemID, userID, itemID],
+  (err, result) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      cb(null, result);
+    });
+}
+//[END returnLoan]
 //--------------------------------------------------- END  LOAN ----------------------------------------------------------------//
 
 module.exports = {
@@ -641,7 +669,9 @@ module.exports = {
   removeAllCart: removeAllCart,
   listCartItems: listCartItems,
   listLoans: listLoans,
-  loan: loan
+  listReturns: listReturns,
+  loan: loan,
+  returnLoan: returnLoan
 };
 
 if (module === require.main) {
