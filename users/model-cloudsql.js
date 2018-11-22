@@ -443,19 +443,23 @@ function updateMovie (id, data, cb) {
 
 //------------------------------------------------Search-------------------------------------------------------------------------//
 
-function findItem(type, searchType, columnValue, cb){
+function findItem(columnValue, cb) {
 
     connection.query(
-        'SELECT * FROM ?? WHERE ?? = ?', [type, searchType, columnValue],
+        'SELECT * FROM `books` WHERE `title` = ? ;' +
+        'SELECT * FROM `movies` WHERE `title` = ? ;' +
+        'SELECT * FROM `magazines` WHERE `title` = ? ;' +
+        'SELECT * FROM `musics` WHERE `title` = ? ;'
+        , [columnValue, columnValue, columnValue, columnValue],
         (err, results) => {
             if (err) {
                 cb(err);
                 return;
             }
+            console.log(results);
             cb(null, results);
         });
 }
-
 
 
 function findByAttribute(itemType, column, columnValue, orderBy, sortUpDown, cb) {
