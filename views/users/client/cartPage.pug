@@ -41,6 +41,10 @@ block content
                 img(Id="image" src=item.imageURL)
               td= item.title
               td= item.type
+              td
+                a(href=`/users/client/cart/${item.itemID}/delete`, class='btn btn-danger btn-sm')
+                  i.glyphicon.glyphicon-trash
+                  span  Delete book
     br
     div(class="checkoutButton")
         button Checkout

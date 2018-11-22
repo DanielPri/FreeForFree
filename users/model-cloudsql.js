@@ -561,11 +561,15 @@ function addCart(id, itemID, cb) {
 //[END addCart]
 
 //[START removeCart]
-function removeCart(id, itemID, cb) {
-  connection.query('DELETE FROM `cart` WHERE `id` = ? AND `itemID` = ?', [id, itemID], cb);
+function removeCart(itemID, cb) {
+  connection.query('DELETE FROM `cart` WHERE `itemID` = ?', itemID, cb);
 }
 //[END removeCart]
 //------------------------------------------------- END  CART ------------------------------------------------------------------//
+
+//-------------------------------------------------- START  LOAN ---------------------------------------------------------------//
+
+//--------------------------------------------------- END  LOAN ----------------------------------------------------------------//
 
 module.exports = {
   createSchema: createSchema,

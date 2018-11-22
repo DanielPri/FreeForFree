@@ -931,6 +931,36 @@ router.get('/client/cart', oauth2.required, oauth2.clientRequired, (req, res, ne
   });
 });
 
+router.get('/client/cart/:book/delete', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+  getModel().removeCart(req.params.book, (err) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.redirect('..');
+  });
+});
+
+router.get('/client/cart/:movie/delete', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+  getModel().removeCart(req.params.movie, (err) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.redirect('..');
+  });
+});
+
+router.get('/client/cart/:music/delete', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+  getModel().removeCart(req.params.music, (err) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.redirect('..');
+  });
+});
+
 router.get('/client/movies', oauth2.required, oauth2.clientRequired, (req, res, next) => {
   getModel().listMovies(10, req.query.pageToken, (err, entities, cursor) => {
     if (err) {
