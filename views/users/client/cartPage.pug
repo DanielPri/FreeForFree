@@ -37,9 +37,10 @@ block content
            tbody
             each item in cart
              tr
-              td= item.id
-              td hello
-              td hello
+              td
+                img(Id="image" src=item.imageURL)
+              td= item.title
+              td= item.type
     br
     div(class="checkoutButton")
         button Checkout

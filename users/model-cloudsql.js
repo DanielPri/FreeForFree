@@ -533,16 +533,16 @@ function verifyEditing(itemID, cb) {
 //----------------------------------------------- START  CART ------------------------------------------------------------------//
 // [Start listCartItems]
 function listCartItems (id, cb) {
-  connection.query(
-    'SELECT * FROM `cart` WHERE `id` = ?', id,
-    (err, results) => {
-      if (err) {
-        cb(err);
-        return;
-      }
-      cb(null, results);
-    }
-  );
+    connection.query(
+        'SELECT * FROM ((SELECT `title`, `id`, `imageURL` FROM books UNION SELECT `title`, `id`, `imageURL` FROM `musics` UNION SELECT `title`, `id`, `imageURL` FROM `movies`) AS q JOIN cart AS c) JOIN inventory AS i WHERE c.id = ? AND c.itemID = q.id AND i.id = q.id', id,
+        (err, results) => {
+            if (err) {
+                cb(err);
+                return;
+            }
+            cb(null, results);
+        }
+    );
 }
 //[End listCartItems]
 
