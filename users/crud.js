@@ -569,13 +569,24 @@ router.get('/admin/magazines/:magazine/delete', oauth2.required, oauth2.adminReq
   * Display a Music.
   */
  router.get('/admin/music/:music', oauth2.required, oauth2.adminRequired, (req, res, next) => {
+   var editing = false;
+   getModel().verifyEditing(req.params.music, (err, result) => {
+     if (err) {
+       next(err);
+       return;
+     }
+     if (result.length == 1) {
+       editing = true;
+     }
+   });
   getModel().readMusic(req.params.music, (err, entity) => {
     if (err) {
       next(err);
       return;
     }
     res.render('users/admin/viewMusic.pug', {
-      music: entity
+      music: entity,
+      check: editing
     });
   });
 });
@@ -950,13 +961,24 @@ router.get('/client/music', oauth2.required, oauth2.clientRequired, (req, res, n
 
   //* Display a book.
  router.get('/client/books/:book', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+   var editing = false;
+   getModel().verifyEditing(req.params.book, (err, result) => {
+     if (err) {
+       next(err);
+       return;
+     }
+     if (result.length == 1) {
+       editing = true;
+     }
+   });
   getModel().readBook(req.params.book, (err, entity) => {
     if (err) {
       next(err);
       return;
     }
     res.render('users/client/viewBook.pug', {
-      book: entity
+      book: entity,
+      check: editing
     });
   });
 });
@@ -1006,13 +1028,24 @@ router.get('/client/music', oauth2.required, oauth2.clientRequired, (req, res, n
 
 //* Display a Movie.
 router.get('/client/movies/:movie', oauth2.required, oauth2.clientRequired, (req, res, next) => {
+  var editing = false;
+  getModel().verifyEditing(req.params.movie, (err, result) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    if (result.length == 1) {
+      editing = true;
+    }
+  });
   getModel().readMovie(req.params.movie, (err, entity) => {
     if (err) {
       next(err);
       return;
     }
     res.render('users/client/viewMovie.pug', {
-      movie: entity
+      movie: entity,
+      check: editing
     });
   });
 });
@@ -1115,7 +1148,7 @@ router.post('/client/music', (req, res, next) => {
  *
  * Add to cart a book.
  */
-router.get('/client/books/:book/addToCart',   oauth2.required, oauth2.clientRequired, (req, res, next) => {
+router.get('/client/books/:book/addToCart', oauth2.required, oauth2.clientRequired, (req, res, next) => {
   getModel().addCart(req.user.id, req.params.book, (err) => {
     if (err) {
       next(err);
@@ -1130,7 +1163,7 @@ router.get('/client/books/:book/addToCart',   oauth2.required, oauth2.clientRequ
  *
  * Add to cart a movie.
  */
-router.get('/client/movies/:movie/addToCart',   oauth2.required, oauth2.clientRequired, (req, res, next) => {
+router.get('/client/movies/:movie/addToCart', oauth2.required, oauth2.clientRequired, (req, res, next) => {
   getModel().addCart(req.user.id, req.params.movie, (err) => {
     if (err) {
       next(err);
@@ -1145,7 +1178,7 @@ router.get('/client/movies/:movie/addToCart',   oauth2.required, oauth2.clientRe
  *
  * Add to cart a music.
  */
-router.get('/client/musics/:music/addToCart',   oauth2.required, oauth2.clientRequired, (req, res, next) => {
+router.get('/client/musics/:music/addToCart', oauth2.required, oauth2.clientRequired, (req, res, next) => {
   getModel().addCart(req.user.id, req.params.music, (err) => {
     if (err) {
       next(err);
