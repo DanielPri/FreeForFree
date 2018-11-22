@@ -888,7 +888,7 @@ router.post('/admin/music', (req, res, next) => {
 
 //--------Catalog----------//
 router.get('/client/catalog', oauth2.required, oauth2.clientRequired, (req, res, next) => {
-  res.render('users/client/catalog.pug')
+    res.render('users/client/catalog.pug', { items: {} })
 });
 
 router.get('/client/books', oauth2.required, oauth2.clientRequired, (req, res, next) => {
@@ -1040,18 +1040,16 @@ router.get('/client/movies/:movie', oauth2.required, oauth2.clientRequired, (req
 
 //For catalog.  Will eventually search the entire  database for any matches in search bar
 router.post('/client/catalog', (req, res, next) => {
-  const anyPossibility = req.body.searchBar;
-  console.log(anyPossibility);
-  getModel().findByAttribute(anyPossibility, (err, entities) => {
-    if (err) {
-      next(err);
-      return;
-    }
-    res.render('users/client/catalog.pug', {
-      items: entities,
-      type: 'movies'
+    const anyPossibility = req.body.searchBar;
+    getModel().findItem(anyPossibility, (err, entities) => {
+        if (err) {
+            next(err);
+            return;
+        }
+        res.render('users/client/catalog.pug', {
+            items: entities
+        });
     });
-  });
 });
 
 //Search for specific book attributes
