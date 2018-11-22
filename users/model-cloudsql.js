@@ -446,12 +446,13 @@ function updateMovie (id, data, cb) {
 
 function findItem(columnValue, cb) {
 
+    var columnPartial = "%" + columnValue + "%";
     connection.query(
-        'SELECT * FROM `books` WHERE `title` = ? ;' +
-        'SELECT * FROM `movies` WHERE `title` = ? ;' +
-        'SELECT * FROM `magazines` WHERE `title` = ? ;' +
-        'SELECT * FROM `musics` WHERE `title` = ? ;'
-        , [columnValue, columnValue, columnValue, columnValue],
+        'SELECT * FROM `books` WHERE `title` LIKE ? ;' +
+        'SELECT * FROM `movies` WHERE `title` LIKE ? ;' +
+        'SELECT * FROM `magazines` WHERE `title` LIKE ? ;' +
+        'SELECT * FROM `musics` WHERE `title` LIKE ? ;'
+        , [columnPartial, columnPartial, columnPartial, columnPartial],
         (err, results) => {
             if (err) {
                 cb(err);
@@ -465,22 +466,23 @@ function findItem(columnValue, cb) {
 
 function findByAttribute(itemType, column, columnValue, orderBy, sortUpDown, cb) {
 
+    const columnPartial = "%" + columnValue + "%";
     if (sortUpDown === 'ASC') { // Sort Ascending
         if (columnValue == 1)
-            var mysql = 'SELECT * FROM ?? WHERE ? = ? ORDER BY ?? ASC'
+            var mysql = 'SELECT * FROM ?? WHERE ? LIKE ? ORDER BY ?? ASC'
         else
-            var mysql = 'SELECT * FROM ?? WHERE ?? = ? ORDER BY ?? ASC'
+            var mysql = 'SELECT * FROM ?? WHERE ?? LIKE ? ORDER BY ?? ASC'
     }
     else if (sortUpDown === 'DESC') { // Sort Descending
         if (columnValue == 1)
-            var mysql = 'SELECT * FROM ?? WHERE ? = ? ORDER BY ?? DESC'
+            var mysql = 'SELECT * FROM ?? WHERE ? LIKE ? ORDER BY ?? DESC'
 
         else
-            var mysql = 'SELECT * FROM ?? WHERE ?? = ? ORDER BY ?? DESC'
+            var mysql = 'SELECT * FROM ?? WHERE ?? LIKE ? ORDER BY ?? DESC'
     }
 
     connection.query(
-        mysql, [itemType, column, columnValue, orderBy],
+        mysql, [itemType, column, columnPartial, orderBy],
         (err, results) => {
             if (err) {
                 cb(err);
