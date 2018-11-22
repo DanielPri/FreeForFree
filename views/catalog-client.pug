@@ -13,15 +13,12 @@ html(lang="en")
             a(href="/users") FreeForFree
         ul.nav.navbar-nav
           li
-            a(href="/users/admin/list") Active Users
+            a(href="/users/client/catalog") Catalog
           li
-            a(href="/users/admin/catalog") Catalog
-          li
-            a(href="/users/admin/addUser") Create New User
-          li
-            a(href="/users/admin/editUserInfo") Edit User Info
+            a(href="/users/client/myLoans") My Loans
 
         p.navbar-text.navbar-right
+          a(class="btn btn-success" href="/users/client/cart")  <span class="glyphicon glyphicon-shopping-cart"></span>
           if profile
             if profile.image
               img.img-circle(src=profile.image, width=24)
@@ -30,15 +27,15 @@ html(lang="en")
 
     div(class="mediaType")
         div(class="searchButton")
-          a(class="btn btn-primary" href="/users/admin/catalog")  <span class="glyphicon glyphicon-search"></span> Search
+          a(class="btn btn-primary" href="/users/client/catalog")  <span class="glyphicon glyphicon-search"></span> Search
         div(class="bookButton")
-          a(class="btn btn-primary" href="/users/admin/books") <span class="glyphicon glyphicon-book"></span> Books
+          a(class="btn btn-primary" href="/users/client/books") <span class="glyphicon glyphicon-book"></span> Books
         div(class="magazineButton")
-          a(class="btn btn-primary" href="/users/admin/magazines") <span class="glyphicon glyphicon-book"></span> Magazines
+          a(class="btn btn-primary" href="/users/client/magazines") <span class="glyphicon glyphicon-book"></span> Magazines
         div(class="movieButton")
-          a(class="btn btn-primary" href="/users/admin/movies") <span class="glyphicon glyphicon-film"></span> Movies
+          a(class="btn btn-primary" href="/users/client/movies") <span class="glyphicon glyphicon-film"></span> Movies
         div(class="musicButton")
-          a(class="btn btn-primary" href="/users/admin/music") <span class="glyphicon glyphicon-music"></span> Music
+          a(class="btn btn-primary" href="/users/client/music") <span class="glyphicon glyphicon-music"></span> Music
     br
 
     block content

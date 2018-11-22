@@ -1,0 +1,76 @@
+extends ../../catalog.pug
+
+
+block content
+  .container
+    div(class="searchForm")
+      .form-group
+        h1
+          label(for="search") Search <span class="glyphicon glyphicon-search"></span>
+        form(action = "magazines" method = "post" name = "magazines")
+          input.form-control(type="text", name="searchBar")
+          br
+          h3 Search by
+          div(class="searchDropDown")
+            select(name = "magazines")
+              option.form-control(value="title") Title
+              option.form-control(value= "publisher") Publisher
+              option.form-control(value="language") Language
+              option.form-control(value="ISBN10") ISBN-10
+              option.form-control(value="ISBN13") ISBN-13
+            br
+            br
+            br
+            h3 Sort by
+            select(name = "sortBy")
+              option.form-control(value="title") Title
+              option.form-control(value= "publisher") Publisher
+              option.form-control(value="language") Language
+              option.form-control(value="ISBN10") ISBN-10
+              option.form-control(value="ISBN13") ISBN-13
+            select(name = "sortUpDown")
+              option.form-control(value="ASC") Ascending
+              option.form-control(value="DESC") Descending
+            br
+            br
+            div(class="submitSearch")
+            button(type = "submit" class="btn btn-success")
+             span Submit
+
+
+    br   
+    br
+    br
+    div(align="center")
+      a(class="btn btn-primary" href="/users/admin/formMagazine") Add Magazine
+    br
+    br
+    header Magazines
+    table(class="table table-striped table-bordered")
+     thead
+      tr
+       td View
+       td Title
+       td Language
+       td Publisher
+       td ISBN-10
+       td ISBN-13
+     tbody   
+      each magazine in magazines
+       tr
+         td
+          .media-left
+           a(href=`/users/admin/magazines/${magazine.id}`)
+            img(Id="image" src=magazine.imageUrl)
+          td= magazine.title
+          td= magazine.language
+          td= magazine.publisher
+          td= magazine.ISBN10
+          td= magazine.ISBN13
+  if !magazines.length
+    p No magazines found.
+  if nextPageToken
+    nav
+      ul.pager
+        li
+          a(href=`?pageToken=${encodeURIComponent(nextPageToken)}`) Next

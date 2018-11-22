@@ -16,7 +16,7 @@ html(lang="en")
 
         ul.nav.navbar-nav
           li
-            a(href="/users") Home
+            a(href="/users/client/catalog") Browse
           li
             a(href="/users/admin/list") Admin
 
@@ -26,9 +26,9 @@ html(lang="en")
             if profile.image
               img.img-circle(src=profile.image, width=24)
             span #{profile.displayName} &nbsp;
-              a(href=logout) (logout)
+              a(class="btn btn-danger" href=logout) <span class="glyphicon glyphicon-log-out"></span> Logout
           else
-            a(href=login) Login
+            a(href=login) <span class="glyphicon glyphicon-log-in"></span> Login
           // [END profile]
 
 
