@@ -4,12 +4,6 @@ block content
   div(class="container")
     div(class="row justify-content-md-center")
       h3 Movie
-       small
-      .btn-group
-       a(href=`/users/admin/books/${movie.id}/edit`, class='btn btn-success btn-sm' disabled=check)
-         i.glyphicon.glyphicon-edit
-         span  Add to cart
-            
       .media
           .media-left
             img(Id="image" src=movie.imageUrl)
@@ -19,3 +13,8 @@ block content
               small= movie.publishedDate
             h5 Direced by #{movie.director||'unknown'}
             p= movie.description
+      br
+      .btn-group
+       a(href=`/users/client/movies/${movie.id}/addToCart`, class='btn btn-success btn-sm' disabled=check)
+         i.glyphicon.glyphicon-shopping-cart
+         span  Add to Cart

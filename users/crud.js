@@ -1124,6 +1124,36 @@ router.get('/client/books/:book/addToCart',   oauth2.required, oauth2.clientRequ
     res.redirect('/users/client/cart');
   });
 });
+
+/**
+ * GET /movie/:id/addtocart
+ *
+ * Add to cart a movie.
+ */
+router.get('/client/movies/:movie/addToCart',   oauth2.required, oauth2.clientRequired, (req, res, next) => {
+  getModel().addCart(req.user.id, req.params.movie, (err) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.redirect('/users/client/cart');
+  });
+});
+
+/**
+ * GET /music/:id/addtocart
+ *
+ * Add to cart a music.
+ */
+router.get('/client/musics/:music/addToCart',   oauth2.required, oauth2.clientRequired, (req, res, next) => {
+  getModel().addCart(req.user.id, req.params.music, (err) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.redirect('/users/client/cart');
+  });
+});
 //********************************************************* END CART FUNCTIONS ******************************************************************/
 
 //*************************************************** END CLIENT ROUTERS AND FUNCTIONS **********************************************************/
