@@ -100,7 +100,7 @@ router.post('/admin/editUserInfo', oauth2.required, oauth2.adminRequired, (req, 
 
 
 router.get('/admin/books', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().listBooks(10, req.query.pageToke, (err, entities, cursor) => {
+  getModel().listBooks(10, req.query.pageToken, (err, entities, cursor) => {
     if (err) {
       next(err);
       return;
