@@ -60,7 +60,6 @@ router.get('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, n
 
 //----------Choosing User Type-------------------//
 router.post('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  console.log(req.body.userType)
   getModel().chooseUserType(req.body.userType, (err, entities) => {
     if (err) {
       next(err);

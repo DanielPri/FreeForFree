@@ -62,8 +62,8 @@ block content
           td= magazine.publisher
           td= magazine.ISBN10
           td= magazine.ISBN13
-  if !magazines.length
-    p No magazines found.
+    if !magazines.length
+      p No magazines found.
   if nextPageToken
     nav
       ul.pager
