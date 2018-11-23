@@ -18,10 +18,10 @@ const mysql = require('mysql');
 const config = require('../config');
 
 const options = {
-  user: config.get('MYSQL_USER'),
-  password: config.get('MYSQL_PASSWORD'),
-  database: 'bookshelf',
-  multipleStatements: true
+    user: config.get('MYSQL_USER'),
+    password: config.get('MYSQL_PASSWORD'),
+    database: 'bookshelf',
+    multipleStatements: true
 };
 
 if (config.get('INSTANCE_CONNECTION_NAME') && config.get('NODE_ENV') === 'production') {
@@ -444,39 +444,45 @@ function updateMovie (id, data, cb) {
 
 //------------------------------------------------Search-------------------------------------------------------------------------//
 
-function findItem(type, searchType, columnValue, cb){
+function findItem(columnValue, cb) {
 
+    var columnPartial = "%" + columnValue + "%";
     connection.query(
-        'SELECT * FROM ?? WHERE ?? = ?', [type, searchType, columnValue],
+        'SELECT * FROM `books` WHERE `title` LIKE ? ;' +
+        'SELECT * FROM `movies` WHERE `title` LIKE ? ;' +
+        'SELECT * FROM `magazines` WHERE `title` LIKE ? ;' +
+        'SELECT * FROM `musics` WHERE `title` LIKE ? ;'
+        , [columnPartial, columnPartial, columnPartial, columnPartial],
         (err, results) => {
             if (err) {
                 cb(err);
                 return;
             }
+            console.log(results);
             cb(null, results);
         });
 }
 
 
-
 function findByAttribute(itemType, column, columnValue, orderBy, sortUpDown, cb) {
 
+    const columnPartial = "%" + columnValue + "%";
     if (sortUpDown === 'ASC') { // Sort Ascending
         if (columnValue == 1)
-            var mysql = 'SELECT * FROM ?? WHERE ? = ? ORDER BY ?? ASC'
+            var mysql = 'SELECT * FROM ?? WHERE ? LIKE ? ORDER BY ?? ASC'
         else
-            var mysql = 'SELECT * FROM ?? WHERE ?? = ? ORDER BY ?? ASC'
+            var mysql = 'SELECT * FROM ?? WHERE ?? LIKE ? ORDER BY ?? ASC'
     }
     else if (sortUpDown === 'DESC') { // Sort Descending
         if (columnValue == 1)
-            var mysql = 'SELECT * FROM ?? WHERE ? = ? ORDER BY ?? DESC'
+            var mysql = 'SELECT * FROM ?? WHERE ? LIKE ? ORDER BY ?? DESC'
 
         else
-            var mysql = 'SELECT * FROM ?? WHERE ?? = ? ORDER BY ?? DESC'
+            var mysql = 'SELECT * FROM ?? WHERE ?? LIKE ? ORDER BY ?? DESC'
     }
 
     connection.query(
-        mysql, [itemType, column, columnValue, orderBy],
+        mysql, [itemType, column, columnPartial, orderBy],
         (err, results) => {
             if (err) {
                 cb(err);

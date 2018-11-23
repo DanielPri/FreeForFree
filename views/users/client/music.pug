@@ -66,8 +66,8 @@ block content
         td= music.label
         td= music.releaseDate
         td= music.ASIN
-  if !musics.length
-    p No musics found.
+    if !musics.length
+      p No musics found.
   if nextPageToken
     nav
       ul.pager

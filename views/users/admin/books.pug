@@ -81,8 +81,8 @@ block content
         td= book.publisher
         td= book.ISBN10
         td= book.ISBN13 
-  if !books.length
-    p No books found.
+    if !books.length
+      p No books found.
   if nextPageToken
     nav
       ul.pager

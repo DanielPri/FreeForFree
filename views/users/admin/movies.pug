@@ -81,8 +81,8 @@ block content
         td= movie.subtitles
         td= movie.dubbed
         td= movie.runTime
-  if !movies.length
-    p No movies found.
+    if !movies.length
+      p No movies found.
   if nextPageToken
     nav
       ul.pager

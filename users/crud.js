@@ -41,7 +41,7 @@ router.get('/', (req, res, next) => {
 
 //--------Catalog----------//
 router.get('/admin/catalog', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  res.render('users/admin/catalog.pug')
+  res.render('users/admin/catalog.pug', { items: {} })
 });
 
 //--------Add User----------//
@@ -60,7 +60,6 @@ router.get('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, n
 
 //----------Choosing User Type-------------------//
 router.post('/admin/addUser', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  console.log(req.body.userType)
   getModel().chooseUserType(req.body.userType, (err, entities) => {
     if (err) {
       next(err);
@@ -101,7 +100,7 @@ router.post('/admin/editUserInfo', oauth2.required, oauth2.adminRequired, (req, 
 
 
 router.get('/admin/books', oauth2.required, oauth2.adminRequired, (req, res, next) => {
-  getModel().listBooks(10, req.query.pageToke, (err, entities, cursor) => {
+  getModel().listBooks(10, req.query.pageToken, (err, entities, cursor) => {
     if (err) {
       next(err);
       return;
@@ -797,15 +796,13 @@ images.sendUploadToGCS,
 //For catalog.  Will eventually search the entire  database for any matches in search bar
 router.post('/admin/catalog', (req, res, next) => {
   const anyPossibility = req.body.searchBar;
-  console.log(anyPossibility);
-  getModel().findByAttribute(anyPossibility, (err, entities) => {
+    getModel().findItem(anyPossibility, (err, entities) => {
     if (err) {
       next(err);
       return;
     }
     res.render('users/admin/catalog.pug', {
-      items: entities,
-      type: 'movies'
+            items: entities
     });
   });
 });
@@ -890,7 +887,7 @@ router.post('/admin/music', (req, res, next) => {
 
 //--------Catalog----------//
 router.get('/client/catalog', oauth2.required, oauth2.clientRequired, (req, res, next) => {
-  res.render('users/client/catalog.pug')
+    res.render('users/client/catalog.pug', { items: {} })
 });
 
 router.get('/client/books', oauth2.required, oauth2.clientRequired, (req, res, next) => {
@@ -1042,18 +1039,16 @@ router.get('/client/movies/:movie', oauth2.required, oauth2.clientRequired, (req
 
 //For catalog.  Will eventually search the entire  database for any matches in search bar
 router.post('/client/catalog', (req, res, next) => {
-  const anyPossibility = req.body.searchBar;
-  console.log(anyPossibility);
-  getModel().findByAttribute(anyPossibility, (err, entities) => {
-    if (err) {
-      next(err);
-      return;
-    }
-    res.render('users/client/catalog.pug', {
-      items: entities,
-      type: 'movies'
+    const anyPossibility = req.body.searchBar;
+    getModel().findItem(anyPossibility, (err, entities) => {
+        if (err) {
+            next(err);
+            return;
+        }
+        res.render('users/client/catalog.pug', {
+            items: entities
+        });
     });
-  });
 });
 
 //Search for specific book attributes
